@@ -1,0 +1,14 @@
+Prediction vector:
+[[-0.01015221 -0.01599693  0.0264659  -0.018613    0.035624  ]]
+
+Prediction vector min:
+[0 0 0 0 0]
+
+(unsat_epsilon, sat_epsilon)
+(0.0,7.62939453125e-05)
+
+Output vector:
+[[-0.0163011  -0.01699914  0.0264659  -0.0153011   0.03562401]]
+
+Output vector min:
+[1]
