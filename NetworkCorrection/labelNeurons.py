@@ -1,3 +1,4 @@
+import os
 import sys
 from time import time
 import numpy
@@ -8,9 +9,7 @@ import keras
 from numpy import genfromtxt
 
 
-sat = 'SAT'
-unsat = 'UNSAT'
-class findCorrection:
+class labelNeurons:
     # def __init__(self, epsilon_max):
     #     self.epsilon_max = epsilon_max
 
@@ -32,6 +31,21 @@ class findCorrection:
                 continue
             input = [max(r,0) for r in result]
             neurons.append(input)
+        return neurons
+
+    def create_Marabou_equation(self, loaded_model, input, num_layers):
+        
+
+        neurons = []
+        l = 0
+        for layer in loaded_model.layers:
+            if l==0:
+                l = l + 1
+                continue
+            w = layer.get_weights()[0]
+            ep = np.zeros_like(w)
+            # print(w)
+            print(ep)
         return neurons
     
     def labelNodes(self, model, all_layer_outputs ,last_layer_labels, threshold):
@@ -69,10 +83,23 @@ class findCorrection:
                         d = d + 1
                     else:
                         # print(node," is a split neuron.")
-                        label_current_layer.append(2)
+                        # label_current_layer.append(2)
+                        """
+                        Since this is a split neuron, we will have to create duplicate of the DNN at this point.
+                        """
+                        # pid = os.fork()
+                        # if pid > 0 :
+                        #     print("I am parent process:")
+                        #     label_current_layer.append(1)
+                        #     i = i + 1
+                        # else:
+                        #     print("I am child process:")
+                        #     label_current_layer.append(0)
+                        #     d = d + 1
                         s = s + 1
+                        label_current_layer.append(2)
                 # print(i, " ", d," ", s)
-                print(label_current_layer)
+                # print(label_current_layer)
                 labels.append(label_current_layer)
                 label_previous_layer = label_current_layer
             else:
@@ -110,16 +137,62 @@ class findCorrection:
                     else:
                         s = s+1
                         label_current_layer.append(2)
+                        """
+                        Since this is a split neuron, we will have to create duplicate of the DNN at this point.
+                        """
+                        # pid = os.fork()
+                        # if pid > 0 :
+                        #     print("I am parent process:")
+                        #     label_current_layer.append(1)
+                        #     i = i + 1
+                        # else:
+                        #     print("I am child process:")
+                        #     label_current_layer.append(0)
+                        #     d = d + 1
 
                 # print(i, " ", d," ", s)
-                print(label_current_layer)
+                # print(label_current_layer)
                 labels.append(label_current_layer)
                 label_previous_layer = label_current_layer
                 # break
-
+        labels.reverse()
+        # for l in labels:
+        #     print(l)
         return labels
+    
+    def fixEpsilonRanges(self, loaded_model, all_layer_outputs, labels, max_layers):
+        epsilons = []
+        for layer in range(max_layers-1, 0, -1):
+            current_layer = layer-1
+            next_layer = layer
+            weight = loaded_model.layers[next_layer+1].get_weights()[0]
+            # print(weight)
+            epsilon = np.zeros_like(weight)
+            for label in range(0,len(labels[next_layer])):
+                if labels[next_layer][label]==1:
+                    for curr_layer_neuron in range(0, len(epsilon)):
+                        if weight[curr_layer_neuron][label]!=0:
+                            epsilon[curr_layer_neuron][label] = 1
+                    #This means the next layer neuron is an increment neuron, i.e the edge weight should only increase.
+                elif labels[next_layer][label]==0:
+                    for curr_layer_neuron in range(0, len(epsilon)):
+                        if weight[curr_layer_neuron][label]!=0:
+                            epsilon[curr_layer_neuron][label] = -1
+                    #This means the next layer neuron is an decrement neuron, i.e the edge weight should only decrease.
+                else:
+                    for curr_layer_neuron in range(0, len(epsilon)):
+                        if weight[curr_layer_neuron][label]!=0:
+                            epsilon[curr_layer_neuron][label] = 2
+                    #This indicates a split neuron.
+            epsilons.append(epsilon)
+            # print(epsilon)
+        return epsilons
 
-    def run(self, threshold):     
+    def findEpsilon(self, loaded_model, all_layer_outputs, labels, max_layers):
+        
+        return
+
+    def run(self, threshold, last_layer_labels, max_layers):     
         json_file = open('./Models/ACASXU_2_9.json', 'r')
         loaded_model_json = json_file.read()
         json_file.close()
@@ -137,13 +210,16 @@ class findCorrection:
         # for output in all_layer_outputs:
         #     print(len(output), output)
 
-        last_layer_labels = [1, 1, 0, 0, 0]         ### 2 stands for split neurons, 1 stands for increment neuron and 0 stands for decrement neuron.###
         t1 = time()
         labels = self.labelNodes(loaded_model, all_layer_outputs ,last_layer_labels, threshold)
         t2 = time()
         print("Time taken in labelling of all nodes was: ", (t2-t1)," seconds.")
-        for l in labels:
-            print(l)
+        labels.append(last_layer_labels)
+        # for l in labels:
+        #     print(l)
+        epsilon = self.fixEpsilonRanges(loaded_model, all_layer_outputs, labels, max_layers)
+        self.create_Marabou_equation(loaded_model, inputs[0], num_layers)
+        return loaded_model, all_layer_outputs, labels
         
 
 if __name__ == '__main__':
@@ -151,10 +227,14 @@ if __name__ == '__main__':
     parser.add_argument('--threshold', default=0.005, help='This is the threshold for edge weights. \
                         If an edge weight is below this threshold, it will not be considered while labelling neurons \
                         as increment/decrement/split neurons.')
+
+    parser.add_argument('--max_layers', default=7, help='Number of layers in the DNN.')
     
     args = parser.parse_args()
     threshold = float(args.threshold)
-
+    max_layers = int(args.max_layers)
+    last_layer_labels = [1, 1, 0, 0, 0]         ### 2 stands for split neurons, 1 stands for increment neuron and 0 stands for decrement neuron.###
+        
     MODELS_PATH = './Models'
-    problem = findCorrection()
-    problem.run(threshold)
+    object = labelNeurons()
+    loaded_model, all_layer_outputs, labels = object.run(threshold, last_layer_labels, max_layers)

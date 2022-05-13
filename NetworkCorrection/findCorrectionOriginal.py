@@ -165,6 +165,7 @@ class findCorrection:
         print(satTimes)
         print(unsatTimes)
         print()
+        print("SAT EPSILON:", sat_epsilon)
         return unsat_epsilon, sat_epsilon , sat_vals
 
     def run(self, model_name, num):

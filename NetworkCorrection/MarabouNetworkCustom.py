@@ -8,7 +8,7 @@ os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
 import tensorflow as tf
 from maraboupy import MarabouUtils
 from maraboupy import MarabouNetwork
-class MarabouNetworkWeightsVars(MarabouNetwork.MarabouNetwork):
+class MarabouNetworkCustom(MarabouNetwork.MarabouNetwork):
     def __init__(self, filename, inputVals, inputNames=None, outputName=None, savedModel=False, savedModelTags=[]):
         """
         Constructs a MarabouNetworkTF object from a frozen Tensorflow protobuf or SavedModel
@@ -106,6 +106,7 @@ class MarabouNetworkWeightsVars(MarabouNetwork.MarabouNetwork):
             outputOp = tf_session.graph.get_operation_by_name(outputName)
         else: # Assume that the last operation is the output
             outputOp = tf_session.graph.get_operations()[-1]
+            print(outputOp)
 
         for j in range(inputVals.shape[0]):
             self.setupForInput(j)
@@ -135,7 +136,7 @@ class MarabouNetworkWeightsVars(MarabouNetwork.MarabouNetwork):
                 self.shapeMap[op.name] = [None]
             # self.inputVars.append(self.opToVarArray(op))
         self.inputOps = [op.name for op in ops]
-
+        
     def setOutputOp(self, op):
         """
         Function to set output operation
@@ -273,6 +274,7 @@ class MarabouNetworkWeightsVars(MarabouNetwork.MarabouNetwork):
         aTranspose = op.node_def.attr['transpose_a'].b
         bTranspose = op.node_def.attr['transpose_b'].b
         A = prevValues[0]
+        # print("A is: ",A)
         variables = prevValues[1]['vars']
         values = prevValues[1]['vals']
         epsilons = prevValues[1]['epsilons']
@@ -285,8 +287,13 @@ class MarabouNetworkWeightsVars(MarabouNetwork.MarabouNetwork):
         m, n = curValues.shape
         p = A.shape[1]
         ### END getting inputs ###
-        print(curValues)
-        print("Printing m, n, p:",m," ",n," ",p," ")
+        # print(curValues)
+        # print("Printing m, n, p:",m," ",n," ",p," ")
+        # print("HELLO")
+        # print(variables)
+        # print(epsilons)
+        # print(values)
+        # print("HELLO")
         ### Generate actual equations ###
         for i in range(m):
             for j in range(n):
@@ -579,4 +586,4 @@ def read_tf_weights_as_var(filename, inputVals, inputName=None, outputName=None,
     Returns:
         marabouNetworkTF: (MarabouNetworkTF) representing network
     """
-    return MarabouNetworkWeightsVars(filename, inputVals, inputName, outputName, savedModel, savedModelTags)
+    return MarabouNetworkCustom(filename, inputVals, inputName, outputName, savedModel, savedModelTags)

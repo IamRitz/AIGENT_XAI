@@ -1,0 +1,12 @@
+None
+Engine::processInputQuery: Input query (before preprocessing): 305 equations, 610 variables
+Engine::processInputQuery: Input query (after preprocessing): 0 equations, 10 variables
+
+Input bounds:
+	x0: [ -0.2678,  -0.2678] [FIXED]
+	x1: [ -0.1242,  -0.1242] [FIXED]
+	x2: [ -0.0639,  -0.0639] [FIXED]
+	x3: [  0.3750,   0.3750] [FIXED]
+	x4: [ -0.0195,  -0.0195] [FIXED]
+
+Branching heuristics set to LargestInterval
