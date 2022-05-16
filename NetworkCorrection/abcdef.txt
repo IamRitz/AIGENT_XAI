@@ -1,0 +1,5 @@
+Engine::processInputQuery: Input query (before preprocessing): 26317 equations, 26620 variables
+Engine::processInputQuery: Input query (after preprocessing): 26617 equations, 52672 variables
+
+Input bounds:
+

@@ -106,7 +106,7 @@ class MarabouNetworkCustom(MarabouNetwork.MarabouNetwork):
             outputOp = tf_session.graph.get_operation_by_name(outputName)
         else: # Assume that the last operation is the output
             outputOp = tf_session.graph.get_operations()[-1]
-            print(outputOp)
+            # print(outputOp)
 
         for j in range(inputVals.shape[0]):
             self.setupForInput(j)
@@ -216,16 +216,22 @@ class MarabouNetworkCustom(MarabouNetwork.MarabouNetwork):
             return np.concatenate(values, axis=axis)
         if op.node_def.op == 'Const':
             opVars = self.opToVarArray(op)
-            if self.epsilons.size == 0: 
-                self.epsilons = self.opToVarArray(op, force=True)
+            # print("Previous Size of epsilons: ", np.shape(op))
+            # if self.epsilons.size == 0: 
+            #     self.epsilons = self.opToVarArray(op, force=True)
+            ep = self.opToVarArray(op, force=True)
+            if len(np.shape(ep))==1:
+                ep = np.array([self.epsilons])
+            np.append(self.epsilons, ep)
             epsilons = self.epsilons 
+            # print("Size of epsilons: ", np.shape(epsilons))
             tproto = op.node_def.attr['value'].tensor
             return {'vals': tensor_util.MakeNdarray(tproto), 'vars': opVars, 'epsilons': epsilons}
         if op.node_def.op == 'Placeholder':
-            print(self.inputNumber)
-            print(self.inputVals)
-            print(self.inputVals[self.inputNumber])
-            print(self.inputVals[self.inputNumber].shape[0])
+            # print(self.inputNumber)
+            # print(self.inputVals)
+            # print(self.inputVals[self.inputNumber])
+            # print(self.inputVals[self.inputNumber].shape[0])
             return np.reshape(self.inputVals[self.inputNumber], (1, self.inputVals[self.inputNumber].shape[0]))
 
         ### END operations not requiring new variables ###
@@ -268,6 +274,7 @@ class MarabouNetworkCustom(MarabouNetwork.MarabouNetwork):
 
         input_ops = [i.op for i in op.inputs]
         prevValues = [self.getValues(i) for i in input_ops]
+        # print("Printing prevValues:\n",prevValues,"\nPrinted.")
         curValues = self.getValues(op)
         self.matMulLayers[self.inputNumber][self.numOfLayers] = prevValues[1]
         
@@ -287,9 +294,15 @@ class MarabouNetworkCustom(MarabouNetwork.MarabouNetwork):
         m, n = curValues.shape
         p = A.shape[1]
         ### END getting inputs ###
+        # print("New function:")
+        # print(type(op))
+        # print()
+        # print(op)
+        # print("Printed op.")
         # print(curValues)
         # print("Printing m, n, p:",m," ",n," ",p," ")
         # print("HELLO")
+        # print(A)
         # print(variables)
         # print(epsilons)
         # print(values)
@@ -300,11 +313,15 @@ class MarabouNetworkCustom(MarabouNetwork.MarabouNetwork):
                 e = []
                 e = MarabouUtils.Equation()
                 for k in range(p):
+                    # print(i,",",j,",",k)
+                    # print(variables[k][j],",",epsilons[k][j],",",values[k][j],",",A[i][k])
                     self.createVarEpsilonEquation(variables[k][j], epsilons[k][j], values[k][j])
+                    # returns:: variables[k][j] - epsilons[k][j] = values[k][j]
                     e.addAddend( A[i][k], variables[k][j])
                 e.addAddend(-1, curValues[i][j])
-                e.addAddend
+                # e.addAddend
                 e.setScalar(0.0)
+                # print(e)
                 self.addEquation(e)
 
     def biasAddEquations(self, op):

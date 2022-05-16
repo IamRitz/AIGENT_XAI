@@ -69,14 +69,16 @@ def create_marabou_equations():
             l = l + 1
             continue
         w = layer.get_weights()[0]
-        print(np.array(w).shape)
-        weights = np.zeros_like(w)
+        # print(np.array(w).shape)
+        # weights = np.zeros_like(w)
+        weights = np.full((np.array(w).shape[0], np.array(w).shape[1]), 0, dtype=int)
         for i in range(np.array(w).shape[0]):
             for j in range(np.array(w).shape[1]):
-                weights[i][j] = var_counter
+                weights[i][j] = int(var_counter)
                 var_counter = var_counter + 1
         weight_vars.append(weights)
     
+    # print(weight_vars)
     # print(weight_vars)
     ### Initializing weights variable array complete. ###
 
@@ -87,7 +89,7 @@ def create_marabou_equations():
             l = l + 1
             continue
         w = layer.get_weights()[0]
-        print(np.array(w).shape)
+        # print(np.array(w).shape)
         epsilon = np.zeros_like(w)
         for i in range(np.array(w).shape[0]):
             for j in range(np.array(w).shape[1]):
@@ -106,7 +108,7 @@ def create_marabou_equations():
             continue
         w = layer.get_weights()[0]
         neuron_count = np.array(layer.get_weights()[0]).shape[0]
-        print("Number of neurons is: ", neuron_count)
+        # print("Number of neurons is: ", neuron_count)
         n_var = []
         for n in range(neuron_count):
             n_var.append(var_counter)
@@ -117,9 +119,11 @@ def create_marabou_equations():
     ### Initializing neuron variable array complete. ###
 
     inputQuery = MarabouCore.InputQuery()
-    inputQuery.setNumberOfVariables(var_counter+2000)
+    inputQuery.setNumberOfVariables(var_counter+305)
+    count = var_counter+305
     ###Adding constraints for inputs###
     for i in range(len(input)):
+        print("Input:",i)
         eq3 = MarabouCore.Equation(MarabouCore.Equation.EquationType.EQ)        ###The first step is to assign input values for each of the input variable.###
         eq3.addAddend(1, input_vars[i])
         eq3.setScalar(input[i])
@@ -127,6 +131,7 @@ def create_marabou_equations():
     ###Constraints for inputs added.###
 
     ###Adding constraints for outputs###
+    
     e1 = MarabouCore.Equation(MarabouCore.Equation.EquationType.GE)
     e1.addAddend(1, 5)
     e1.addAddend(-1, 7)
@@ -190,14 +195,16 @@ def create_marabou_equations():
     ###Constraints for edge weights added.###
 
     ###Adding constraints for all epsilons.###
-    e = MarabouCore.Equation(MarabouCore.Equation.EquationType.LE)
+    ep = MarabouCore.Equation(MarabouCore.Equation.EquationType.LE)
     for i in range(num_layers):
         current_epsilon_vars = epsilon_vars[i]
         for j in range(current_epsilon_vars.shape[0]):
             for k in range(current_epsilon_vars.shape[1]):
-                e.addAddend(1, epsilon_vars[i][j][k])
-    e.setScalar(epsilon_max)
-    inputQuery.addEquation(e)
+                ep.addAddend(1, epsilon_vars[i][j][k])
+                inputQuery.setLowerBound(epsilon_vars[i][j][k], -epsilon_max)
+                inputQuery.setUpperBound(epsilon_vars[i][j][k], epsilon_max)
+    ep.setScalar(epsilon_max)
+    inputQuery.addEquation(ep)
     ###Constraints for epsilons added.###
 
     ###Finally, calculating the actual output by finding constraints.###
@@ -205,69 +212,61 @@ def create_marabou_equations():
     l = 0
     # print(len(weight_vars))
     # print(len(model.layers))
-    for layer in range(num_layers-1):
+    for layer in range(num_layers):
         current_weights = weight_vars[layer]
         prev_layer_neurons = neuron_vars[layer]
-        next_layer_neurons = neuron_vars[layer+1]
+        w = np.array(model.layers[layer+1].get_weights()[0])
+        next_layer_neurons = output_vars
+        if layer!=6:
+            next_layer_neurons = neuron_vars[layer+1]
         if layer==0:
             prev_layer_neurons = input_vars
         
         current_bias = model.layers[layer+1].get_weights()[1]
-        print(current_weights.shape)
-        print(len(current_bias))
+        # print(current_weights.shape)
+        # print(len(current_bias))
         # Shape of X is: 1, len(prev_layer_neurons)
         # Shape of Y is: current_weights.shape[0], current_weights.shape[1]
         # Shape of result will be: 1, current_weights.shape[1]
-        temp_vars = []
+        temp_vars = [0]*current_weights.shape[1]
         for i in range(current_weights.shape[1]):
             temp_vars[i] = var_counter
             var_counter = var_counter + 1
+            # inputQuery.setLowerBound(temp_vars[i], -10)
+            # inputQuery.setUpperBound(temp_vars[i], 10)
 
         for i in range(len(temp_vars)):
             e = MarabouCore.Equation(MarabouCore.Equation.EquationType.EQ)
             e.addAddend(-1, temp_vars[i])
-            e.setScalar(-1*(current_bias[i]))
-
+            
             for j in range(current_weights.shape[1]):
                 # iterate through rows of Y
+                
                 for k in range(current_weights.shape[0]):
                     #Multiply prev_layer_neurons[k] with current_weights[k][j]
-                    e.addAddend(1, current_weights[k][j])
-                    # result[i][j] += X[i][k] * Y[k][j]
-            
-            
+                    """
+                    e_n = MarabouCore.Equation(MarabouCore.Equation.EquationType.EQ)
+                    e_n.addAddend(1, current_weights[k][j])
+                    e_n.addAddend(-1, epsilon_vars[layer][k][j])
+                    e_n.setScalar(w[k][j])
+                    inputQuery.addEquation(e_n)
+                    """
+                    # print(current_weights[k][j], "----->", prev_layer_neurons[k])
+                    # e.addAddend(current_weights[k][j], prev_layer_neurons[k])
+                    e.addAddend(prev_layer_neurons[k], current_weights[k][j])
+            e.setScalar(-1*(current_bias[i]))
             inputQuery.addEquation(e)
             MarabouCore.addReluConstraint(inputQuery, temp_vars[i], next_layer_neurons[i])
-
+            inputQuery.setLowerBound(next_layer_neurons[i], 0)
             # e10 = MarabouCore.Equation(MarabouCore.Equation.EquationType.GE)
             # e10.addAddend(1, next_layer_neurons[i])
-            # e10.setScalar(0)
-        # w = layer.get_weights()[0]
-        # b = layer.get_weights()[1]
-        # ep = np.zeros_like(w)
-        # for row in range(0,len(w)):
-        #     for col in range(0,len(w[0])):
-        #         # print(row," ",col, " ", ep[row][col], " ", w[row][col])
-        #         inputQuery.setLowerBound(ep[row][col], w[row][col]-epsilon_max)
-        #         inputQuery.setUpperBound(ep[row][col], w[row][col]+epsilon_max)
-        # # print(w)
-        # result = np.matmul(input,ep)+b
-        # l = l + 1
-        # if l == num_layers:
-        #     input = result
-        #     neurons.append(input)
-        #     continue
-        # input = [r for r in result]
-        # for i in range(0, len(result)):
-        #     inputQuery.setLowerBound(input[i], 0)
-        # neurons.append(input)
-        
-    
+            # e10.setScalar(0)     
     t1=time()
-    options = createOptions()
-    Marabou_result = MarabouCore.solve(inputQuery, options, "")
+    options = createOptions(verbosity=2)
+    Marabou_result = MarabouCore.solve(inputQuery, options, "abcdef.txt")
     t2=time()
-    print("Time taken in solving the query is: ",(t2-t1)," seconds. \nThe query was: ", Marabou_result[0])
+    print("Time taken in solving the query is: ",(t2-t1)," seconds. \nThe query was: ", Marabou_result)
+    print("Var_count is: ", var_counter)
     return Marabou_result
     
 create_marabou_equations()
