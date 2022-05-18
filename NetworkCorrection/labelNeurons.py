@@ -24,13 +24,14 @@ class labelNeurons:
             b = layer.get_weights()[1]
             # print(w)
             result = np.matmul(input,w)+b
-            l = l + 1
+            
             if l == num_layers:
                 input = result
                 neurons.append(input)
                 continue
             input = [max(r,0) for r in result]
             neurons.append(input)
+            l = l + 1
         return neurons
 
     def create_Marabou_equation(self, loaded_model, input, num_layers):
