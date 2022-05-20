@@ -14,7 +14,8 @@ from MarabouNetworkCustom import read_tf_weights_as_var
 from maraboupy import MarabouCore
 from maraboupy.Marabou import createOptions
 from scipy import stats
-# z3.set_param('parallel.enable', True)
+z3.set_param('parallel.enable', True)
+z3.set_param('get-info','reason-unknown')
 """
 This file implemenets code to find correction using z3.
 What has been completed till now?
@@ -125,7 +126,7 @@ class findCorrectionWithZ3:
         # print("Median: ", medianN)
         # print("Mode: ", modeN)
 
-        mark = 0.15
+        mark = 0.25
         all_positive_weights.sort()
         positive_index = ceil(mark*len(all_positive_weights))
         positive_heuristic = all_positive_weights[len(all_positive_weights)-positive_index]
@@ -143,7 +144,7 @@ class findCorrectionWithZ3:
         sum = z3.Real('sum')
         # summation = 0
         sumify = z3.Real('sumify')
-        m.add(z3.And(sum==sumify,sum<=epsilon_max, sum>=0))
+        m.add(z3.And(sumify<=epsilon_max, sumify>=0))
         model = self.loadModel()
         weights = model.get_weights()
         layer_output = 0
@@ -151,9 +152,7 @@ class findCorrectionWithZ3:
         neurons.reverse()
         neurons.append(inp)
         neurons.reverse()
-        # print(neurons)
-        # for i in neurons:
-        #     print(len(i))
+        
         counted_ones = []
         for i in range(0, len(weights)-1,2):
             w = weights[i]
@@ -169,28 +168,25 @@ class findCorrectionWithZ3:
                 ep = z3.RealVector('e'+str(int(i/2))+'_'+str(row), shape1)
                 
                 for col in range(shape1):
-                    if i==0 or i==2 or i==4 or i==6 or i==8 or i==10 :
+                    if i==0 or i==2 or i==4 or i==6 or i==10:
                         m.add(ep[col]==0)
                     elif neuron_current_layer[col]>mean:
                         # print(row,",",col)
                         if abs(w[col][row])>meanP or abs(w[col][row])<meanN:
                             # sumify = sumify + z3.Sum([self.absZ3(ep[col]))
-                            counted_ones.append(ep[col])
-                            # m.add(sumify == (self.absZ3(ep[col]) + sumify))
-                            # print(sumify)
-                            # summation = summation + self.absZ3(ep[col])
-                            # print(summation)
+                            counted_ones.append(self.absZ3(ep[col]))
+                            # counted_ones.append(ep[col])
                             m.add(ep[col]>=-epsilon_max)
                             m.add(ep[col]<=epsilon_max)
                             # m.add(ep[col]==0)
-                            k=k+1
+                            k = k + 1
                         else:
                             # print("For col:", ep[col])
                             m.add(ep[col]==0)
+                    else:
+                        m.add(ep[col]==0)
                 epsilon.append(ep)
-                sumify = sumify + z3.Sum([self.absZ3(x) for x in ep])
-                # sumify = sumify + z3.Sum(ep)
-            # print(np.shape(epsilon),"   ",np.shape(input))
+                # sumify = sumify + z3.Sum([self.absZ3(x) for x in ep])
             """
             Create an epsilon array at every stage which should be added to the weight array and put constraints on it.
             """
@@ -200,19 +196,15 @@ class findCorrectionWithZ3:
             #     out = (w.T+epsilon) @ input + b
             layer_output = self.ReLU(out)
             input = layer_output
-        # m.add(z3.And(summation<=epsilon_max, summation>=0))
-        # m.add(summation==sum)
-        # m.add(sumify<=epsilon_max)
         
-        # len1 = len(counted_ones) + 1
-        # arr_temp = z3.RealVector('counting', len1)
-        # arr_temp[0] = 0
-        # for i in range(len1-1):
-        #     m.add(arr_temp[i+1]==arr_temp[i]+counted_ones[i]) 
-        # m.add(arr_temp[len1-1]<=epsilon_max)
-        print("Sumify is: ",sumify)
         print("Added sum constraints.")
-        # print(k)
+        print("k was: ",k)
+        len1 = len(counted_ones)+1
+        summing = z3.RealVector("summing", len1)
+        m.add(summing[0]==0)
+        m.add(summing[len1-1]<=epsilon_max)
+        for i in range(len1-1):
+            m.add(summing[i+1]==counted_ones[i]+summing[i])
         # print(len(layer_output))
         return layer_output
 
@@ -253,8 +245,9 @@ class findCorrectionWithZ3:
     def callZ3(self, m, epsilon_max, model, input, neurons, max_layers, mean, meanP, meanN):
         inputs = genfromtxt('./data/inputs.csv', delimiter=',')
         input =inputs[0]
-        input_vars = z3.RealVector('input_vars',5)
-        output_vars = z3.RealVector('output_vars',5)
+        classes = 5
+        input_vars = z3.RealVector('input_vars',len(input))
+        output_vars = z3.RealVector('output_vars', classes)
         
         ###Adding constraints for inputs###
         for i in range(len(input)):
@@ -289,6 +282,13 @@ class findCorrectionWithZ3:
             m = z3.Solver()       
             self.callZ3(m, ep, model, input, neurons, max_layers, mean, meanP, meanN)
             t1 = time()
+            f = open("demofile2.txt", "a")
+            # print(m.assertions())
+            for x in m.assertions():
+                f.write(str(x))
+                f.write("\n")
+            f.close()
+            print("Assertions written to file.")
             solution = m.check()
             t2 = time()
             print("Time taken in solving the query is: ",(t2-t1)," seconds. \nThe query was: ", solution)
@@ -340,11 +340,4 @@ if __name__ == '__main__':
     epsilon = classObject.calc(epsilon_max, tolerance, model, input, neurons, num_layers)
     t4 = time()
     print("The total time taken was: ",(t4-t3)," seconds.\n The minimum change done was: ",epsilon)
-    # num_layers = 7
-    # inputs = genfromtxt('./data/inputs.csv', delimiter=',')
-    # input = inputs[0]
-    # model = classObject.loadModel()
-    # neurons = classObject.get_neuron_values(model, input, num_layers)
-    # # classObject.find(neurons)
-    # mean = classObject.neuronHeuristics(neurons, num_layers)
-    # classObject.find(neurons, mean)
+    

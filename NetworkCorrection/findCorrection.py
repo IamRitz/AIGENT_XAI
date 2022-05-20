@@ -155,7 +155,7 @@ class findCorrection:
             # MarabouUtils.addInequality(network, [outputVars[i][outputNum], outputVars[i][3]], [1, -1], self.correct_diff)
             # MarabouUtils.addInequality(network, [outputVars[i][outputNum], outputVars[i][4]], [1, -1], self.correct_diff)
         t1=time()
-        vals = network.solve(verbose=True)
+        vals = network.solve(verbose=False)
         t2=time()
         # print("Prinitng Vals: ",vals[0], vals[1])
         # print(network.epsilons)
@@ -225,18 +225,18 @@ class findCorrection:
         num = num if num >= 0 else 'all'
         
         outFile = open('./data/{}_0to{}_lp.txt'.format(model_name, num-1), 'w') if self.lp else open('./data/{}_{}.txt'.format(model_name, num), 'w')
-        print('Prediction vector:', file=outFile)
-        print(predictions, file=outFile)
-        print('\nPrediction vector min:', file=outFile)
-        print(prediction, file=outFile)
-        print('\n(unsat_epsilon, sat_epsilon)', file=outFile)
-        print('({},{})'.format(unsat_epsilon, sat_epsilon), file=outFile)
+        # print('Prediction vector:', file=outFile)
+        # print(predictions, file=outFile)
+        # print('\nPrediction vector min:', file=outFile)
+        # print(prediction, file=outFile)
+        # print('\n(unsat_epsilon, sat_epsilon)', file=outFile)
+        # print('({},{})'.format(unsat_epsilon, sat_epsilon), file=outFile)
         # print(output_vars)
         output_vars = network.outputVars
-        print("MY output:")
-        print(output_vars)
-        print(output_vars.shape[0])
-        print(output_vars.shape[1])
+        # print("MY output:")
+        # print(output_vars)
+        # print(output_vars.shape[0])
+        # print(output_vars.shape[1])
         print(sat_vals)
         for i in range(output_vars.shape[1]):
             for j in range(output_vars.shape[0]):
