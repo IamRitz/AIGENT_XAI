@@ -122,10 +122,12 @@ def find(epsilon, model, inp, true_label, num_inputs, num_outputs):
     m.update()
     expr = grb.quicksum(ep)
     # print("Expr:", expr)
-    m.addConstr(expr+epsilon_max>=0)
-    m.addConstr(expr-epsilon_max<=0)
+    epsilon_max_2 = m.addVar(lb=0,ub=epsilon,vtype=GRB.CONTINUOUS, name="epsilon_max_2")
+    m.addConstr(expr+epsilon_max_2>=0)
+    m.addConstr(expr-epsilon_max_2<=0)
     m.update()
-    m.setObjective(epsilon_max, GRB.MINIMIZE)
+    m.setObjective(epsilon_max+epsilon_max_2, GRB.MINIMIZE)
+    # m.setObjectiveN(epsilon_max_2, GRB.MINIMIZE, 1)
 
     m.optimize()
 
@@ -143,6 +145,7 @@ def find(epsilon, model, inp, true_label, num_inputs, num_outputs):
 
     print("Query has: ", m.NumObj, " objectives.")
     print(m.getVarByName("epsilon_max"))
+    print(m.getVarByName("epsilon_max_2"))
     print("Effective change was: ", summation)
 
 def ann(epsilon, tf_model, inp, true_label, num_inputs, num_outputs):
