@@ -2,7 +2,7 @@ import sys
 from time import time
 
 from numpy import safe_eval
-sys.path.append('../')
+# sys.path.append('../')
 import numpy as np
 import argparse
 from maraboupy import MarabouUtils
@@ -84,12 +84,7 @@ class findCorrection:
         return abs_epsilon
 
     def evaluateEpsilon(self, epsilon, network, lastLayer):
-        # print("Entering evaluate epsilon")
-        # for outputNum in [0, 1]:
         outputVars = network.outputVars
-        # print("Shape ",outputVars.shape)
-        # print(len(lastLayer))
-        # print(len(lastLayer[0]))
         abs_epsilons = list()
         n, m = network.epsilons.shape
         # print(n,m)
@@ -121,12 +116,8 @@ class findCorrection:
             # MarabouUtils.addInequality(network, [outputVars[i][outputNum], outputVars[i][3]], [1, -1], self.correct_diff)
             # MarabouUtils.addInequality(network, [outputVars[i][outputNum], outputVars[i][4]], [1, -1], self.correct_diff)
         t1=time()
-        vals = network.solve(verbose=True)
+        vals = network.solve(verbose=False)
         t2=time()
-        # print("Prinitng Vals: ",vals[0], vals[1])
-        # print(network.epsilons)
-        #Vals[0] represents sat/unsat
-        #vals[1] represents the actual solution
         if vals[0]:
             return sat, vals, t2-t1
         else:
@@ -169,19 +160,19 @@ class findCorrection:
         return unsat_epsilon, sat_epsilon , sat_vals
 
     def run(self, model_name, num):
-        filename = './ProtobufNetworks/last.layer.{}.pb'.format(model_name)
+        filename = '../ProtobufNetworks/last.layer.{}.pb'.format(model_name)
         orig_model_name = 'ACASXU_2_9'
-        lastlayer_inputs = np.load('./data/{}.lastlayer.input.npy'.format(orig_model_name))
+        lastlayer_inputs = np.load('../data/{}.lastlayer.input.npy'.format(orig_model_name))
         if num >= 0:
             lastlayer_inputs = lastlayer_inputs[:num]
-        print("Last layer: ", lastlayer_inputs)
-        print("The original model picked was: ",filename)
+        # print("Last layer: ", lastlayer_inputs)
+        # print("The original model picked was: ",filename)
         network = read_tf_weights_as_var(filename=filename, inputVals=lastlayer_inputs)
         # print(network.epsilons)
         # print(type(network))
         # print("Output Vars:",network.outputVars)
         unsat_epsilon, sat_epsilon, sat_vals = self.findEpsilon(network) if self.lp else self.findEpsilonInterval(network, lastlayer_inputs)
-        predictions = np.load('./data/{}.prediction.npy'.format(model_name))
+        predictions = np.load('../data/{}.prediction.npy'.format(model_name))
         prediction = np.argmin(predictions, axis=1)
         if num >= 0:
             predictions = predictions[:num]
@@ -189,20 +180,20 @@ class findCorrection:
         
         num = num if num >= 0 else 'all'
         
-        outFile = open('./data/{}_0to{}_lp.txt'.format(model_name, num-1), 'w') if self.lp else open('./data/{}_{}.txt'.format(model_name, num), 'w')
-        print('Prediction vector:', file=outFile)
-        print(predictions, file=outFile)
-        print('\nPrediction vector min:', file=outFile)
-        print(prediction, file=outFile)
-        print('\n(unsat_epsilon, sat_epsilon)', file=outFile)
-        print('({},{})'.format(unsat_epsilon, sat_epsilon), file=outFile)
+        outFile = open('../data/{}_0to{}_lp.txt'.format(model_name, num-1), 'w') if self.lp else open('../data/{}_{}.txt'.format(model_name, num), 'w')
+        # print('Prediction vector:', file=outFile)
+        # print(predictions, file=outFile)
+        # print('\nPrediction vector min:', file=outFile)
+        # print(prediction, file=outFile)
+        # print('\n(unsat_epsilon, sat_epsilon)', file=outFile)
+        # print('({},{})'.format(unsat_epsilon, sat_epsilon), file=outFile)
         # print(output_vars)
         output_vars = network.outputVars
-        print("MY output:")
-        print(output_vars)
-        print(output_vars.shape[0])
-        print(output_vars.shape[1])
-        print(sat_vals)
+        # print("MY output:")
+        # print(output_vars)
+        # print(output_vars.shape[0])
+        # print(output_vars.shape[1])
+        # print(sat_vals)
         for i in range(output_vars.shape[1]):
             for j in range(output_vars.shape[0]):
                 print(output_vars[j][i])
@@ -216,13 +207,19 @@ class findCorrection:
         # print(epsilons_vars)
         # print(sat_epsilon)
         # print(unsat_epsilon)
-        epsilons_vals = np.array([[sat_vals[epsilons_vars[j][i]] for i in range(epsilons_vars.shape[1])] for j in range(epsilons_vars.shape[0])])    
+        epsilons_vals = np.array([[sat_vals[epsilons_vars[j][i]] for i in range(epsilons_vars.shape[1])] for j in range(epsilons_vars.shape[0])])   
+        print(epsilons_vals) 
+        s = 0
+        for i in range(len(epsilons_vals)):
+            for j in range(len(epsilons_vals[i])):
+                s = s + abs(epsilons_vals[i][j])
+        print(s)
         # print("EP: ",epsilons_vars)
         # print("Epsilon calculated was: ", epsilons_vals)
         if self.lp:
-            np.save('./data/{}_0to{}3_lp.vals'.format(model_name, num-1), epsilons_vals)
+            np.save('../data/newVals.vals', epsilons_vals)
         else:
-            np.save('./data/{}_0to{}4.vals'.format(model_name, num-1), epsilons_vals)
+            np.save('../data/newVals.vals', epsilons_vals)
 
 if __name__ == '__main__':
 
