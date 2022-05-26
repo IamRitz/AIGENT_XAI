@@ -162,9 +162,9 @@ def find(epsilon, model, inp, true_label, num_inputs, num_outputs):
     m.addConstr(result[0]-result[2]>=0.00001)
     m.addConstr(result[0]-result[3]>=0.00001)
     m.addConstr(result[0]-result[4]>=0.00001)
-    m.addConstr(result[1]-result[2]>=0.00001)
-    m.addConstr(result[1]-result[3]>=0.00001)
-    m.addConstr(result[1]-result[4]>=0.00001)
+    # m.addConstr(result[1]-result[2]>=0.00001)
+    # m.addConstr(result[1]-result[3]>=0.00001)
+    # m.addConstr(result[1]-result[4]>=0.00001)
     
     t3 = time()
     m.update()
@@ -210,4 +210,4 @@ if __name__ == '__main__':
 
     print(true_label)
 
-    find(1, model, inp, true_label, num_inputs, num_outputs)
+    find(0.008, model, inp, true_label, num_inputs, num_outputs)
