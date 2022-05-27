@@ -1,9 +1,11 @@
+import os
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 from csv import reader
 import csv
 from fileinput import filename
 import numpy as np
 import tensorflow as tf
-import os
+tf.compat.v1.logging.set_verbosity(tf.compat.v1.logging.ERROR)
 from time import time
 from adversarialExampleMNIST import find
 
@@ -16,8 +18,6 @@ def getData():
     f2 = open('MNISTdata/outputs.csv', 'r')
     f2_reader = reader(f2)
 
-    print(type(f1_reader))
-
     for row in f1_reader:
         inp = [float(x) for x in row]
         inputs.append(inp)
@@ -25,8 +25,6 @@ def getData():
     for row in f2_reader:
         out = [float(x) for x in row]
         outputs.append(out)
-
-    print(len(inputs), len(outputs))
 
     return inputs, outputs, len(inputs)
 
@@ -39,8 +37,9 @@ def storeData(data, fileName, mode):
     return 0
 
 def generateAattack():
+    print("Reading data...")
     inputs, outputs, count = getData()
-    print("########################\nData read. Beginning attack.\n########################")
+    print("########################\nData read. \nTotal number of samples in dataset: ", count,"\nBeginning attack.\n########################")
     status_codes = [0, 0, 0]
     """
     1 stands for feasible model, 2 stands for infeasible model, 0 stands for error occurred while model creation.
@@ -72,10 +71,9 @@ def generateAattack():
             mode = 'a'
             if i==100:
                 mode = 'w'
-            storeData(adversarialData, fileName, mode)
+            storeData(adversarial_data, fileName, mode)
             adversarial_data = []
             print("####################################")
-            # break
     return adversarial_data
 
 if __name__ == '__main__':
