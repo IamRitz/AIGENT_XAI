@@ -1,14 +1,29 @@
 import os
-os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3' 
+"""
+To supress the tensorflow warnings. 
+0 = all messages are logged (default behavior)
+1 = INFO messages are not printed
+2 = INFO and WARNING messages are not printed
+3 = INFO, WARNING, and ERROR messages are not printed
+"""
 from csv import reader
 import csv
 from fileinput import filename
 import numpy as np
 import tensorflow as tf
 tf.compat.v1.logging.set_verbosity(tf.compat.v1.logging.ERROR)
+"""
+Setting verbosity of tensorflow to minimum.
+"""
 from time import time
 from adversarialExampleMNIST import find
 
+"""
+This file generates adversarial examples for all inputs in the dataset of MNIST.
+The adversarial images are generated with a specific limit of l-inf and total change required.
+This file uses the functions defined in Gurobi/adversarialExampleMNIST.py, particularly the function find.
+"""
 def getData():
     inputs = []
     outputs = []
