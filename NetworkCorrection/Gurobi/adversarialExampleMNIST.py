@@ -55,24 +55,18 @@ def get_neuron_values_actual(loaded_model, input, num_layers):
         # print(neurons[len(neurons)-1])
         return neurons
 
-def get_neuron_values(loaded_model, input, num_layers, values):
+def get_neuron_values(loaded_model, input, num_layers, values, gurobi_model):
         neurons = []
         l = 0
         for layer in loaded_model.layers:
-            # if l==0:
-            #     l = l + 1
-            #     continue
             w = layer.get_weights()[0]
             b = layer.get_weights()[1]
-            # print(w, b)
-            # print("\n\n")
             result = np.matmul(input,w)+b
             
             if l == num_layers:
                 input = result
                 neurons.append(input)
                 continue
-            # input = [max(r,0) for r in result]
             input = []
             for r in range(len(result)):
                 if values[l][r]>0: 
@@ -82,14 +76,11 @@ def get_neuron_values(loaded_model, input, num_layers, values):
                     input.append(result[r])
                 else:
                     input.append(0)
-            # input = [r for r in result]
             neurons.append(input)
             l = l + 1
-        # print(len(neurons))
-        # print(neurons[len(neurons)-1])
         return neurons[len(neurons)-1]
 
-def find(epsilon, model, inp, true_label, num_inputs, num_outputs):
+def find(epsilon1, epsilon2, model, inp, true_label, num_inputs, num_outputs):
     num_layers = len(model.layers)
     env = gp.Env(empty=True)
     env.setParam('OutputFlag', 0)
@@ -97,56 +88,63 @@ def find(epsilon, model, inp, true_label, num_inputs, num_outputs):
     m = gp.Model("Model", env=env)
     ep = []
     input_vars = []
-    epsilon_max = m.addVar(lb=0,ub=epsilon,vtype=GRB.CONTINUOUS, name="epsilon_max")
+    try:
+        epsilon_max = m.addVar(lb=0,ub=epsilon1,vtype=GRB.CONTINUOUS, name="epsilon_max")
 
-    for i in range(num_inputs):
-        ep.append(m.addVar(vtype=grb.GRB.CONTINUOUS))
-        m.addConstr(ep[i]-epsilon_max<=0)
-        m.addConstr(-ep[i]<=0)
-    # input_vars = [ep[0,i]+inp[i] for i in range(len(inp))]
-    
-    neurons = get_neuron_values_actual(model, inp, num_layers)
+        for i in range(num_inputs):
+            ep.append(m.addVar(vtype=grb.GRB.CONTINUOUS))
+            m.addConstr(ep[i]-epsilon_max<=0)
+            m.addConstr(-ep[i]<=0)
+        # input_vars = [ep[0,i]+inp[i] for i in range(len(inp))]
+        
+        neurons = get_neuron_values_actual(model, inp, num_layers)
 
-    for i in range(num_inputs):
-        input_vars.append(m.addVar(inp[i]-epsilon, inp[i]+epsilon, vtype=grb.GRB.CONTINUOUS))
-        m.addConstr(input_vars[i]+ep[i]>=inp[i])
-        m.addConstr(input_vars[i]-ep[i]<=inp[i])
+        for i in range(num_inputs):
+            input_vars.append(m.addVar(inp[i]-epsilon1, inp[i]+epsilon1, vtype=grb.GRB.CONTINUOUS))
+            m.addConstr(input_vars[i]+ep[i]>=inp[i])
+            m.addConstr(input_vars[i]-ep[i]<=inp[i])
 
-    result = get_neuron_values(model, input_vars, num_layers, neurons)
+        result = get_neuron_values(model, input_vars, num_layers, neurons, m)
+        m.update()
+        # print(result)
+        # print(type(result))
+        for i in range(num_outputs):
+            if i==true_label:
+                continue
+            m.addConstr(result[i]-result[true_label]>=0.001)
+        
+        m.update()
+        expr = grb.quicksum(ep)
+        # print("Expr:", expr)
+        epsilon_max_2 = m.addVar(lb=0,ub=epsilon2,vtype=GRB.CONTINUOUS, name="epsilon_max_2")
+        m.addConstr(expr+epsilon_max_2>=0)
+        m.addConstr(expr-epsilon_max_2<=0)
+        m.update()
+        m.setObjective(epsilon_max+epsilon_max_2, GRB.MINIMIZE)
+        # m.setObjectiveN(epsilon_max_2, GRB.MINIMIZE, 1)
 
-    for i in range(num_outputs):
-        if i==true_label:
-            continue
-        m.addConstr(result[i]-result[true_label]>=0.001)
-    
-    m.update()
-    expr = grb.quicksum(ep)
-    # print("Expr:", expr)
-    epsilon_max_2 = m.addVar(lb=0,ub=epsilon,vtype=GRB.CONTINUOUS, name="epsilon_max_2")
-    m.addConstr(expr+epsilon_max_2>=0)
-    m.addConstr(expr-epsilon_max_2<=0)
-    m.update()
-    m.setObjective(epsilon_max+epsilon_max_2, GRB.MINIMIZE)
-    # m.setObjectiveN(epsilon_max_2, GRB.MINIMIZE, 1)
-
-    m.optimize()
-
-    summation = 0
-
-    for v in m.getVars():
-            # print('%s %g' % (v.VarName, v.X))
-            if "C" in v.VarName:
-                index = int(v.VarName[1:])
-                if index>=num_inputs and index<num_inputs*2:
-                    # print(v.VarName, v.X, inp[index-num_inputs])
-                    summation = summation + float(v.X) - float(inp[index-num_inputs])
-                # else:
-                #     print(v.VarName, v.X)
-
-    print("Query has: ", m.NumObj, " objectives.")
-    print(m.getVarByName("epsilon_max"))
-    print(m.getVarByName("epsilon_max_2"))
-    print("Effective change was: ", summation)
+        m.optimize()
+        if m.Status == GRB.INFEASIBLE:
+            # print("returning")
+            return [], 2
+        summation = 0
+        # print(ep)
+        c = 0
+        final_change = []
+        for i in range(len(ep)):
+            summation = summation + ep[i].X
+            final_change.append(ep[i].X)
+            if ep[i].X>0:
+                # print(i, ep[i].X)
+                c = c + 1
+        # print("Effective change was: ", summation)
+        # print("The number of weights changed were: ",c)
+        # print("Query has: ", m.NumObj, " objectives.")
+        # print(m.getVarByName("epsilon_max"))
+        # print(m.getVarByName("epsilon_max_2"))
+        return final_change, 1
+    except:
+        return [], 0
 
 def ann(epsilon, tf_model, inp, true_label, num_inputs, num_outputs):
     """
@@ -264,4 +262,4 @@ if __name__ == '__main__':
     print(true_label)
 
     ann(5, model, inp, true_label, num_inputs, num_outputs)
-    find(10, model, inp, true_label, num_inputs, num_outputs)
+    epsilons, status = find(0.5, 10, model, inp, true_label, num_inputs, num_outputs)

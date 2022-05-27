@@ -192,7 +192,21 @@ def find(epsilon, model, inp, true_label, num_inputs, num_outputs):
     print("Query has: ", m.NumObj, " objectives.")
     print(m.getVarByName("epsilon_max"))
     print(m.getVarByName("epsilon_max_2"))
+    print(len(all_epsilons))
+    c = 0
+    for i in range(len(all_epsilons)):
+        print(np.shape(all_epsilons[i]))
+        for j in range(len(all_epsilons[i])):
+            for k in range(len(all_epsilons[i][j])):
+                if all_epsilons[i][j][k].X>0:
+                    summation = summation + all_epsilons[i][j][k].X
+                    print(i,j,k)
+                    c = c + 1
+                # print(all_epsilons[i][j][k].VarName, all_epsilons[i][j][k].X)
+                # print(m.getVarByName(all_epsilons[i][j][k]))
+    
     print("Effective change was: ", summation)
+    print("The number of weights changed were: ",c)
     # m.reset(0)
 
 if __name__ == '__main__':
