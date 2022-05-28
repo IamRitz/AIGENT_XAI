@@ -1,3 +1,3 @@
-This repository focuses on verification of facial recognition systems. 
+This repository focuses on verification of Deep Neural Networks.  
 
-Supervisors: Subodh Vishnu Sharma and Kumar Madhukar 
+Supervisors: Subodh Vishnu Sharma and Kumar Madhukar, IIT Delhi.

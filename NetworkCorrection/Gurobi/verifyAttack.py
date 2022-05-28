@@ -36,7 +36,7 @@ for row in f1_reader:
     # print(type(predicted_label), type(output))
     if predicted_label != output:
         count = count + 1
-    else:
-        print(inp, predicted_output, output)
+    # else:
+    #     print(inp, predicted_output, output)
     # break
 print(count)
