@@ -1,5 +1,5 @@
 import sys
-sys.path.append('../')
+# sys.path.append('../')
 import numpy as np
 import tensorflow as tf
 import uuid
@@ -27,8 +27,8 @@ model_name = args.model
 
 # load_model_name = 'ACASXU_2_9'
 # model_name = 'ACASXU_2_9_3'
-model = utils.load_model('./Models/{}.json'.format(load_model_name), './Models/{}.h5'.format(load_model_name))
-epsilon = np.load('./data/{}to04.vals.npy'.format(model_name))
+model = utils.load_model('../Models/{}.json'.format(load_model_name), '../Models/{}.h5'.format(load_model_name))
+epsilon = np.load('../data/{}to04.vals.npy'.format(model_name))
 """
 Change the name of the epsilon file according to what was generated in findCorrection.py
 """
@@ -44,7 +44,7 @@ Got weights of the original model in line 32 and the epsilon in line 31 and now 
 model.set_weights(weights)
 model.compile(optimizer=tf.optimizers.Adam(),loss='sparse_categorical_crossentropy',metrics=['accuracy'])
 
-utils.save_model('./Models/{}_corrected.json'.format(model_name), './Models/{}_corrected.h5'.format(model_name), model)
+utils.save_model('../Models/{}_corrected.json'.format(model_name), '../Models/{}_corrected.h5'.format(model_name), model)
 utils.saveModelAsProtobuf(model, '{}_corrected'.format(model_name))
 
 sub_model, last_layer = utils.splitModel(model)
@@ -52,15 +52,15 @@ sub_model, last_layer = utils.splitModel(model)
 utils.saveModelAsProtobuf(last_layer, 'last.layer.{}_corrected'.format(model_name))
 # print("2")
 
-datafile = open('./data/inputs.csv')
+datafile = open('../data/inputs.csv')
 sat_in = np.array([[float(x) for x in line.split(',')] for line in datafile])
 print(sat_in)
 datafile.close()
-datafile = open('./data/outputs.csv')
+datafile = open('../data/outputs.csv')
 sat_out = np.array([[float(x) for x in line.split(',')] for line in datafile])
 datafile.close()
 
 prediction = model.predict(sat_in)
 print(prediction)
 print(np.argmin(prediction, axis=1))
-np.save('./data/{}.prediction'.format(model_name), prediction)    
+np.save('../data/{}.prediction'.format(model_name), prediction)    

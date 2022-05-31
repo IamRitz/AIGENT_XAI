@@ -268,7 +268,7 @@ class findCorrection:
 if __name__ == '__main__':
 
     parser = argparse.ArgumentParser()
-    parser.add_argument('--model', default='ACASXU_2_9_0_corrected', help='the name of the model')
+    parser.add_argument('--model', default='ACASXU_2_9', help='the name of the model')
     parser.add_argument('--input_num', default=1, help='the name of the model')
     parser.add_argument('--correct_diff', default=0.001, help='the input to correct')
     parser.add_argument('--epsilon_max', default=5, help='max epsilon value')
