@@ -59,7 +59,7 @@ def generateAattack():
     """
     1 stands for feasible model, 2 stands for infeasible model, 0 stands for error occurred while model creation.
     """
-    fileName = "MNISTdata/adversarialData-2.csv"
+    fileName = "MNISTdata/adversarialData.csv"
     model = tf.keras.models.load_model(os.path.abspath(os.path.join(os.getcwd(), os.pardir)) +'/Models/mnist.h5')
     t1 = time()
     adversarial_data = []
@@ -71,7 +71,7 @@ def generateAattack():
         num_outputs = len(out)
         num_inputs = len(inp)
         # print(inp, "\nOutputs:", out, "\nTrueLabel:", true_label, "\nNum out:", num_outputs, "\nNum In:", num_inputs)
-        epsilons, status = find(0.2, 10, model, inp, true_label, num_inputs, num_outputs)
+        epsilons, status = find(0.1, 10, model, inp, true_label, num_inputs, num_outputs)
         status_codes[status] = status_codes[status] + 1
         if status==1:
             new_image = np.add(np.array(inp), np.array(epsilons))
@@ -81,6 +81,9 @@ def generateAattack():
                 # print("Found anomaly.", predicted_label, true_label)
                 anomaly = anomaly + 1
                 # break
+            # else:
+            #     print(out,"\n\n\n",predicted_output)
+            #     break
             new_image = np.append(new_image,[true_label])
             adversarial_data.append(new_image)
         

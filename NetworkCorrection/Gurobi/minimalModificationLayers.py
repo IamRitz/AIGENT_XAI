@@ -59,7 +59,7 @@ def get_neuron_values(loaded_model, input, num_layers, values, gurobi_model, eps
         l = 0
         epsilons = []
         last_layer = num_layers-2
-        weights = model.get_weights()
+        weights = loaded_model.get_weights()
 
         for i in range(0,len(weights)-1,2):
             # print(i,num_layers)
@@ -159,12 +159,14 @@ def find(epsilon, model, inp, true_label, num_inputs, num_outputs):
     m.update()
     t2 = time()
 
-    m.addConstr(result[0]-result[2]>=0.00001)
-    m.addConstr(result[0]-result[3]>=0.00001)
-    m.addConstr(result[0]-result[4]>=0.00001)
-    m.addConstr(result[1]-result[2]>=0.00001)
-    m.addConstr(result[1]-result[3]>=0.00001)
-    m.addConstr(result[1]-result[4]>=0.00001)
+    m.addConstr(result[0]-result[2]>=0.001)
+    m.addConstr(result[0]-result[3]>=0.001)
+    m.addConstr(result[0]-result[4]>=0.001)
+    # m.addConstr(result[0]-result[1]>=0.001)
+    m.addConstr(result[1]-result[2]>=0.001)
+    m.addConstr(result[1]-result[3]>=0.001)
+    m.addConstr(result[1]-result[4]>=0.001)
+    # m.addConstr(result[1]-result[0]>=0.001)
     
     t3 = time()
     m.update()
@@ -194,6 +196,7 @@ def find(epsilon, model, inp, true_label, num_inputs, num_outputs):
     print(m.getVarByName("epsilon_max_2"))
     
     print(len(all_epsilons))
+    print(type(all_epsilons))
     c = 0
     for i in range(len(all_epsilons)):
         print(np.shape(all_epsilons[i]))
@@ -201,28 +204,38 @@ def find(epsilon, model, inp, true_label, num_inputs, num_outputs):
             for k in range(len(all_epsilons[i][j])):
                 if all_epsilons[i][j][k].X>0:
                     summation = summation + all_epsilons[i][j][k].X
-                    print(i,j,k)
+                    print(i,j,k, all_epsilons[i][j][k].X)
                     c = c + 1
                 # print(all_epsilons[i][j][k].VarName, all_epsilons[i][j][k].X)
                 # print(m.getVarByName(all_epsilons[i][j][k]))
     
     print("Effective change was: ", summation)
     print("The number of weights changed were: ",c)
+    # np.save('../data/mine.vals', all_epsilons)
+    # print("Wrote epsilons to file.")
+    eps = []
+    for i in range(len(all_epsilons)):
+        eps_1 = np.zeros_like(all_epsilons[i])
+        for j in range(len(all_epsilons[i])):
+            for k in range(len(all_epsilons[i][j])):
+                eps_1[j][k] = float(all_epsilons[i][j][k].X)
+        eps.append(eps_1)
+    return eps
     # m.reset(0)
 
-if __name__ == '__main__':
-    # model = tf.keras.models.load_model(os.path.abspath(os.path.join(os.getcwd(), os.pardir)) +'/Models/mnist.h5')
-    model = loadModel()
-    # inp = getmnist()
-    inp = getInputs()
+# if __name__ == '__main__':
+#     # model = tf.keras.models.load_model(os.path.abspath(os.path.join(os.getcwd(), os.pardir)) +'/Models/mnist.h5')
+#     model = loadModel()
+#     # inp = getmnist()
+#     inp = getInputs()
 
-    num_inputs = len(inp)
-    # print(model.summary())
-    # sample_output = model.predict([inp])
-    sample_output = getOutputs()
-    true_label = (np.argmax(sample_output))
-    num_outputs = len(sample_output[0])
+#     num_inputs = len(inp)
+#     # print(model.summary())
+#     # sample_output = model.predict([inp])
+#     sample_output = getOutputs()
+#     true_label = (np.argmax(sample_output))
+#     num_outputs = len(sample_output[0])
 
-    print(true_label)
+#     print(true_label)
 
-    find(1, model, inp, true_label, num_inputs, num_outputs)
+#     find(1, model, inp, true_label, num_inputs, num_outputs)

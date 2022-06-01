@@ -254,7 +254,7 @@ class findCorrection:
         epsilons_vals = np.array([[sat_vals[epsilons_vars[j][i]] for i in range(epsilons_vars.shape[1])] for j in range(epsilons_vars.shape[0])])    
         # print("EP: ",epsilons_vars)
         # print("Epsilon calculated was: ", epsilons_vals)
-        print(epsilons_vals) 
+        print(type(epsilons_vals)) 
         s = 0
         for i in range(len(epsilons_vals)):
             for j in range(len(epsilons_vals[i])):

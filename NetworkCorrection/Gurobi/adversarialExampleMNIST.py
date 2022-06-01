@@ -135,13 +135,13 @@ def find(epsilon1, epsilon2, model, inp, true_label, num_inputs, num_outputs):
             summation = summation + ep[i].X
             final_change.append(ep[i].X)
             if ep[i].X>0:
-                # print(i, ep[i].X)
+                print(i, ep[i].X)
                 c = c + 1
-        # print("Effective change was: ", summation)
-        # print("The number of weights changed were: ",c)
-        # print("Query has: ", m.NumObj, " objectives.")
-        # print(m.getVarByName("epsilon_max"))
-        # print(m.getVarByName("epsilon_max_2"))
+        print("Effective change was: ", summation)
+        print("The number of pixels changed were: ",c)
+        print("Query has: ", m.NumObj, " objectives.")
+        print(m.getVarByName("epsilon_max"))
+        print(m.getVarByName("epsilon_max_2"))
         return final_change, 1
     except:
         return [], 0
