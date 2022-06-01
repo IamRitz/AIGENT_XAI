@@ -16,14 +16,14 @@ This is a white box approach to correct faults in the network. The implementatio
 <h3> 2. Adversarial Image generation</h3>
 This is a black box approach which generates adversarial examples for a Network. These adversarial samples can be used to retrain the network and improve it's robustness. Implementation is in following files:
 <ol>
-  <li><h5>1. NetworkCorrection/Gurobi/adversarialExampleMNIST.py:</h5> Contains code to find adversarial image for a particular input image on a trained MNIST model.
+  <li><h5>NetworkCorrection/Gurobi/adversarialExampleMNIST.py:</h5> Contains code to find adversarial image for a particular input image on a trained MNIST model.
   </li>
 
-  <li><h5>2. NetworkCorrection/Gurobi/adversarialExampleACASXU.py:</h5> Contains code to find adversarial image for a particular input image on a trained ACAS-Xu model.
+  <li><h5>NetworkCorrection/Gurobi/adversarialExampleACASXU.py:</h5> Contains code to find adversarial image for a particular input image on a trained ACAS-Xu model.
   </li>
 
-  <li><h5>3. NetworkCorrection/Gurobi/attackMNIST.py:</h5> Contains code to find adversarial images for all the images in the input dataset for MNIST model. It generates an adversarial dataset and stores it in: NetworkCorrection/Gurobi/MNISTdata/adversarialData.csv.
+  <li><h5>NetworkCorrection/Gurobi/attackMNIST.py:</h5> Contains code to find adversarial images for all the images in the input dataset for MNIST model. It generates an adversarial dataset and stores it in: NetworkCorrection/Gurobi/MNISTdata/adversarialData.csv.
   </li>
 </ol>
 
-Supervisors: Subodh Vishnu Sharma and Kumar Madhukar, IIT Delhi.
+<h3>Supervisors: Subodh Vishnu Sharma and Kumar Madhukar, IIT Delhi.</h3>
