@@ -3,10 +3,10 @@ This repository contains implementations for two problems statements:
 <h3>1. Minimal Modifications in DNNs:</h3>
 This is a white box approach to correct faults in the network. The implementation can be found in following files:
 <ol>
-  <li><h5>NetworkCorrection/Gurobi/minimalModificationLayers.py:</h5> This file contains code to find minimal modification across layers in ACAS-Xu Network. The details of this network can be found in NetworkCorrection/Report-V1 in section 1.3.
+  <li><h5>NetworkCorrection/Gurobi/minimalModificationLayers.py:</h5> This file contains code to find minimal modification across layers in ACAS-Xu Network. The details of this network can be found in NetworkCorrection/Report_v1.pdf in section 1.3.
   </li>
 
-  <li><h5>NetworkCorrection/Gurobi/minimalModificationLayersOriginal.py:</h5> This file contains code to find minimal modification only in the last layer to correct a property in the ACAS-Xu Network. This code replicates the original work which has been done in this area. The implementations corresponding to sections 1.2.1 and 1.2.2 are in this file. To switch between these implementations, follow the comments in the file.
+  <li><h5>NetworkCorrection/Gurobi/minimalModificationLayersOriginal.py:</h5> This file contains code to find minimal modification only in the last layer to correct a property in the ACAS-Xu Network. This code replicates the original work which has been done in this area. The implementations corresponding to sections 1.2.1 and 1.2.2 are in this file. To switch between these implementations, specify mode as 1 or 0. 
   </li>
 
   <li><h5>NetworkCorrection/Gurobi/applyCorrection.py:</h5> Call the main method in this file to generate a minimal modification(across layers), apply it to the original network and test it on the inputs.

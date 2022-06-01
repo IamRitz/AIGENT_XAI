@@ -1,3 +1,4 @@
+import argparse
 from time import time
 import gurobipy as gp
 import gurobipy as gp
@@ -54,7 +55,7 @@ def get_neuron_values_actual(loaded_model, input, num_layers):
         # print(neurons[len(neurons)-1])
         return neurons
 
-def get_neuron_values(loaded_model, input, num_layers, values, gurobi_model, epsilon_max):
+def get_neuron_values(loaded_model, input, num_layers, values, gurobi_model, epsilon_max, mode):
         neurons = []
         l = 0
         epsilons = []
@@ -75,20 +76,22 @@ def get_neuron_values(loaded_model, input, num_layers, values, gurobi_model, eps
                 for row in range(shape0):
                     ep = []
                     for col in range(shape1):
-                        # ep.append(gurobi_model.addVar(vtype=grb.GRB.CONTINUOUS))
-                        # gurobi_model.addConstr(ep[col]-epsilon_max<=0)
-                        # gurobi_model.addConstr(ep[col]+epsilon_max>=0)
-                        # gurobi_model.update()
-                        if col==0 or col==1:
+                        if mode==1:
                             ep.append(gurobi_model.addVar(vtype=grb.GRB.CONTINUOUS))
                             gurobi_model.addConstr(ep[col]-epsilon_max<=0)
-                            gurobi_model.addConstr(ep[col]>=0)
-                            gurobi_model.update()
-                        else:
-                            ep.append(gurobi_model.addVar(vtype=grb.GRB.CONTINUOUS))
-                            gurobi_model.addConstr(ep[col]<=0)
                             gurobi_model.addConstr(ep[col]+epsilon_max>=0)
                             gurobi_model.update()
+                        else:
+                            if col==0 or col==1:
+                                ep.append(gurobi_model.addVar(vtype=grb.GRB.CONTINUOUS))
+                                gurobi_model.addConstr(ep[col]-epsilon_max<=0)
+                                gurobi_model.addConstr(ep[col]>=0)
+                                gurobi_model.update()
+                            else:
+                                ep.append(gurobi_model.addVar(vtype=grb.GRB.CONTINUOUS))
+                                gurobi_model.addConstr(ep[col]<=0)
+                                gurobi_model.addConstr(ep[col]+epsilon_max>=0)
+                                gurobi_model.update()
                     epsilon.append(ep)
             
             else:
@@ -96,14 +99,6 @@ def get_neuron_values(loaded_model, input, num_layers, values, gurobi_model, eps
                     ep = []
                     for col in range(shape1):
                         ep.append(0)
-                        # if values[int(i/2)][row]>0:
-                            
-                        #     ep.append(gurobi_model.addVar(lb = 0, vtype=grb.GRB.CONTINUOUS))
-                        #     # gurobi_model.addConstr(ep[col]>=0)
-                        #     gurobi_model.addConstr(ep[col]-epsilon_max<=0)
-                        # else:
-                        #     ep.append(gurobi_model.addVar(lb = 0, ub = 0, vtype=grb.GRB.CONTINUOUS))
-                        #     # gurobi_model.addConstr(ep[col]==0)
                     epsilon.append(ep)
             
             if int(i/2) == last_layer:
@@ -112,8 +107,6 @@ def get_neuron_values(loaded_model, input, num_layers, values, gurobi_model, eps
             else:
                 result = np.matmul(input, w) + b 
 
-            # result = np.matmul(input, w + epsilon) + b
-            # epsilons.append(epsilon)
 
             if int(i/2) == last_layer:
                 input = result
@@ -135,7 +128,7 @@ def get_neuron_values(loaded_model, input, num_layers, values, gurobi_model, eps
         # print(neurons[len(neurons)-1])
         return neurons[len(neurons)-1], epsilons
 
-def find(epsilon, model, inp, true_label, num_inputs, num_outputs):
+def find(epsilon, model, inp, true_label, num_inputs, num_outputs, mode):
     num_layers = len(model.layers)
     env = gp.Env(empty=True)
     env.setParam('OutputFlag', 0)
@@ -154,7 +147,7 @@ def find(epsilon, model, inp, true_label, num_inputs, num_outputs):
 
     t1 = time()
     m.update()
-    result, all_epsilons = get_neuron_values(model, inp, num_layers, neurons, m, epsilon_max)
+    result, all_epsilons = get_neuron_values(model, inp, num_layers, neurons, m, epsilon_max, mode)
     # print(result)
     m.update()
     t2 = time()
@@ -210,18 +203,21 @@ def find(epsilon, model, inp, true_label, num_inputs, num_outputs):
     # m.reset(0)
 
 if __name__ == '__main__':
-    # model = tf.keras.models.load_model(os.path.abspath(os.path.join(os.getcwd(), os.pardir)) +'/Models/mnist.h5')
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--mode', default='1', help='The mode in which the file should execute. If mode is 1,\
+                                                     the implementation corresponds to section 1.2.1 of Report_v1,\
+                                                    otherwise the implementation corresponds to section 1.2.2 of Report_v1.')
+
+    args = parser.parse_args()
+    mode = int(args.mode)
     model = loadModel()
-    # inp = getmnist()
     inp = getInputs()
 
     num_inputs = len(inp)
-    # print(model.summary())
-    # sample_output = model.predict([inp])
     sample_output = getOutputs()
     true_label = (np.argmax(sample_output))
     num_outputs = len(sample_output[0])
-
+    
     print(true_label)
 
-    find(0.008, model, inp, true_label, num_inputs, num_outputs)
+    find(0.008, model, inp, true_label, num_inputs, num_outputs, mode)
