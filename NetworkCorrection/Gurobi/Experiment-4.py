@@ -3,9 +3,10 @@ import sys
 import numpy as np
 import tensorflow as tf
 import uuid
-from minimalModificationLayers import find, getInputs, getOutputs, loadModel
+from ExperimentDumy import find
 
 import argparse
+from ConvertNNETtoTensor import ConvertNNETtoTensorFlow
 import keras
 # tf.compat.v1.disable_eager_execution()
 """
@@ -15,14 +16,21 @@ Epsilon is an array where each index of epsilon i.e epsilon[i] tells the amount 
 That means for ayer n-2, the weights will be modified as: w[i] = w[i]+epsilon[i]
 It modifies the 3rd last layer of the network by modifiying it's weights using the above epsilon.
 """
-def save_model(json_path, model_path, model):
-    # serialize model to JSON
-    model_json = model.to_json()
-    with open(json_path, "w") as json_file:
-        json_file.write(model_json)
-    # serialize weights to HDF5
-    model.save_weights(model_path)
-    print("Saved model to disk")
+def loadModel():
+    obj = ConvertNNETtoTensorFlow()
+    file = '../Models/testdp1_2_2op.nnet'
+    model = obj.constructModel(fileName=file)
+    print(type(model))
+    print(model.summary())
+    return model
+
+def getInputs():
+    inp = [-1, -1, -1, -1]
+    return [inp]
+
+def getOutputs():
+    out = [1, -1]
+    return [out]
 
 def getEpsilons():
     model = loadModel()
@@ -38,23 +46,16 @@ def getEpsilons():
 
     print(true_label)
 
-    all_epsilons = find(5, model, inp, true_label, num_inputs, num_outputs)
+    all_epsilons = find(5, model, inp[0], true_label, num_inputs, num_outputs, 1)
     
     return all_epsilons
-
-parser = argparse.ArgumentParser()
-parser.add_argument('--load_model', default='ACASXU_2_9', help='the name of the model')
-parser.add_argument('--model', default='ACASXU_2_9_0', help='the name of the model')
-args = parser.parse_args()
-
-load_model_name = args.load_model
-model_name = args.model
 
 
 # load_model_name = 'ACASXU_2_9'
 # model_name = 'ACASXU_2_9_3'
 model = loadModel()
 epsilon = getEpsilons()
+# print(epsilon)
 """
 Change the name of the epsilon file according to what was generated in findCorrection.py
 """
@@ -69,8 +70,7 @@ print(len(weights))
 # print(np.shape(epsilon))
 # print(np.shape(weights))
 
-for i in range(0,len(weights),2):
-    weights[i] = weights[i]+ epsilon[int(i/2)]
+weights[2] = weights[2]+ epsilon[0]
 
 # weights = weights + epsilon
 # # print(weights)
@@ -88,14 +88,9 @@ model.compile(optimizer=tf.optimizers.Adam(),loss='sparse_categorical_crossentro
 # # print("1")
 # utils.saveModelAsProtobuf(last_layer, 'last.layer.{}_corrected_mine'.format(model_name))
 # print("2")
-
-datafile = open('../data/inputs.csv')
-sat_in = np.array([[float(x) for x in line.split(',')] for line in datafile])
+sat_in = getInputs()
 print(sat_in)
-datafile.close()
-datafile = open('../data/outputs.csv')
-sat_out = np.array([[float(x) for x in line.split(',')] for line in datafile])
-datafile.close()
+sat_out = getOutputs()
 
 prediction = model.predict(sat_in)
 print(prediction)

@@ -60,6 +60,7 @@ def get_neuron_values(loaded_model, input, num_layers, values, gurobi_model, eps
         l = 0
         epsilons = []
         last_layer = num_layers-2
+        first_layer = 0
         weights = model.get_weights()
 
         for i in range(0,len(weights)-1,2):
@@ -71,8 +72,8 @@ def get_neuron_values(loaded_model, input, num_layers, values, gurobi_model, eps
             epsilon = []
             
             print(np.shape(input), np.shape(values[int(i/2)]), np.shape(w))
-            if int(i/2) == last_layer:
-                print("For last layer:")
+            if int(i/2) == first_layer:
+                print("For first layer, with mode:", mode)
                 for row in range(shape0):
                     ep = []
                     for col in range(shape1):
@@ -101,7 +102,7 @@ def get_neuron_values(loaded_model, input, num_layers, values, gurobi_model, eps
                         ep.append(0)
                     epsilon.append(ep)
             
-            if int(i/2) == last_layer:
+            if int(i/2) == first_layer:
                 result = np.matmul(input, w + epsilon) + b
                 epsilons.append(epsilon)
             else:
@@ -155,6 +156,7 @@ def find(epsilon, model, inp, true_label, num_inputs, num_outputs, mode):
     m.addConstr(result[0]-result[2]>=0.00001)
     m.addConstr(result[0]-result[3]>=0.00001)
     m.addConstr(result[0]-result[4]>=0.00001)
+    m.addConstr(result[0]-result[1]>=0.00001)
     # m.addConstr(result[1]-result[2]>=0.00001)
     # m.addConstr(result[1]-result[3]>=0.00001)
     # m.addConstr(result[1]-result[4]>=0.00001)
@@ -220,4 +222,4 @@ if __name__ == '__main__':
     
     print(true_label)
 
-    find(0.008, model, inp, true_label, num_inputs, num_outputs, mode)
+    find(1, model, inp, true_label, num_inputs, num_outputs, mode)
