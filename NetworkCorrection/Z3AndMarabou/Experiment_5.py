@@ -20,6 +20,11 @@ sys.path.append('../')
 from Gurobi.ConvertNNETtoTensor import ConvertNNETtoTensorFlow
 import numpy as np
 
+"""
+Finds minimal modification using Z3 but only in Layer 0.
+This file is specific to the toy example sent by Madhukar Sir..
+"""
+
 def ReLU(input):
     return np.vectorize(lambda y: z3.If(y>=0, y, z3.RealVal(0)))(input)
 
@@ -37,8 +42,8 @@ def result(input, m, model, epsilon_max):
         # print(w,"\n",w.T,"\n",b)
         # print(type(w))
         # print((w.T).shape)
-        shape0 = (w.T).shape[0]
-        shape1 = (w.T).shape[1]
+        shape0 = w.shape[0]
+        shape1 = w.shape[1]
         epsilon = []
         if layer_to_modify==i:
             print("Adding modifications to Layer:",i)
@@ -57,7 +62,7 @@ def result(input, m, model, epsilon_max):
         # A = Array('A', IntSort(), ArraySort(IntSort(), IntSort()))
         out = w.T @ input + b
         if layer_to_modify==i:
-            out = (w.T+epsilon) @ input + b
+            out = (w+epsilon).T @ input + b
             # print(w.T, epsilon)
         layer_output = ReLU(out)
         input = layer_output
@@ -153,7 +158,7 @@ def getASolution():
     epsilon_max = 0.5
     epsilons_to_add = callZ3(inp, model, epsilon_max_2, epsilon_max)
     print("\nEpsilons are = ", epsilons_to_add)
-    weights[0] = weights[0] + np.array(epsilons_to_add).T
+    weights[0] = weights[0] + np.array(epsilons_to_add)
     print("\nThe modified weights are:")
     print(np.array(weights[0]).T)
     print()

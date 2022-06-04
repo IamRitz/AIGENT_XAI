@@ -13,6 +13,9 @@ import gurobipy as grb
 import os
 from relumip import AnnModel
 
+"""
+Finds minimal modification in across all layers for the ACAS-Xu Network so that either Output 1 or Output 1 is highest.
+"""
 
 def loadModel():
     json_file = open('../Models/ACASXU_2_9.json', 'r')
@@ -80,12 +83,12 @@ def get_neuron_values(loaded_model, input, num_layers, values, gurobi_model, eps
                         # gurobi_model.addConstr(ep[col]+epsilon_max>=0)
                         # gurobi_model.update()
                         if col!=0 and col!=1:
-                            ep.append(gurobi_model.addVar(vtype=grb.GRB.CONTINUOUS))
+                            ep.append(gurobi_model.addVar(lb=-100, vtype=grb.GRB.CONTINUOUS))
                             gurobi_model.addConstr(ep[col]+epsilon_max>=0)
                             gurobi_model.addConstr(ep[col]<=0)
                             gurobi_model.update()
                         else:
-                            ep.append(gurobi_model.addVar(vtype=grb.GRB.CONTINUOUS))
+                            ep.append(gurobi_model.addVar(lb=-100, vtype=grb.GRB.CONTINUOUS))
                             gurobi_model.addConstr(ep[col]>=0)
                             gurobi_model.addConstr(ep[col]-epsilon_max<=0)
                             gurobi_model.update()

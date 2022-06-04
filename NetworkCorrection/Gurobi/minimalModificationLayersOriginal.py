@@ -14,6 +14,9 @@ import gurobipy as grb
 import os
 from relumip import AnnModel
 
+"""
+Finds minimal modification in last layer. Change mode to switch between original technique and inc/dec technique.
+"""
 
 def loadModel():
     json_file = open('../Models/ACASXU_2_9.json', 'r')

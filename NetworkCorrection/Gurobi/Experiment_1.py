@@ -1,20 +1,29 @@
+import os
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3' 
+"""
+To supress the tensorflow warnings. 
+0 = all messages are logged (default behavior)
+1 = INFO messages are not printed
+2 = INFO and WARNING messages are not printed
+3 = INFO, WARNING, and ERROR messages are not printed
+"""
+
+import tensorflow as tf
+tf.compat.v1.logging.set_verbosity(tf.compat.v1.logging.ERROR)
+"""
+Setting verbosity of tensorflow to minimum.
+"""
 import argparse
 from time import time
 import gurobipy as gp
-import gurobipy as gp
 from gurobipy import GRB
-from numpy import genfromtxt
-import keras
 import numpy as np
-import sys
-# sys.path.append('../')
-import tensorflow as tf
 import numpy as np
 import gurobipy as grb
-import os
-from relumip import AnnModel
 from ConvertNNETtoTensor import ConvertNNETtoTensorFlow
-
+"""
+Finds minimal modification only in Layer 0 for the toy example given by Madhukar Sir so that Output1 is greater than Output 0.
+"""
 def loadModel():
     obj = ConvertNNETtoTensorFlow()
     file = '../Models/testdp1_2_2op.nnet'
@@ -58,14 +67,15 @@ def get_neuron_values_actual(loaded_model, input, num_layers):
 
 def get_neuron_values(loaded_model, input, num_layers, values, gurobi_model, epsilon_max, mode):
         neurons = []
+        u=0
         l = 0
         epsilons = []
         last_layer = num_layers-1
         first_layer = 0
-        print("Last layer is: ",last_layer)
-        layer_to_change = 1
+        # print("Last layer is: ",last_layer)
+        layer_to_change = 0
         weights = loaded_model.get_weights()
-        print("Number of weights: ",len(weights))
+        # print("Number of weights: ",len(weights))
         for i in range(0,len(weights),2):
             # print(i,num_layers)
             w = weights[i]
@@ -76,59 +86,67 @@ def get_neuron_values(loaded_model, input, num_layers, values, gurobi_model, eps
             
             # print(np.shape(input), np.shape(values[int(i/2)]), np.shape(w))
             if int(i/2) == layer_to_change:
-                print("For first layer, with mode:", mode, i)
+                # print("For first layer, with mode:", mode, i)
                 for row in range(shape0):
                     ep = []
                     for col in range(shape1):
                         if mode==1:
-                            ep.append(gurobi_model.addVar(vtype=grb.GRB.CONTINUOUS))
+                            ep.append(gurobi_model.addVar(lb = -100, vtype=grb.GRB.CONTINUOUS))
                             gurobi_model.addConstr(ep[col]-epsilon_max<=0)
                             gurobi_model.addConstr(ep[col]+epsilon_max>=0)
                             gurobi_model.update()
-                        else:
-                            if col==0 :
-                                ep.append(gurobi_model.addVar(vtype=grb.GRB.CONTINUOUS))
-                                gurobi_model.addConstr(ep[col]-epsilon_max<=0)
-                                gurobi_model.addConstr(ep[col]>=0)
-                                gurobi_model.update()
-                            else:
-                                ep.append(gurobi_model.addVar(vtype=grb.GRB.CONTINUOUS))
-                                gurobi_model.addConstr(ep[col]<=0)
-                                gurobi_model.addConstr(ep[col]+epsilon_max>=0)
-                                gurobi_model.update()
+                            # print(ep[col])
+                            u = u + 1
+                        
                     epsilon.append(ep)
-            
+                # temp = []
+                # for row in range(shape0):
+                #     t = []
+                #     for col in range(shape1):
+                #         t.append(gurobi_model.addVar(lb = -100, vtype=grb.GRB.CONTINUOUS))
+                #         gurobi_model.addConstr(t[col]-epsilon[row][col]<=w[row][col])
+                #         gurobi_model.addConstr(t[col]+epsilon[row][col]>=w[row][col])
+                #         gurobi_model.update()
+                #     temp.append(t)
+                # w=temp
             else:
                 for row in range(shape0):
                     ep = []
                     for col in range(shape1):
                         ep.append(0)
                     epsilon.append(ep)
-            
+            # print(np.shape(input), np.shape(w))
             if int(i/2) == layer_to_change:
-                result = np.matmul(input, w + epsilon) + b
+                # print(".........................................")
+                # print(input, w+epsilon)
+                # print(".........................................")
+                result = np.matmul(input, w+epsilon ) + b
                 epsilons.append(epsilon)
             else:
                 result = np.matmul(input, w) + b 
 
-
+            # print(result)
             if int(i/2) == last_layer:
                 input = result
                 neurons.append(input)
                 continue
-
+            
             input = []
             for r in range(len(result)):
-                if values[int(i/2)][r]>0: 
+                if r==0 or r==1 or r==2 or r==3: 
                     input.append(gurobi_model.addVar(vtype=grb.GRB.CONTINUOUS))
                     gurobi_model.addConstr(input[r]-result[r]==0)
                     # input.append(result[r])
+                    # print("For r:",r)
+                    gurobi_model.update()
                 else:
                     input.append(0)
                 
             neurons.append(input)
             l = l + 1
         # print(np.shape(neurons))
+        # print(neurons[len(neurons)-1])
+        # print("Number of epsilons added:", u)
         # print(neurons[len(neurons)-1])
         return neurons[len(neurons)-1], epsilons
 
@@ -139,7 +157,7 @@ def find(epsilon, model, inp, true_label, num_inputs, num_outputs, mode):
     env.start()
     m = gp.Model("Model", env=env)
     # m = gp.Model("Model")
-    m.setParam('NonConvex', 2)
+    # m.setParam('NonConvex', 2)
     ep = []
     input_vars = []
     epsilon_max = m.addVar(lb = 0, ub = epsilon, vtype=GRB.CONTINUOUS, name="epsilon_max")
@@ -155,45 +173,53 @@ def find(epsilon, model, inp, true_label, num_inputs, num_outputs, mode):
     # print(result)
     m.update()
     t2 = time()
-    adder = m.addVar(lb = 0.5, ub = 100000, vtype=GRB.CONTINUOUS, name="adder")
+    adder = m.addVar(lb = 1, vtype=GRB.CONTINUOUS, name="adder")
     m.addConstr(result[1] - result[0] - adder>=0)
 
     t3 = time()
     m.update()
-    
-    e2 = grb.quicksum([grb.quicksum([grb.quicksum(y) for y in all_epsilons[x]]) for x in range(len(all_epsilons))])
+    # cum = grb.abs_(all_epsilons[0][0][0])
+    # for i in range(len(all_epsilons)):
+    #     for j in range(len(all_epsilons[i])):
+    #         for k in range(len(all_epsilons[i][j])):
+    #             print(grb.abs_(all_epsilons[i][j][k]))
+    #             cum=cum+grb.abs_((all_epsilons[i][j][k]))
+    e2 = grb.quicksum([grb.quicksum([grb.quicksum([x for x in all_epsilons[i][j] ]) for j in range(len(all_epsilons[i]))]) for i in range(len(all_epsilons))])
     epsilon_max_2 = m.addVar(lb = 0, ub = epsilon, vtype=GRB.CONTINUOUS, name="epsilon_max_2")
     m.update()
     m.addConstr(e2+epsilon_max_2>=0)
     m.addConstr(e2-epsilon_max_2<=0)
     m.update()
     m.setObjective(epsilon_max+epsilon_max_2+adder, GRB.MINIMIZE)
-    # m.setObjectiveN(epsilon_max, index = 0, priority = 0)
-    # m.setObjectiveN(epsilon_max_2, index = 1, priority = 1)
-    # m.setObjectiveN(epsilon_max_2, GRB.MINIMIZE, 1)
+    
     t4 = time()
     # print("Epsilons are:", all_epsilons)
     t5 = time()
     print("Begin optimization.")
+    # m.write("model.ilp")
     m.optimize()
-    m.write("abc2.lp")
     t6 = time()
+    # m.computeIIS()
+    # m.write("model.ilp")
+    # m.write("model.lp")
+
     print("Times taken respectively: ",(t2-t1), (t3-t2), (t4-t3), (t5-t4), (t6-t5),)
     summation = 0
 
-    print("Query has: ", m.NumObj, " objectives.")
+    print("\nQuery has: ", m.NumObj, " objectives.")
     print(m.getVarByName("epsilon_max"))
     print(m.getVarByName("epsilon_max_2"))
     print(m.getVarByName("adder"))
-    print(len(all_epsilons))
+    print()
+    # print(len(all_epsilons))
     c = 0
     for i in range(len(all_epsilons)):
-        print(len(all_epsilons[i]))
+        # print(len(all_epsilons[i]))
         for j in range(len(all_epsilons[i])):
             for k in range(len(all_epsilons[i][j])):
-                if all_epsilons[i][j][k].X>0:
-                    summation = summation + all_epsilons[i][j][k].X
-                    print(i,j,k, all_epsilons[i][j][k].X)
+                if all_epsilons[i][j][k].X!=0:
+                    summation = summation + abs(all_epsilons[i][j][k].X)
+                    # print(i,j,k, all_epsilons[i][j][k].X)
                     c = c + 1
                 # print(all_epsilons[i][j][k].VarName, all_epsilons[i][j][k].X)
                 # print(m.getVarByName(all_epsilons[i][j][k]))
