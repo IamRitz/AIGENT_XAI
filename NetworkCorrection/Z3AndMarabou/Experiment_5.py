@@ -22,7 +22,7 @@ import numpy as np
 
 """
 Finds minimal modification using Z3 but only in Layer 0.
-This file is specific to the toy example sent by Madhukar Sir..
+This file is specific to the toy example sent by Madhukar Sir.
 """
 
 def ReLU(input):
@@ -83,6 +83,7 @@ def get_neuron_values_actual(loaded_model, input, num_layers):
                 input = result
                 neurons.append(input)
                 continue
+            # print(input)
             input = [max(0, r) for r in result]
             neurons.append(input)
             l = l + 1
@@ -171,4 +172,4 @@ def getASolution():
     print()
     print()
 
-getASolution()
+# getASolution()

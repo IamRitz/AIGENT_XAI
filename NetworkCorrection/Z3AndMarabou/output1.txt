@@ -1,0 +1,200 @@
+"""
+When relu=normal.
+and abnormal constraints for epsilons.
+Best results. Related.
+Modifications only in Layer 0.
+"""
+
+
+Running for phase:, [-1, -1, -1, -1]
+Time taken in solving the query is:  0.004613399505615234  seconds. 
+The query was:  unsat
+[]
+Running for phase:, [-1, -1, -1, 1]
+Time taken in solving the query is:  0.007072925567626953  seconds. 
+The query was:  sat
+Total change was:  5.0
+Maximum change was:  1.0
+
+.....................................................................
+Achieved for phase: [-1, -1, -1, 1]
+For Input:  [-1, -1, -1, -1]
+Actual output is:  [1, -1]
+Predicted Output is:  [[-3.  3.]]
+After Modification, the state of nodes is:
+[[0, 0, 0, 3.0], array([-3.,  3.])]
+.....................................................................
+
+
+Running for phase:, [-1, -1, 1, -1]
+Time taken in solving the query is:  0.006837606430053711  seconds. 
+The query was:  sat
+Total change was:  4.999755859375
+Maximum change was:  1.0
+
+.....................................................................
+Predicted Output is:  [[0. 0.]]
+.....................................................................
+Running for phase:, [-1, -1, 1, 1]
+Time taken in solving the query is:  0.01134037971496582  seconds. 
+The query was:  sat
+Total change was:  5.0
+Maximum change was:  1.0
+
+.....................................................................
+Predicted Output is:  [[0. 0.]]
+.....................................................................
+Running for phase:, [-1, 1, -1, -1]
+Time taken in solving the query is:  0.007291316986083984  seconds. 
+The query was:  sat
+Total change was:  5.0
+Maximum change was:  1.0
+
+.....................................................................
+Achieved for phase: [-1, 1, -1, -1]
+For Input:  [-1, -1, -1, -1]
+Actual output is:  [1, -1]
+Predicted Output is:  [[-3.  3.]]
+After Modification, the state of nodes is:
+[[0, 3.0, 0, 0], array([-3.,  3.])]
+.....................................................................
+
+
+Running for phase:, [-1, 1, -1, 1]
+Time taken in solving the query is:  0.010116100311279297  seconds. 
+The query was:  sat
+Total change was:  5.0
+Maximum change was:  1.0
+
+.....................................................................
+Achieved for phase: [-1, 1, -1, 1]
+For Input:  [-1, -1, -1, -1]
+Actual output is:  [1, -1]
+Predicted Output is:  [[-2.  2.]]
+After Modification, the state of nodes is:
+[[1.0, 2.0, 0, 1.0], array([-2.,  2.])]
+.....................................................................
+
+
+Running for phase:, [-1, 1, 1, -1]
+Time taken in solving the query is:  0.009601116180419922  seconds. 
+The query was:  sat
+Total change was:  5.0
+Maximum change was:  1.0
+
+.....................................................................
+Predicted Output is:  [[0. 0.]]
+.....................................................................
+Running for phase:, [-1, 1, 1, 1]
+Time taken in solving the query is:  0.12364482879638672  seconds. 
+The query was:  sat
+Total change was:  5.0
+Maximum change was:  1.0
+
+.....................................................................
+Achieved for phase: [-1, 1, 1, 1]
+For Input:  [-1, -1, -1, -1]
+Actual output is:  [1, -1]
+Predicted Output is:  [[-1.  1.]]
+After Modification, the state of nodes is:
+[[1.0, 1.0, 0, 1.0], array([-1.,  1.])]
+.....................................................................
+
+
+Running for phase:, [1, -1, -1, -1]
+Time taken in solving the query is:  0.005608558654785156  seconds. 
+The query was:  unsat
+[]
+Running for phase:, [1, -1, -1, 1]
+Time taken in solving the query is:  0.017383813858032227  seconds. 
+The query was:  sat
+Total change was:  5.0
+Maximum change was:  1.0
+
+.....................................................................
+Achieved for phase: [1, -1, -1, 1]
+For Input:  [-1, -1, -1, -1]
+Actual output is:  [1, -1]
+Predicted Output is:  [[-1.  1.]]
+After Modification, the state of nodes is:
+[[2.0, 0, 0, 3.0], array([-1.,  1.])]
+.....................................................................
+
+
+Running for phase:, [1, -1, 1, -1]
+Time taken in solving the query is:  0.006105184555053711  seconds. 
+The query was:  unsat
+[]
+Running for phase:, [1, -1, 1, 1]
+Time taken in solving the query is:  0.780022144317627  seconds. 
+The query was:  sat
+Total change was:  5.0
+Maximum change was:  1.0
+
+.....................................................................
+Achieved for phase: [1, -1, 1, 1]
+For Input:  [-1, -1, -1, -1]
+Actual output is:  [1, -1]
+Predicted Output is:  [[-1.  1.]]
+After Modification, the state of nodes is:
+[[2.0, 0, 0, 3.0], array([-1.,  1.])]
+.....................................................................
+
+
+Running for phase:, [1, 1, -1, -1]
+Time taken in solving the query is:  0.017446517944335938  seconds. 
+The query was:  sat
+Total change was:  5.0
+Maximum change was:  1.0
+
+.....................................................................
+Achieved for phase: [1, 1, -1, -1]
+For Input:  [-1, -1, -1, -1]
+Actual output is:  [1, -1]
+Predicted Output is:  [[-1.  1.]]
+After Modification, the state of nodes is:
+[[2.0, 3.0, 0, 0], array([-1.,  1.])]
+.....................................................................
+
+
+Running for phase:, [1, 1, -1, 1]
+Time taken in solving the query is:  2.779017210006714  seconds. 
+The query was:  sat
+Total change was:  5.0
+Maximum change was:  1.0
+
+.....................................................................
+Achieved for phase: [1, 1, -1, 1]
+For Input:  [-1, -1, -1, -1]
+Actual output is:  [1, -1]
+Predicted Output is:  [[-2.  2.]]
+After Modification, the state of nodes is:
+[[1.0, 2.0, 0, 1.0], array([-2.,  2.])]
+.....................................................................
+
+
+Running for phase:, [1, 1, 1, -1]
+Time taken in solving the query is:  0.32492804527282715  seconds. 
+The query was:  sat
+Total change was:  5.0
+Maximum change was:  1.0
+
+.....................................................................
+Achieved for phase: [1, 1, 1, -1]
+For Input:  [-1, -1, -1, -1]
+Actual output is:  [1, -1]
+Predicted Output is:  [[-1.  1.]]
+After Modification, the state of nodes is:
+[[2.0, 3.0, 0, 0], array([-1.,  1.])]
+.....................................................................
+
+
+Running for phase:, [1, 1, 1, 1]
+Time taken in solving the query is:  15.04600214958191  seconds. 
+The query was:  sat
+Total change was:  5.0
+Maximum change was:  2.0
+
+.....................................................................
+Predicted Output is:  [[ 0.18181849 -0.18181849]]
+.....................................................................

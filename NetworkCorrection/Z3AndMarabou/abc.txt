@@ -1,0 +1,157 @@
+
+Retreiving model...
+Model retreived.
+For Input:  [-1, -1, -1, -1]
+Actual output is:  [1, -1]
+Predicted Output is:  [[ 1. -1.]]
+
+2 (2,)
+Adding modifications to Layer: 0
+[1.0, 0, 0, 0]
+[(1 + e000)*input_vars__0 +
+ (-2 + e010)*input_vars__1 +
+ (0 + e020)*input_vars__2 +
+ (0 + e030)*input_vars__3 +
+ 0                           (2 + e001)*input_vars__0 +
+                             (-1 + e011)*input_vars__1 +
+                             (0 + e021)*input_vars__2 +
+                             (0 + e031)*input_vars__3 +
+                             0
+ (0 + e002)*input_vars__0 +
+ (0 + e012)*input_vars__1 +
+ (-1 + e022)*input_vars__2 +
+ (2 + e032)*input_vars__3 +
+ 0                           (0 + e003)*input_vars__0 +
+                             (0 + e013)*input_vars__1 +
+                             (2 + e023)*input_vars__2 +
+                             (-1 + e033)*input_vars__3 +
+                             0                          ]
+Adding modifications to Layer: 2
+[1.0, 0, 0, 0]
+[1*
+ If((1 + e000)*input_vars__0 +
+    (-2 + e010)*input_vars__1 +
+    (0 + e020)*input_vars__2 +
+    (0 + e030)*input_vars__3 +
+    0 >=
+    0,
+    (1 + e000)*input_vars__0 +
+    (-2 + e010)*input_vars__1 +
+    (0 + e020)*input_vars__2 +
+    (0 + e030)*input_vars__3 +
+    0,
+    0) +
+ -1*
+ If((2 + e001)*input_vars__0 +
+    (-1 + e011)*input_vars__1 +
+    (0 + e021)*input_vars__2 +
+    (0 + e031)*input_vars__3 +
+    0 >=
+    0,
+    (2 + e001)*input_vars__0 +
+    (-1 + e011)*input_vars__1 +
+    (0 + e021)*input_vars__2 +
+    (0 + e031)*input_vars__3 +
+    0,
+    0) +
+ 1*
+ If((0 + e002)*input_vars__0 +
+    (0 + e012)*input_vars__1 +
+    (-1 + e022)*input_vars__2 +
+    (2 + e032)*input_vars__3 +
+    0 >=
+    0,
+    (0 + e002)*input_vars__0 +
+    (0 + e012)*input_vars__1 +
+    (-1 + e022)*input_vars__2 +
+    (2 + e032)*input_vars__3 +
+    0,
+    0) +
+ -1*
+ If((0 + e003)*input_vars__0 +
+    (0 + e013)*input_vars__1 +
+    (2 + e023)*input_vars__2 +
+    (-1 + e033)*input_vars__3 +
+    0 >=
+    0,
+    (0 + e003)*input_vars__0 +
+    (0 + e013)*input_vars__1 +
+    (2 + e023)*input_vars__2 +
+    (-1 + e033)*input_vars__3 +
+    0,
+    0) +
+ 0                              -1*
+                                If((1 + e000)*input_vars__0 +
+                                   (-2 + e010)*input_vars__1 +
+                                   (0 + e020)*input_vars__2 +
+                                   (0 + e030)*input_vars__3 +
+                                   0 >=
+                                   0,
+                                   (1 + e000)*input_vars__0 +
+                                   (-2 + e010)*input_vars__1 +
+                                   (0 + e020)*input_vars__2 +
+                                   (0 + e030)*input_vars__3 +
+                                   0,
+                                   0) +
+                                1*
+                                If((2 + e001)*input_vars__0 +
+                                   (-1 + e011)*input_vars__1 +
+                                   (0 + e021)*input_vars__2 +
+                                   (0 + e031)*input_vars__3 +
+                                   0 >=
+                                   0,
+                                   (2 + e001)*input_vars__0 +
+                                   (-1 + e011)*input_vars__1 +
+                                   (0 + e021)*input_vars__2 +
+                                   (0 + e031)*input_vars__3 +
+                                   0,
+                                   0) +
+                                -1*
+                                If((0 + e002)*input_vars__0 +
+                                   (0 + e012)*input_vars__1 +
+                                   (-1 + e022)*input_vars__2 +
+                                   (2 + e032)*input_vars__3 +
+                                   0 >=
+                                   0,
+                                   (0 + e002)*input_vars__0 +
+                                   (0 + e012)*input_vars__1 +
+                                   (-1 + e022)*input_vars__2 +
+                                   (2 + e032)*input_vars__3 +
+                                   0,
+                                   0) +
+                                1*
+                                If((0 + e003)*input_vars__0 +
+                                   (0 + e013)*input_vars__1 +
+                                   (2 + e023)*input_vars__2 +
+                                   (-1 + e033)*input_vars__3 +
+                                   0 >=
+                                   0,
+                                   (0 + e003)*input_vars__0 +
+                                   (0 + e013)*input_vars__1 +
+                                   (2 + e023)*input_vars__2 +
+                                   (-1 + e033)*input_vars__3 +
+                                   0,
+                                   0) +
+                                0                             ]
+Time taken in solving the query is:  47.00007963180542  seconds. 
+The query was:  sat
+Total change was:  2.5
+Maximum change was:  0.5
+[[[0.5, 0.0, 0.0, -0.20710678118654752], [0.0, 0.0, 0.0, -0.5], [0.0, 0.0, 0.0, -0.5], [0.0, 0.0, 0.0, -0.5]], [[0.0, 0.0], [0.0, 0.0], [0.0, 0.20710678118654752], [0.08578643762690495, 0.0]]]
+
+Epsilons are =  [[[0.5, 0.0, 0.0, -0.20710678118654752], [0.0, 0.0, 0.0, -0.5], [0.0, 0.0, 0.0, -0.5], [0.0, 0.0, 0.0, -0.5]], [[0.0, 0.0], [0.0, 0.0], [0.0, 0.20710678118654752], [0.08578643762690495, 0.0]]]
+
+The modified weights are:
+[[ 1.5        -2.          0.          0.        ]
+ [ 2.         -1.          0.          0.        ]
+ [ 0.          0.         -1.          2.        ]
+ [-0.20710678 -0.5         1.5        -1.5       ]]
+
+For Input:  [-1, -1, -1, -1]
+Actual output is:  [1, -1]
+Predicted Output is:  [[-0.14644659  0.20710677]]
+
+.................
+After Modification, the state of nodes is:
+
+

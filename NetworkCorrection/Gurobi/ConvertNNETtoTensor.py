@@ -82,7 +82,7 @@ class ConvertNNETtoTensorFlow:
     def constructModel(self, fileName):
         w, biases = self.read_nnet(fileName)
         model = Sequential()
-        print("\nRetreiving model...")
+        # print("\nRetreiving model...")
         
         i = 0
         input_shape = np.shape(w[i])[1]
@@ -103,15 +103,15 @@ class ConvertNNETtoTensorFlow:
         
         model.set_weights(weights)
         
-        print("Model retreived.")
+        # print("Model retreived.")
         return model
 
     def predict(self, model, inputToModel, actual_output):
         predicted_output = model.predict(np.array([inputToModel]))
-        print("For Input: ", inputToModel)
-        print("Actual output is: ", actual_output)
-        print("Predicted Output is: ", predicted_output)
-        print()
+        # print("For Input: ", inputToModel)
+        # print("Actual output is: ", actual_output)
+        # print("Predicted Output is: ", predicted_output)
+        # print()
         return predicted_output
 
     def convert(self, file):
