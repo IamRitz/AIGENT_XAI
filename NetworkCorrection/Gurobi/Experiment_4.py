@@ -14,7 +14,7 @@ tf.compat.v1.logging.set_verbosity(tf.compat.v1.logging.ERROR)
 """
 Setting verbosity of tensorflow to minimum.
 """
-from Experiment_1 import find
+from Experiment_2 import find
 from ConvertNNETtoTensor import ConvertNNETtoTensorFlow
 
 # tf.compat.v1.disable_eager_execution()
@@ -25,19 +25,21 @@ Updates the original network with the epsilons and generates a comparison betwee
 """
 def loadModel():
     obj = ConvertNNETtoTensorFlow()
-    file = '../Models/testdp1_2_2op.nnet'
+    file = '../Models/ACASXU_run2a_1_6_batch_2000.nnet'
     model = obj.constructModel(fileName=file)
     # print(type(model))
     # print(model.summary())
     return model
 
 def getInputs():
-    inp = [-1, -1, -1, -1]
-    return [inp]
+    inp = [0.6399288845, 0.0, 0.0, 0.475, -0.475]
+    return inp
 
 def getOutputs():
-    out = [1, -1]
-    return [out]
+    output_1 = [-0.0203966, -0.01847511, -0.01822628, -0.01796024, -0.01798192]
+    output_2 = [-0.01942023, -0.01750685, -0.01795192, -0.01650293, -0.01686228]
+    output_3 = [ 0.02039307, 0.01997121, -0.02107569, 0.02101956, -0.0119698 ]
+    return output_3
 
 def get_neuron_values_actual(loaded_model, input, num_layers):
         neurons = []
@@ -70,11 +72,11 @@ def getEpsilons():
     # sample_output = model.predict([inp])
     sample_output = getOutputs()
     true_label = (np.argmax(sample_output))
-    num_outputs = len(sample_output[0])
+    num_outputs = len(sample_output)
 
     print(true_label)
 
-    all_epsilons = find(1000, model, inp[0], true_label, num_inputs, num_outputs, 1)
+    all_epsilons = find(10, model, inp, true_label, num_inputs, num_outputs, 1)
     
     return all_epsilons
 
@@ -98,7 +100,7 @@ weights = model.get_weights()
 # print("Weights before change:")
 # print(model.get_weights())
 weights[0] = weights[0]+ np.array(epsilon[0])
-print("__________________________________________\n",weights[0].T,"\n__________________________________________")
+# print("__________________________________________\n",epsilon[0],"\n__________________________________________")
 model.set_weights(weights)
 model.compile(optimizer=tf.optimizers.Adam(),loss='sparse_categorical_crossentropy',metrics=['accuracy'])
 # print("Weights after change:")
@@ -108,8 +110,8 @@ sat_in = getInputs()
 print(sat_in)
 sat_out = getOutputs()
 
-prediction = model.predict(sat_in)
+prediction = model.predict([sat_in])
 print("Final prediction: ",prediction)
-print(np.argmax(prediction, axis=1))
+print(np.argmax(prediction[0]))
 
-get_neuron_values_actual(model, sat_in[0], 2)
+# get_neuron_values_actual(model, sat_in, 2)

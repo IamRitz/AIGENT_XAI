@@ -19,15 +19,15 @@ from ConvertNNETtoTensor import ConvertNNETtoTensorFlow
 Finds minimal modification in any 1 layer for the ACAS-Xu Networks given by Madhukar Sir so that Output 0 is highest.
 """
 
-def loadModel():
-    json_file = open('../Models/ACASXU_2_9.json', 'r')
-    loaded_model_json = json_file.read()
-    json_file.close()
-    loaded_model = keras.models.model_from_json(loaded_model_json)
-    # load weights into new model
-    loaded_model.load_weights("../Models/ACASXU_2_9.h5")
-    print(type(loaded_model))
-    return loaded_model
+# def loadModel():
+#     json_file = open('../Models/ACASXU_2_9.json', 'r')
+#     loaded_model_json = json_file.read()
+#     json_file.close()
+#     loaded_model = keras.models.model_from_json(loaded_model_json)
+#     # load weights into new model
+#     loaded_model.load_weights("../Models/ACASXU_2_9.h5")
+#     print(type(loaded_model))
+#     return loaded_model
 
 # def getInputs():
 #     inputs = genfromtxt('../data/inputs.csv', delimiter=',')
@@ -38,12 +38,12 @@ def loadModel():
 #     return [outputs[0]]
 
 
-# def loadModel():
-#     obj = ConvertNNETtoTensorFlow()
-#     file = '../Models/ACASXU_run2a_3_8_batch_2000.nnet'
-#     model = obj.constructModel(fileName=file)
-#     print(type(model))
-#     return model
+def loadModel():
+    obj = ConvertNNETtoTensorFlow()
+    file = '../Models/ACASXU_run2a_1_6_batch_2000.nnet'
+    model = obj.constructModel(fileName=file)
+    print(type(model))
+    return model
 
 def getInputs():
     inp = [0.6399288845, 0.0, 0.0, 0.475, -0.475]
@@ -59,9 +59,9 @@ def get_neuron_values_actual(loaded_model, input, num_layers):
         neurons = []
         l = 0
         for layer in loaded_model.layers:
-            if l==0:
-                l = l + 1
-                continue
+            # if l==0:
+            #     l = l + 1
+            #     continue
             # # print(l)
             w = layer.get_weights()[0]
             b = layer.get_weights()[1]
@@ -87,7 +87,7 @@ def get_neuron_values(loaded_model, input, num_layers, values, gurobi_model, eps
         first_layer = 0
         print("Last layer is: ",last_layer)
         layer_to_change = 0
-        weights = model.get_weights()
+        weights = loaded_model.get_weights()
         print("Number of weights: ",len(weights))
         for i in range(0,len(weights),2):
             # print(i,num_layers)
@@ -103,8 +103,9 @@ def get_neuron_values(loaded_model, input, num_layers, values, gurobi_model, eps
                 for row in range(shape0):
                     ep = []
                     for col in range(shape1):
+                        # mode =0
                         if mode==1:
-                            ep.append(gurobi_model.addVar(vtype=grb.GRB.CONTINUOUS))
+                            ep.append(gurobi_model.addVar(lb=-1, vtype=grb.GRB.CONTINUOUS))
                             gurobi_model.addConstr(ep[col]-epsilon_max<=0)
                             gurobi_model.addConstr(ep[col]+epsilon_max>=0)
                             gurobi_model.update()
@@ -143,7 +144,7 @@ def get_neuron_values(loaded_model, input, num_layers, values, gurobi_model, eps
             input = []
             for r in range(len(result)):
                 if values[int(i/2)][r]>0: 
-                    input.append(gurobi_model.addVar(vtype=grb.GRB.CONTINUOUS))
+                    input.append(gurobi_model.addVar(lb=-1,vtype=grb.GRB.CONTINUOUS))
                     gurobi_model.addConstr(input[r]-result[r]==0)
                     # input.append(result[r])
                 else:
@@ -218,13 +219,23 @@ def find(epsilon, model, inp, true_label, num_inputs, num_outputs, mode):
             for k in range(len(all_epsilons[i][j])):
                 if all_epsilons[i][j][k].X>0:
                     summation = summation + all_epsilons[i][j][k].X
-                    print(i,j,k)
+                    print(i,j,k, all_epsilons[i][j][k].X)
                     c = c + 1
                 # print(all_epsilons[i][j][k].VarName, all_epsilons[i][j][k].X)
                 # print(m.getVarByName(all_epsilons[i][j][k]))
     
     print("Effective change was: ", summation)
     print("The number of weights changed were: ",c)
+    eps = []
+    for i in range(len(all_epsilons)):
+        eps_1 = np.zeros_like(all_epsilons[i])
+        for j in range(len(all_epsilons[i])):
+            for k in range(len(all_epsilons[i][j])):
+                eps_1[j][k] = float(all_epsilons[i][j][k].X)
+        eps.append(eps_1)
+    print(len(eps))
+    return eps
+
     # m.reset(0)
 
 if __name__ == '__main__':

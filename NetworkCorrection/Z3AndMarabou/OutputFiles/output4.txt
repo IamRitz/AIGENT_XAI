@@ -1,7 +1,8 @@
 """
+add function used.
 Normal relu,
 Abnormal constraints on epsilons,
-Finding modification only in overall network.
+Finding modification in overall network.
 Timeout set to 9 seconds.
 """
 

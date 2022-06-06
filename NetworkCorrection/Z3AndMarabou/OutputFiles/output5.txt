@@ -1,0 +1,156 @@
+"""
+assert_and_track function used.
+Normal relu,
+Abnormal constraints on epsilons,
+Finding modification in overall network.
+Timeout not used, processes created and timeout set for each process.
+epsilon_max_2 = 5
+epsilon_max = 2
+"""
+
+.....................................................................
+Running for phase:, [-1, -1, -1, -1]
+Time taken in solving the query is:  0.0011861324310302734  seconds. 
+The query was:  unsat
+[Constraint_: 54]
+unsat
+.....................................................................
+
+
+.....................................................................
+Running for phase:, [-1, -1, -1, 1]
+Time taken in solving the query is:  0.039095163345336914  seconds. 
+The query was:  sat
+Total change was:  4.999999046325684
+Maximum change was:  1.0
+
+Predicted Output is:  [[ 0.48215097 -1.1049156 ]]
+.....................................................................
+
+
+.....................................................................
+Running for phase:, [-1, -1, 1, -1]
+Time taken in solving the query is:  0.015202045440673828  seconds. 
+The query was:  sat
+Total change was:  5.0
+Maximum change was:  2.0
+
+Predicted Output is:  [[ 0.8846154 -0.9526628]]
+.....................................................................
+
+
+.....................................................................
+Running for phase:, [-1, -1, 1, 1]
+Time taken in solving the query is:  0.09087347984313965  seconds. 
+The query was:  sat
+Total change was:  4.999998092651367
+Maximum change was:  1.0
+
+Predicted Output is:  [[ 0.7096443 -1.0026042]]
+.....................................................................
+
+
+.....................................................................
+Running for phase:, [-1, 1, -1, -1]
+Time taken in solving the query is:  0.0404057502746582  seconds. 
+The query was:  sat
+Total change was:  4.999998092651367
+Maximum change was:  1.0
+
+Predicted Output is:  [[-0.03569824 -1.205368  ]]
+.....................................................................
+
+
+.....................................................................
+Running for phase:, [-1, 1, -1, 1]
+Time taken in solving the query is:  0.30560803413391113  seconds. 
+The query was:  sat
+Total change was:  4.99993896484375
+Maximum change was:  1.0
+
+Predicted Output is:  [[-0.0804494  -0.32312012]]
+.....................................................................
+
+
+.....................................................................
+Running for phase:, [-1, 1, 1, -1]
+Time taken in solving the query is:  0.13109302520751953  seconds. 
+The query was:  sat
+Total change was:  4.115935464931054
+Maximum change was:  1.0545831094632356
+
+Predicted Output is:  [[ 0.9728407 -1.3895073]]
+.....................................................................
+
+
+.....................................................................
+Running for phase:, [-1, 1, 1, 1]
+Time taken in solving the query is:  0.005827665328979492  seconds. 
+The query was:  sat
+Total change was:  5.0
+Maximum change was:  0.3125
+
+Predicted Output is:  [[ 0.75     -1.296875]]
+.....................................................................
+
+
+.....................................................................
+Running for phase:, [1, -1, -1, -1]
+Time taken in solving the query is:  0.03287696838378906  seconds. 
+The query was:  unsat
+[Constraint_: 0,
+ Constraint_: 1,
+ Constraint_: 2,
+ Constraint_: 3,
+ Constraint_: 4,
+ Constraint_: 5,
+ Constraint_: 13,
+ Constraint_: 21,
+ Constraint_: 29,
+ Constraint_: 36,
+ Constraint_: 37,
+ Constraint_: 38,
+ Constraint_: 39,
+ Constraint_: 54]
+unsat
+.....................................................................
+
+
+.....................................................................
+Running for phase:, [1, -1, 1, -1]
+Time taken in solving the query is:  0.4464142322540283  seconds. 
+The query was:  sat
+Total change was:  4.9999998807907104
+Maximum change was:  1.5
+
+Predicted Output is:  [[ 1.40625 -2.25   ]]
+.....................................................................
+
+
+.....................................................................
+Running for phase:, [1, 1, -1, -1]
+Time taken in solving the query is:  0.5377466678619385  seconds. 
+The query was:  sat
+Total change was:  4.999999940395355
+Maximum change was:  1.25390625
+
+Achieved for phase: [1, 1, -1, -1]
+For Input:  [-1, -1, -1, -1]
+Actual output is:  [1, -1]
+Predicted Output is:  [[-1.4429169  0.6375656]]
+After Modification, the state of nodes is:
+[[1.01904296875, 2.761962890625, 0, 0], array([-1.44291687,  0.63756561])]
+.....................................................................
+
+
+.....................................................................
+Running for phase:, [1, 1, 1, 1]
+Time taken in solving the query is:  0.09453129768371582  seconds. 
+The query was:  sat
+Total change was:  4.999999999941792
+Maximum change was:  1.0
+
+Predicted Output is:  [[ 0.41746128 -0.05253851]]
+.....................................................................
+
+

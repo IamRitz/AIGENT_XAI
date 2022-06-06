@@ -1,5 +1,6 @@
 """
-When relu=normal.
+add function used.
+relu=normal.
 and abnormal constraints for epsilons.
 Best results. Related.
 Modifications only in Layer 0.
