@@ -1,49 +1,13 @@
-import argparse
 from time import time
 import gurobipy as gp
-import gurobipy as gp
 from gurobipy import GRB
-from numpy import genfromtxt
-import keras
-import numpy as np
-import sys
-# sys.path.append('../')
-import tensorflow as tf
 import numpy as np
 import gurobipy as grb
-import os
-from relumip import AnnModel
-from ConvertNNETtoTensor import ConvertNNETtoTensorFlow
 
 """
-Finds minimal modification in any 1 layer for the ACAS-Xu Networks given by Madhukar Sir so that Output 0 is highest.
+Finds minimal modification in any k-th layer for the ACAS-Xu Networks so that Output 0 is highest.
 """
 
-# def loadModel():
-#     json_file = open('../Models/ACASXU_2_9.json', 'r')
-#     loaded_model_json = json_file.read()
-#     json_file.close()
-#     loaded_model = keras.models.model_from_json(loaded_model_json)
-#     # load weights into new model
-#     loaded_model.load_weights("../Models/ACASXU_2_9.h5")
-#     print(type(loaded_model))
-#     return loaded_model
-
-# def getInputs():
-#     inputs = genfromtxt('../data/inputs.csv', delimiter=',')
-#     return inputs[0]
-
-# def getOutputs():
-#     outputs = genfromtxt('../data/outputs.csv', delimiter=',')
-#     return [outputs[0]]
-
-
-# def loadModel():
-#     obj = ConvertNNETtoTensorFlow()
-#     file = '../Models/ACASXU_run2a_1_6_batch_2000.nnet'
-#     model = obj.constructModel(fileName=file)
-#     print(type(model))
-#     return model
 
 def getInputs():
     inp = [0.6399288845, 0.0, 0.0, 0.475, -0.475]
@@ -156,7 +120,7 @@ def get_neuron_values(loaded_model, input, num_layers, values, gurobi_model, eps
         # print(neurons[len(neurons)-1])
         return neurons[len(neurons)-1], epsilons
 
-def find(epsilon, model, inp, true_label, num_inputs, num_outputs, mode, layer_to_change):
+def find(epsilon, model, inp, expected_label, num_inputs, num_outputs, mode, layer_to_change):
     num_layers = len(model.layers)
     env = gp.Env(empty=True)
     env.setParam('OutputFlag', 0)
@@ -179,11 +143,12 @@ def find(epsilon, model, inp, true_label, num_inputs, num_outputs, mode, layer_t
     # print(result)
     m.update()
     t2 = time()
-    diff = 0.01
-    m.addConstr(result[0]-result[1]>=diff)
-    m.addConstr(result[0]-result[2]>=diff)
-    m.addConstr(result[0]-result[3]>=diff)
-    m.addConstr(result[0]-result[4]>=diff)
+    diff = 0.0000001
+    # print(len(result))
+    for i in range(len(result)):
+        if i==expected_label:
+            continue
+        m.addConstr(-result[expected_label]+result[i]>=diff)
     
     t3 = time()
     m.update()
@@ -203,7 +168,8 @@ def find(epsilon, model, inp, true_label, num_inputs, num_outputs, mode, layer_t
     t5 = time()
     print("Begin optimization.")
     m.optimize()
-    m.write("abc2.lp")
+    # m.computeIIS()
+    # m.write("abc2.ilp")
     t6 = time()
     print("Times taken respectively: ",(t2-t1), (t3-t2), (t4-t3), (t5-t4), (t6-t5),)
     summation = 0
@@ -240,27 +206,3 @@ def find(epsilon, model, inp, true_label, num_inputs, num_outputs, mode, layer_t
         eps.append(eps_1)
     print(len(eps))
     return eps
-
-    # m.reset(0)
-
-# if __name__ == '__main__':
-#     parser = argparse.ArgumentParser()
-#     parser.add_argument('--mode', default='1', help='The mode in which the file should execute. If mode is 1,\
-#                                                      the implementation corresponds to section 1.2.1 of Report_v1,\
-#                                                     otherwise the implementation corresponds to section 1.2.2 of Report_v1.')
-
-#     args = parser.parse_args()
-#     mode = int(args.mode)
-#     model = loadModel()
-#     inp = getInputs()
-
-#     num_inputs = len(inp)
-#     sample_output = getOutputs()
-#     op = model.predict(np.array([inp]))
-#     print(op)
-#     true_label = (np.argmax(sample_output))
-#     num_outputs = len(sample_output)
-    
-#     print(true_label)
-
-#     find(100, model, inp, true_label, num_inputs, num_outputs, mode)

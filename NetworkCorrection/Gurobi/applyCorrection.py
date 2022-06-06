@@ -42,14 +42,6 @@ def getEpsilons():
     
     return all_epsilons
 
-parser = argparse.ArgumentParser()
-parser.add_argument('--load_model', default='ACASXU_2_9', help='the name of the model')
-parser.add_argument('--model', default='ACASXU_2_9_0', help='the name of the model')
-args = parser.parse_args()
-
-load_model_name = args.load_model
-model_name = args.model
-
 
 # load_model_name = 'ACASXU_2_9'
 # model_name = 'ACASXU_2_9_3'

@@ -20,7 +20,7 @@ Finds minimal modification across all layers for the ACAS-Xu Networks given by M
 
 def loadModel():
     obj = ConvertNNETtoTensorFlow()
-    file = '../Models/ACASXU_run2a_3_8_batch_2000.nnet'
+    file = '../Models/ACASXU_run2a_1_6_batch_2000.nnet'
     model = obj.constructModel(fileName=file)
     print(type(model))
     return model
@@ -70,6 +70,7 @@ def get_neuron_values_actual(loaded_model, input, num_layers):
 
 def get_neuron_values(loaded_model, input, num_layers, values, gurobi_model, epsilon_max):
         neurons = []
+        val_max = 10
         l = 0
         epsilons = []
         last_layer = num_layers-1
@@ -213,19 +214,24 @@ def find(epsilon, model, inp, true_label, num_inputs, num_outputs):
     print(len(all_epsilons))
     print(type(all_epsilons))
     c = 0
+    neg = 0
     for i in range(len(all_epsilons)):
-        print(np.shape(all_epsilons[i]))
         for j in range(len(all_epsilons[i])):
             for k in range(len(all_epsilons[i][j])):
-                if all_epsilons[i][j][k].X>0:
-                    summation = summation + all_epsilons[i][j][k].X
-                    print(i,j,k, all_epsilons[i][j][k].X)
+                if all_epsilons[i][j][k].X!=0:
+                    summation = summation + abs(all_epsilons[i][j][k].X)
+                    # print(i,j,k, all_epsilons[i][j][k].X)
                     c = c + 1
+                if all_epsilons[i][j][k].X<0:
+                    neg = neg + 1
                 # print(all_epsilons[i][j][k].VarName, all_epsilons[i][j][k].X)
                 # print(m.getVarByName(all_epsilons[i][j][k]))
+        print(np.shape(all_epsilons[i]), c, neg)
+        
     
     print("Effective change was: ", summation)
-    print("The number of weights changed were: ",c)
+    print("The number of weights changed were: ", c)
+    print("The total number of decrements were:",neg)
     # np.save('../data/mine.vals', all_epsilons)
     # print("Wrote epsilons to file.")
     eps = []
@@ -238,19 +244,19 @@ def find(epsilon, model, inp, true_label, num_inputs, num_outputs):
     return eps
     # m.reset(0)
 
-if __name__ == '__main__':
-    # model = tf.keras.models.load_model(os.path.abspath(os.path.join(os.getcwd(), os.pardir)) +'/Models/mnist.h5')
-    model = loadModel()
-    # inp = getmnist()
-    inp = getInputs()
+# if __name__ == '__main__':
+#     # model = tf.keras.models.load_model(os.path.abspath(os.path.join(os.getcwd(), os.pardir)) +'/Models/mnist.h5')
+#     model = loadModel()
+#     # inp = getmnist()
+#     inp = getInputs()
 
-    num_inputs = len(inp)
-    # print(model.summary())
-    # sample_output = model.predict([inp])
-    sample_output = getOutputs()
-    true_label = (np.argmax(sample_output))
-    num_outputs = len(sample_output)
+#     num_inputs = len(inp)
+#     # print(model.summary())
+#     # sample_output = model.predict([inp])
+#     sample_output = getOutputs()
+#     true_label = (np.argmax(sample_output))
+#     num_outputs = len(sample_output)
 
-    print(true_label)
+#     print(true_label)
 
-    find(10, model, inp, true_label, num_inputs, num_outputs)
+#     find(10, model, inp, true_label, num_inputs, num_outputs)

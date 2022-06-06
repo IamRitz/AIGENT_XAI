@@ -14,7 +14,7 @@ import os
 from relumip import AnnModel
 
 """
-Finds minimal modification in across all layers for the ACAS-Xu Network so that either Output 1 or Output 1 is highest.
+Finds minimal modification across all layers for the ACAS-Xu Network so that either Output 0 or Output 1 is highest.
 """
 
 def loadModel():
@@ -58,6 +58,7 @@ def get_neuron_values_actual(loaded_model, input, num_layers):
         return neurons
 
 def get_neuron_values(loaded_model, input, num_layers, values, gurobi_model, epsilon_max):
+        val_max = 10
         neurons = []
         l = 0
         epsilons = []
@@ -82,13 +83,16 @@ def get_neuron_values(loaded_model, input, num_layers, values, gurobi_model, eps
                         # gurobi_model.addConstr(ep[col]-epsilon_max<=0)
                         # gurobi_model.addConstr(ep[col]+epsilon_max>=0)
                         # gurobi_model.update()
+                        ep.append(gurobi_model.addVar(lb=-val_max, ub=val_max, vtype=grb.GRB.CONTINUOUS))
+                        # ep.append(gurobi_model.addVar(vtype=grb.GRB.CONTINUOUS))
                         if col!=0 and col!=1:
-                            ep.append(gurobi_model.addVar(lb=-100, vtype=grb.GRB.CONTINUOUS))
+                            # ep.append(gurobi_model.addVar(lb=-1, vtype=grb.GRB.CONTINUOUS))
                             gurobi_model.addConstr(ep[col]+epsilon_max>=0)
                             gurobi_model.addConstr(ep[col]<=0)
                             gurobi_model.update()
                         else:
-                            ep.append(gurobi_model.addVar(lb=-100, vtype=grb.GRB.CONTINUOUS))
+                            # ep.append(gurobi_model.addVar(lb=-1, vtype=grb.GRB.CONTINUOUS))
+                            # ep.append(gurobi_model.addVar(vtype=grb.GRB.CONTINUOUS))
                             gurobi_model.addConstr(ep[col]>=0)
                             gurobi_model.addConstr(ep[col]-epsilon_max<=0)
                             gurobi_model.update()
@@ -167,14 +171,16 @@ def find(epsilon, model, inp, true_label, num_inputs, num_outputs):
     m.update()
     t2 = time()
 
-    m.addConstr(result[0]-result[2]>=0.0001)
-    m.addConstr(result[0]-result[3]>=0.0001)
-    m.addConstr(result[0]-result[4]>=0.0001)
-    # m.addConstr(result[0]-result[1]>=0.001)
-    m.addConstr(result[1]-result[2]>=0.0001)
-    m.addConstr(result[1]-result[3]>=0.0001)
-    m.addConstr(result[1]-result[4]>=0.0001)
-    # m.addConstr(result[1]-result[0]>=0.0001)
+    diff = 0.1
+    # m.addConstr(result[0]-result[2]>=diff)
+    # m.addConstr(result[0]-result[3]>=diff1)
+    # m.addConstr(result[0]-result[4]>=diff)
+    # m.addConstr(result[0]-result[1]>=diff)
+    
+    m.addConstr(result[1]-result[2]>=diff)
+    m.addConstr(result[1]-result[3]>=diff)
+    m.addConstr(result[1]-result[4]>=diff)
+    m.addConstr(result[1]-result[0]>=diff)
     
     t3 = time()
     m.update()
@@ -206,19 +212,24 @@ def find(epsilon, model, inp, true_label, num_inputs, num_outputs):
     print(len(all_epsilons))
     print(type(all_epsilons))
     c = 0
+    neg = 0
     for i in range(len(all_epsilons)):
-        print(np.shape(all_epsilons[i]))
+        # print(np.shape(all_epsilons[i]), c, neg)
         for j in range(len(all_epsilons[i])):
             for k in range(len(all_epsilons[i][j])):
-                if all_epsilons[i][j][k].X>0:
-                    summation = summation + all_epsilons[i][j][k].X
-                    print(i,j,k, all_epsilons[i][j][k].X)
+                if all_epsilons[i][j][k].X!=0:
+                    summation = summation + abs(all_epsilons[i][j][k].X)
+                    # print(i,j,k, all_epsilons[i][j][k].X)
                     c = c + 1
+                if all_epsilons[i][j][k].X<0:
+                    neg=neg+1
                 # print(all_epsilons[i][j][k].VarName, all_epsilons[i][j][k].X)
                 # print(m.getVarByName(all_epsilons[i][j][k]))
+        print(np.shape(all_epsilons[i]), c, neg)
     
     print("Effective change was: ", summation)
     print("The number of weights changed were: ",c)
+    print("The number of decrements were : ",neg)
     # np.save('../data/mine.vals', all_epsilons)
     # print("Wrote epsilons to file.")
     eps = []

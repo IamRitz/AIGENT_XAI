@@ -1,3 +1,24 @@
+# from ConvertNNETtoTensor import ConvertNNETtoTensorFlow
+# from extractNetwork import extractNetwork
+
+# def loadModel():
+#     obj = ConvertNNETtoTensorFlow()
+#     file = '../Models/ACASXU_run2a_1_2_batch_2000.nnet'
+#     model = obj.constructModel(fileName=file)
+#     # print(type(model))
+#     # print(model.summary())
+#     return model
+
+# # o1 = extractNetwork()
+# # originalModel = loadModel()
+# # print(originalModel.summary())
+# # print(o1.printActivations(originalModel))
+# # modifiedModel = o1.extractModel(originalModel, 4)
+# # print(modifiedModel.summary())
+# # print(o1.printActivations(modifiedModel))
+
+
+import random
 import numpy as np
 import os
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3' 
@@ -14,7 +35,7 @@ tf.compat.v1.logging.set_verbosity(tf.compat.v1.logging.ERROR)
 """
 Setting verbosity of tensorflow to minimum.
 """
-from Experiment_2 import find
+from findModificationsLayerK import find
 from ConvertNNETtoTensor import ConvertNNETtoTensorFlow
 
 # tf.compat.v1.disable_eager_execution()
@@ -64,65 +85,58 @@ def get_neuron_values_actual(loaded_model, input, num_layers):
                 input = result
                 neurons.append(input)
                 continue
-            print(w, b, result)
+            # print(w, b, result)
             input = [max(0, r) for r in result]
             neurons.append(input)
             l = l + 1
-        print(neurons)
+        # print(neurons)
         return neurons
 
 def getEpsilons(layer_to_change):
     model = loadModel()
-    # inp = getmnist()
     inp = getInputs()
 
     num_inputs = len(inp)
-    # print(model.summary())
-    # sample_output = model.predict([inp])
     sample_output = getOutputs()
-    true_label = (np.argmax(sample_output))
     num_outputs = len(sample_output)
+    true_label = np.argmax(model.predict([inp]))
+    expected_label = random.randint(0, num_outputs-1)
+    while true_label==expected_label:
+        expected_label = random.randint(0, num_outputs-1)
 
-    print(true_label)
-
-    all_epsilons = find(10, model, inp, true_label, num_inputs, num_outputs, 1, layer_to_change)
+    # expected_label = 0
+    print(true_label, expected_label)
+    all_epsilons = find(100, model, inp, true_label, num_inputs, num_outputs, 1, layer_to_change)
     
     return all_epsilons
 
-layer_to_change = 3
-# load_model_name = 'ACASXU_2_9'
-# model_name = 'ACASXU_2_9_3'
-model = loadModel()
-epsilon = getEpsilons(layer_to_change)
-# print(epsilon)
-"""
-Change the name of the epsilon file according to what was generated in findCorrection.py
-"""
-print("Model loaded")
-# ACASXU_2_9_0to04.vals.npy
-weights = model.get_weights()
-# print(weights)
+def updateModel():
+    num_layers = 7
+    layer_to_change = int(num_layers/2)
+    model = loadModel()
+    epsilon = getEpsilons(layer_to_change)
 
-# print(len(epsilon))
-# print(len(weights))
+    """
+    Change the name of the epsilon file according to what was generated in findCorrection.py
+    """
+    print("Model loaded")
+    # ACASXU_2_9_0to04.vals.npy
+    weights = model.get_weights()
 
-# print("Weights before change:")
-# print(model.get_weights())
-# for i in range(7):
-#     weights[2*i] = weights[2*i]+ np.array(epsilon[i])
-weights[2*layer_to_change] = weights[2*layer_to_change]+ np.array(epsilon[0])
-# print("__________________________________________\n",epsilon[0],"\n__________________________________________")
-model.set_weights(weights)
-model.compile(optimizer=tf.optimizers.Adam(),loss='sparse_categorical_crossentropy',metrics=['accuracy'])
-# print("Weights after change:")
-# print(model.get_weights())
+    weights[2*layer_to_change] = weights[2*layer_to_change]+ np.array(epsilon[0])
 
-sat_in = getInputs()
-print(sat_in)
-sat_out = getOutputs()
+    model.set_weights(weights)
+    model.compile(optimizer=tf.optimizers.Adam(),loss='sparse_categorical_crossentropy',metrics=['accuracy'])
 
-prediction = model.predict([sat_in])
-print("Final prediction: ",prediction)
-print(np.argmax(prediction[0]))
+    sat_in = getInputs()
+    print(sat_in)
+    sat_out = getOutputs()
 
-# get_neuron_values_actual(model, sat_in, 2)
+    prediction = model.predict([sat_in])
+    print("Final prediction: ",prediction)
+    print(np.argmax(prediction[0]))
+    neuron_values = get_neuron_values_actual(model, sat_in, num_layers)
+    print(len(neuron_values))
+    print(np.shape(neuron_values[layer_to_change]))
+
+updateModel()
