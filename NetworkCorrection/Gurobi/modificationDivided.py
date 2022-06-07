@@ -64,13 +64,13 @@ def get_neuron_values(loaded_model, input, num_layers, values, gurobi_model, eps
             
             # print(np.shape(input), np.shape(values[int(i/2)]), np.shape(w))
             if int(i/2) == layer_to_change:
-                print("Adding modifications to layer:", layer_to_change)
+                print("Adding modifications to layer:", layer_to_change, np.shape(w))
                 for row in range(shape0):
                     ep = []
                     for col in range(shape1):
                         # mode =0
                         if mode==1:
-                            ep.append(gurobi_model.addVar(lb=-val_max, ub = val_max, vtype=grb.GRB.CONTINUOUS))
+                            ep.append(gurobi_model.addVar(lb = -val_max, ub = val_max, vtype=grb.GRB.CONTINUOUS))
                             gurobi_model.addConstr(ep[col]-epsilon_max<=0)
                             gurobi_model.addConstr(ep[col]+epsilon_max>=0)
                             gurobi_model.update()
@@ -107,10 +107,8 @@ def get_neuron_values(loaded_model, input, num_layers, values, gurobi_model, eps
 
             input = []
             for r in range(len(result)):
-                # input.append(gurobi_model.addVar(lb=-val_max, ub = val_max, vtype=grb.GRB.CONTINUOUS))
-                # gurobi_model.addConstr(input[r]-grb.max_(result[r], 0)==0)
                 if values[int(i/2)][r]>0: 
-                    input.append(gurobi_model.addVar(lb=-val_max, ub = val_max, vtype=grb.GRB.CONTINUOUS))
+                    input.append(gurobi_model.addVar(lb = -val_max, ub = val_max, vtype=grb.GRB.CONTINUOUS))
                     gurobi_model.addConstr(input[r]-result[r]==0)
                     # input.append(result[r])
                 else:
@@ -119,10 +117,11 @@ def get_neuron_values(loaded_model, input, num_layers, values, gurobi_model, eps
             neurons.append(input)
             l = l + 1
         # print(np.shape(neurons))
+        # print(len(epsilons), np.shape(epsilons[0]))
         # print(neurons[len(neurons)-1])
         return neurons[len(neurons)-1], epsilons
 
-def find(epsilon, model, inp, expected_label, num_inputs, num_outputs, mode, layer_to_change):
+def find(epsilon, model, inp, expected_outputs, mode, layer_to_change, phaseGiven, phases):
     num_layers = len(model.layers)
     env = gp.Env(empty=True)
     env.setParam('OutputFlag', 0)
@@ -135,6 +134,8 @@ def find(epsilon, model, inp, expected_label, num_inputs, num_outputs, mode, lay
     epsilon_max = m.addVar(lb = 0, ub = epsilon, vtype=GRB.CONTINUOUS, name="epsilon_max")
 
     neurons = get_neuron_values_actual(model, inp, num_layers)
+    if phaseGiven==1:
+        neurons = phases
 
     # for i in range(num_inputs):
     #     input_vars.append(m.addVar(inp[i], inp[i], vtype=grb.GRB.CONTINUOUS))
@@ -145,16 +146,22 @@ def find(epsilon, model, inp, expected_label, num_inputs, num_outputs, mode, lay
     # print(result)
     m.update()
     t2 = time()
-    diff = 0.1
-    # print(len(result))
-    # expected_label=3
-    resultVar = m.addVar(lb = -100, ub = 100, vtype=GRB.CONTINUOUS, name="resultVar")
+    # diff = 0.0000001
+    print(len(result))
+    z, p = 0, 0
+    resultVar = m.addVar(lb = -1000, ub = 1000, vtype=GRB.CONTINUOUS, name="resultVar")
     # m.addConstr(resultVar-result[3]==0)
+    # for i in range(len(result)):
+    #      m.setObjectiveN(grb.abs_(result[i]-expected_outputs[i]), index = 1, priority = 1)
+
     for i in range(len(result)):
-        if i==expected_label:
-            continue
-        m.addConstr(result[expected_label]-result[i]<=diff)
-        resultVar = resultVar+result[i]
+        if expected_outputs[i]==0:
+            m.addConstr(result[i]<=-0.00001)
+            z = z+1
+        else:
+            m.addConstr(result[i]-expected_outputs[i]<=0.0001)
+            p=p+1
+    # print(z, p)
     
     t3 = time()
     m.update()
@@ -165,12 +172,12 @@ def find(epsilon, model, inp, expected_label, num_inputs, num_outputs, mode, lay
     m.addConstr(e2+epsilon_max_2>=0)
     m.addConstr(e2-epsilon_max_2<=0)
     m.update()
-    # m.setObjective(resultVar, GRB.MINIMIZE)
-    # m.setObjective(epsilon_max+epsilon_max_2+resultVar, GRB.MINIMIZE)
-    m.setObjectiveN(epsilon_max, index = 2, priority = 1)
-    m.setObjectiveN(epsilon_max_2, index = 1, priority = 1)
-    m.setObjectiveN(resultVar, index = 0, priority = 2)
-    # m.setObjectiveN(epsilon_max, GRB.MAXIMIZE, 1)
+    m.setObjective(epsilon_max_2, GRB.MINIMIZE)
+    # m.setObjectiveN(epsilon_max, index = 2, priority = 1)
+    # m.setObjectiveN(epsilon_max_2, index = 1, priority = 0)
+    # m.setObjectiveN(epsilon_max_2, index = 1, priority = 1)
+    # m.setObjectiveN(epsilon_max_2, index = 2, priority = 10)
+    # m.setObjective(epsilon_max, GRB.MINIMIZE)
     t4 = time()
     # print("Epsilons are:", all_epsilons)
     t5 = time()
@@ -185,8 +192,7 @@ def find(epsilon, model, inp, expected_label, num_inputs, num_outputs, mode, lay
     print("Query has: ", m.NumObj, " objectives.")
     print(m.getVarByName("epsilon_max"))
     print(m.getVarByName("epsilon_max_2"))
-    print(m.getVarByName("resultVar"))
-    print(len(all_epsilons))
+    # print(len(all_epsilons), np.shape(all_epsilons))
     c = 0
     neg = 0
     for i in range(len(all_epsilons)):
@@ -201,7 +207,7 @@ def find(epsilon, model, inp, expected_label, num_inputs, num_outputs, mode, lay
                     neg = neg + 1
                 # print(all_epsilons[i][j][k].VarName, all_epsilons[i][j][k].X)
                 # print(m.getVarByName(all_epsilons[i][j][k]))
-        print(np.shape(all_epsilons[i]), c, neg)
+        # print(np.shape(all_epsilons[i]), c, neg)
     
     print("Effective change was: ", summation)
     print("The number of weights changed were: ",c)
@@ -213,5 +219,5 @@ def find(epsilon, model, inp, expected_label, num_inputs, num_outputs, mode, lay
             for k in range(len(all_epsilons[i][j])):
                 eps_1[j][k] = float(all_epsilons[i][j][k].X)
         eps.append(eps_1)
-    print(len(eps))
+    # print(len(eps), np.shape(eps[0]))
     return eps

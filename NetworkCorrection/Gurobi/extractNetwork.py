@@ -22,26 +22,37 @@ This file converts a neural network saved in nnet format to a tensorflow model.
 """
 class extractNetwork:
     def extractModel(self, model, layer_count):
+        # print(model.summary())
+        print("Extracting till layer: ", layer_count)
         weights = model.get_weights()
+        # print(len(weights))
         modifiedModel = Sequential()
         i = 0
         
         input_shape = np.shape(weights[i])[0]
         num_nodes = np.shape(weights[i])[1]
-        modifiedModel.add(Dense(num_nodes, input_dim = input_shape, activation= 'relu'))
+        if layer_count>1:
+            modifiedModel.add(Dense(num_nodes, input_dim = input_shape, activation= 'relu'))
+        else:
+            modifiedModel.add(Dense(num_nodes, input_dim = input_shape))
         i = i + 2
         while i<(2*layer_count)-2:
+            print("Adding hidden layer.")
             num_nodes = np.shape(weights[i])[1]
             modifiedModel.add(Dense(num_nodes, activation= 'relu'))
             i = i + 2
-        num_nodes = np.shape(weights[i])[1]
-        modifiedModel.add(Dense(num_nodes))
+        if layer_count>1:
+            num_nodes = np.shape(weights[i])[1]
+            modifiedModel.add(Dense(num_nodes))
 
         weights_to_set = []
         for i in range(0, 2*layer_count, 2):
             weights_to_set.append(np.array(weights[i]))
             weights_to_set.append(np.array(weights[i+1]))
         
+        # print((modifiedModel.get_weights()))
+        # print(modifiedModel.summary())
+        # print(len(weights_to_set))
         modifiedModel.set_weights(weights_to_set)
         
         # print("Model retreived.")

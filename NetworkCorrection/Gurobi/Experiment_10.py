@@ -1,26 +1,10 @@
-# from ConvertNNETtoTensor import ConvertNNETtoTensorFlow
-# from extractNetwork import extractNetwork
-
-# def loadModel():
-#     obj = ConvertNNETtoTensorFlow()
-#     file = '../Models/ACASXU_run2a_1_2_batch_2000.nnet'
-#     model = obj.constructModel(fileName=file)
-#     # print(type(model))
-#     # print(model.summary())
-#     return model
-
-# # o1 = extractNetwork()
-# # originalModel = loadModel()
-# # print(originalModel.summary())
-# # print(o1.printActivations(originalModel))
-# # modifiedModel = o1.extractModel(originalModel, 4)
-# # print(modifiedModel.summary())
-# # print(o1.printActivations(modifiedModel))
-
-
+from cProfile import label
+from ConvertNNETtoTensor import ConvertNNETtoTensorFlow
+from extractNetwork import extractNetwork
 import random
 import numpy as np
 import os
+import z3
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3' 
 """
 To supress the tensorflow warnings. 
@@ -35,15 +19,17 @@ tf.compat.v1.logging.set_verbosity(tf.compat.v1.logging.ERROR)
 """
 Setting verbosity of tensorflow to minimum.
 """
-from findModificationsLayerK import find
+from findModificationsLayerK import find as find
 from ConvertNNETtoTensor import ConvertNNETtoTensorFlow
-
-# tf.compat.v1.disable_eager_execution()
+from modificationDivided import find as find2
+from labelNeurons import labelNeurons
 """
 What this file does?
 Calls any particular Experiment file to get the epsilons generated.
 Updates the original network with the epsilons and generates a comparison between original and modified network.
 """
+counter=0
+
 def loadModel():
     obj = ConvertNNETtoTensorFlow()
     file = '../Models/ACASXU_run2a_1_2_batch_2000.nnet'
@@ -51,15 +37,6 @@ def loadModel():
     # print(type(model))
     # print(model.summary())
     return model
-
-# def loadModel():
-#     json_file = open('../Models/ACASXU_2_9.json', 'r')
-#     loaded_model_json = json_file.read()
-#     json_file.close()
-#     loaded_model = keras.models.model_from_json(loaded_model_json)
-#     # load weights into new model
-#     loaded_model.load_weights("../Models/ACASXU_2_9.h5")
-#     return loaded_model
 
 def getInputs():
     inp = [0.6399288845, 0.0, 0.0, 0.475, -0.475]
@@ -100,27 +77,24 @@ def getEpsilons(layer_to_change):
     sample_output = getOutputs()
     num_outputs = len(sample_output)
     true_label = np.argmax(model.predict([inp]))
-    expected_label = random.randint(0, num_outputs-1)
+    expected_label = random.randint(0, 1000)%(num_outputs-1)
     while true_label==expected_label:
-        expected_label = random.randint(0, num_outputs-1)
+        expected_label = random.randint(0, 1000)%(num_outputs-1)
 
     # expected_label = 0
     print(true_label, expected_label)
-    all_epsilons = find(100, model, inp, true_label, num_inputs, num_outputs, 1, layer_to_change)
+    all_epsilons = find(10, model, inp, true_label, num_inputs, num_outputs, 1, layer_to_change)
     
-    return all_epsilons
+    return all_epsilons, inp
 
-def updateModel():
-    num_layers = 7
-    layer_to_change = int(num_layers/2)
+def predict(epsilon, layer_to_change):
+    print("predicting for: ", layer_to_change)
     model = loadModel()
-    epsilon = getEpsilons(layer_to_change)
 
     """
     Change the name of the epsilon file according to what was generated in findCorrection.py
     """
-    print("Model loaded")
-    # ACASXU_2_9_0to04.vals.npy
+    # layer_to_change = 0
     weights = model.get_weights()
 
     weights[2*layer_to_change] = weights[2*layer_to_change]+ np.array(epsilon[0])
@@ -129,14 +103,113 @@ def updateModel():
     model.compile(optimizer=tf.optimizers.Adam(),loss='sparse_categorical_crossentropy',metrics=['accuracy'])
 
     sat_in = getInputs()
-    print(sat_in)
-    sat_out = getOutputs()
-
+    # print(sat_in)
     prediction = model.predict([sat_in])
     print("Final prediction: ",prediction)
     print(np.argmax(prediction[0]))
-    neuron_values = get_neuron_values_actual(model, sat_in, num_layers)
-    print(len(neuron_values))
-    print(np.shape(neuron_values[layer_to_change]))
+    return model
 
-updateModel()
+def updateModel():
+    num_layers = 7
+    layer_to_change = int(num_layers/2)
+    # layer_to_change = 0
+    model = loadModel()
+    originalModel = model
+    print("Layer to change in this iteration:", layer_to_change)
+    epsilon, inp = getEpsilons(layer_to_change)
+    sat_in = getInputs()
+    # print("Model loaded")
+    # ACASXU_2_9_0to04.vals.npy
+    tempModel = predict(epsilon, layer_to_change)
+    print("...........................................................................................")
+    print("Dividing Network.")
+    print("...........................................................................................")
+    """
+    Now we have modifications in the middle layer of the netwrok.
+    Next, we will run a loop to divide the network and find modifications in lower half of the network.
+    """
+    o1 = extractNetwork()
+    o3 = labelNeurons()
+    phases = get_neuron_values_actual(tempModel, sat_in, num_layers)
+    neuron_values_1 = phases[layer_to_change-1]
+    # all_epsilons2 = epsilon
+
+    while layer_to_change>0:
+        print("Extracting model till layer: ", layer_to_change)
+        extractedNetwork = o1.extractModel(originalModel, layer_to_change)
+        print(len(extractedNetwork.get_weights()))
+        layer_to_change = int(layer_to_change/2)
+        print("Applying modifications to: ", layer_to_change)
+        
+        epsilon = find2(10, extractedNetwork, inp, neuron_values_1, 1, layer_to_change, 0, phases)
+
+        tempModel = predict(epsilon, layer_to_change)
+        phases = get_neuron_values_actual(tempModel, sat_in, num_layers)
+        neuron_values_1 = phases[layer_to_change-1]
+        print("...........................................................................................")
+        print("Dividing Network.")
+        print("...........................................................................................")
+    return extractedNetwork, neuron_values_1,  epsilon 
+
+def ReLU(input):
+        return np.vectorize(lambda y: z3.If(y>=0, y, z3.RealVal(0)))(input)
+
+def add(m, expr):
+    global counter
+    m.assert_and_track(expr, "Constraint_: "+str(counter))
+    counter = counter + 1
+
+def Z3Attack(inputs, model, outputs):
+    delta_max = 100000
+    m = z3.Solver()  
+    m.set(unsat_core=True)  
+    delta = z3.RealVector('delta',len(inputs))
+    input_vars = z3.RealVector('input_vars',len(inputs))
+
+    for i in range(len(inputs)):
+        add(m, z3.And(input_vars[i]>=inputs[i]-delta[i], input_vars[i]<=inputs[i]+delta[i]))
+        add(m, z3.And(delta[i]>=0, delta[i]<=delta_max))
+    
+    weights = model.get_weights()
+    w = weights[0]
+    b = weights[1]
+    out = w.T @ input_vars + b
+    # print(out)
+    layer_output = ReLU(out)
+    
+    for i in range(len(outputs)):
+        if outputs[i]>0:
+            add(m, out[i]==outputs[i])
+        else:
+            add(m, out[i]<=0)
+        # add(m, layer_output[i]==outputs[i])
+   
+    solution = m.check()
+    print(solution)
+    if solution==z3.sat:
+        print("SAT")
+    else:
+        print(m.unsat_core())
+        
+    return 0
+
+def generateAdversarial():
+    extractedModel, neuron_values_1, epsilon = updateModel()
+    print("Finally, we have layer 0 modifications.")
+    tempModel = predict(epsilon, 0)
+    
+    sat_in = getInputs()
+    num_layers = int(len(tempModel.get_weights())/2)
+    phases = get_neuron_values_actual(tempModel, sat_in, num_layers)
+    neuron_values_1 = phases[0]
+    # for p in neuron_values_1:
+    #     print(p)
+    """
+    Now, I have all the epsilons which are to be added to layer 0. 
+    Left over task: Find delta such that input+delta can give the same effect as update model
+    We want the outputs of hidden layer 1 to be equal to the values stored in neuron_values_1
+    """
+    Z3Attack(sat_in, extractedModel, neuron_values_1)
+    # print(all_epsilons)
+
+generateAdversarial()
