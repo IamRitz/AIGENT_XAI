@@ -18,7 +18,6 @@ from time import time
 import gurobipy as gp
 from gurobipy import GRB
 import numpy as np
-import numpy as np
 import gurobipy as grb
 from ConvertNNETtoTensor import ConvertNNETtoTensorFlow
 """
