@@ -145,7 +145,7 @@ def find(epsilon, model, inp, expected_label, num_inputs, num_outputs, mode, lay
     # print(result)
     m.update()
     t2 = time()
-    diff = 0.1
+    diff = 0.0001
     # print(len(result))
     # expected_label=3
     resultVar = m.addVar(lb = -100, ub = 100, vtype=GRB.CONTINUOUS, name="resultVar")
@@ -153,7 +153,7 @@ def find(epsilon, model, inp, expected_label, num_inputs, num_outputs, mode, lay
     for i in range(len(result)):
         if i==expected_label:
             continue
-        m.addConstr(result[expected_label]-result[i]>=diff)
+        # m.addConstr(result[expected_label]-result[i]>=diff)
         resultVar = resultVar+result[i]
     
     t3 = time()

@@ -45,7 +45,7 @@ def getData():
         inp = [float(x) for x in row]
         prediction = model.predict([inp])
         out = np.argmax(prediction)
-        if out==7:
+        if out==6:
             print(i,",")
             # break
         i=i+1

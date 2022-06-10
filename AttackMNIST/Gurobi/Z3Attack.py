@@ -51,7 +51,7 @@ def getData():
     outputs = []
     f1 = open('MNISTdata/inputs.csv', 'r')
     f1_reader = reader(f1)
-
+    stopAt = 500
     f2 = open('MNISTdata/outputs.csv', 'r')
     f2_reader = reader(f2)
     i=0
@@ -59,7 +59,7 @@ def getData():
         inp = [float(x) for x in row]
         inputs.append(inp)
         i=i+1
-        if i==100:
+        if i==stopAt:
             break
         # break
     i=0
@@ -67,7 +67,7 @@ def getData():
         out = [float(x) for x in row]
         outputs.append(out)
         i=i+1
-        if i==100:
+        if i==stopAt:
             break
         # break
 
@@ -147,7 +147,7 @@ def updateModel(sat_in):
     num_layers = int(len(model.get_weights())/2)
     layer_to_change = int(num_layers/2)
     # layer_to_change = 0
-    
+    print("Modifying weights for weight layer:",layer_to_change)
     originalModel = model
     # print("Layer to change in this iteration:", layer_to_change)
     epsilon, inp = getEpsilons(layer_to_change, sat_in)
@@ -165,12 +165,24 @@ def updateModel(sat_in):
     o1 = extractNetwork()
     o3 = labelNeurons()
     phases = get_neuron_values_actual(tempModel, sat_in, num_layers)
-    neuron_values_1 = phases[layer_to_change-1]
+    neuron_values_1 = phases[layer_to_change]
+
+    # phases_original = get_neuron_values_actual(originalModel, sat_in, num_layers)
+    # neuron_values_2 = phases[layer_to_change-1]
+
+    # for i in range(len(neuron_values_1)):
+    #     print(neuron_values_1[i], neuron_values_2[i])
+    #     print("\n\n")
     # all_epsilons2 = epsilon
     # extractedNetwork = o1.extractModel(originalModel, 1)
+    # layer_to_change = 0
     while layer_to_change>0:
-        # print("Extracting model till layer: ", layer_to_change)
-        extractedNetwork = o1.extractModel(originalModel, layer_to_change)
+        # print("##############################")
+        
+        print("Extracting model till layer: ", layer_to_change+1)
+        extractedNetwork = o1.extractModel(originalModel, layer_to_change+1)
+        # print(extractedNetwork.summary())
+        # print("Number of weights: ",len(extractedNetwork.get_weights())/2)
         # print(len(extractedNetwork.get_weights()))
         layer_to_change = int(layer_to_change/2)
         # print("Applying modifications to: ", layer_to_change)
@@ -179,7 +191,7 @@ def updateModel(sat_in):
 
         tempModel = predict(epsilon, layer_to_change, sat_in)
         phases = get_neuron_values_actual(tempModel, sat_in, num_layers)
-        neuron_values_1 = phases[layer_to_change-1]
+        neuron_values_1 = phases[layer_to_change]
         # print("...........................................................................................")
         # print("Dividing Network.")
         # print("...........................................................................................")
@@ -204,8 +216,8 @@ def Z3Attack(inputs, model, outputs):
 
     for i in range(len(inputs)):
         add(m, z3.And(input_vars[i]>=inputs[i]-delta[i], input_vars[i]<=inputs[i]+delta[i]))
-        add(m, input_vars[i]!=0)
-        add(m, z3.And(delta[i]>=0, delta[i]<=delta_max))
+        # add(m, input_vars[i]!= 0)
+        add(m, z3.And(delta[i]>=0, delta[i]<=abs(inputs[i])))
     
     weights = model.get_weights()
     w = weights[0]
@@ -213,7 +225,7 @@ def Z3Attack(inputs, model, outputs):
     out = w.T @ input_vars + b
     # print(out)
     layer_output = ReLU(out)
-    tolerance = 1
+    tolerance = 10
 
     for i in range(len(outputs)):
         if outputs[i]>0:
@@ -253,85 +265,22 @@ def Z3Attack(inputs, model, outputs):
     # print(ad_inp)
     return ad_inp
 
-def GurobiAttack(inputs, model, outputs):
-    print("Launching attack with Gurobi.")
-    tolerance = 10
-    env = gp.Env(empty=True)
-    env.setParam('OutputFlag', 0)
-    env.start()
-    m = gp.Model("Model", env=env)
-    changes = []
-    input_vars = []
-    max_change = m.addVar(lb = 0, ub = tolerance, vtype=GRB.CONTINUOUS, name="max_change")
 
-    changes = []
-
-    for i in range(len(inputs)):
-        changes.append(m.addVar(vtype=GRB.CONTINUOUS))
-        m.addConstr(changes[i]<=tolerance)
-        m.addConstr(changes[i]>=-tolerance)
-
-    for i in range(len(inputs)):
-        input_vars.append(m.addVar(lb=-10, ub=10, vtype=GRB.CONTINUOUS))
-        # m.addConstr(input_vars[i]+changes[i]>=inputs[i])
-        # m.addConstr(input_vars[i]-changes[i]<=inputs[i])
-        m.addConstr(input_vars[i]-changes[i]==inputs[i])
-    
-    weights = model.get_weights()
-    w = weights[0]
-    b = weights[1]
-    result = np.matmul(input_vars,w)+b
-
-    thresholds = []
-    # threshold = m.addVar(lb = 0, ub = 1, vtype=GRB.CONTINUOUS, name="threshold")
-    for i in range(len(result)):
-        thresholds.append(m.addVar(lb=0, ub=2, vtype=GRB.CONTINUOUS))
-        # m.setObjectiveN(gp.abs_(result[i]-outputs[i]-thresholds[i]), index = i, priority = 1)
-        if outputs[i]>0:
-            m.addConstr(result[i]-thresholds[i]<=outputs[i])
-            m.addConstr(result[i]+thresholds[i]>=outputs[i])
-        else:
-            m.addConstr(result[i]-thresholds[i]<=0)
-
-    expr = gp.quicksum(changes)
-    epsilon_max_2 = m.addVar(lb=0,ub=10,vtype=GRB.CONTINUOUS, name="epsilon_max_2")
-    m.addConstr(expr>=0)
-    m.addConstr(expr-epsilon_max_2<=0)
-    m.update()
-    sum_thresholds = gp.quicksum(thresholds)
-    epsilon_max_3 = m.addVar(lb=0,ub=10,vtype=GRB.CONTINUOUS, name="epsilon_max_3")
-    m.addConstr(sum_thresholds>=0)
-    m.addConstr(sum_thresholds-epsilon_max_3<=0)
-    # m.setObjective(epsilon_max_3, GRB.MINIMIZE)
-    # m.setObjectiveN(threshold, index = 2, priority = 1)
-    # m.setObjectiveN(epsilon_max_3, index = 4, priority = 10)
-    m.setObjectiveN(epsilon_max_3, index = 0, priority = 1)
-    m.setObjectiveN(epsilon_max_2, index = 1, priority = 1)
-    # m.setObjectiveN(max_change, index = 3, priority = 1)
-    # m.setObjectiveN(epsilon_max_2, GRB.MINIMIZE, 1)
-
-    m.optimize()
-    if m.Status == GRB.INFEASIBLE:
-        return []
-    print(m.getVarByName("epsilon_max_2"))
-    print(m.getVarByName("epsilon_max_3"))
-    print(m.getVarByName("sum_thresholds"))
-    print(m.getVarByName("max_change"))
-    # print(thresholds)
-    m.write("abc.lp")
-
-    modifications = []
-    for i in range(len(changes)):
-        # print(inputs[i], float(changes[i].X))
-        modifications.append(float(changes[i].X)+inputs[i])
-    
-    # for i in range(len(result)):
-    #     print(result[i], outputs[i])
-    # print(modifications)
-    return modifications
+def findMetric(sat_in, ad_inp):
+    lInf, sumDist = 0, 0 
+    for i in range(len(sat_in)):
+        sumDist = sumDist + abs(sat_in[i]-ad_inp[i])
+        if abs(sat_in[i]-ad_inp[i])>lInf:
+            lInf = abs(sat_in[i]-ad_inp[i])
+    return lInf, sumDist
 
 def generateAdversarial(sat_in):
-    extractedModel, neuron_values_1, epsilon = updateModel(sat_in)
+    try:
+        extractedModel, neuron_values_1, epsilon = updateModel(sat_in)
+    except:
+        print("UNSAT. Could not find a minimal modification by divide and conquer.")
+        return 0
+    
     # print("Finally, we have layer 0 modifications.")
     tempModel = predict(epsilon, 0, sat_in)
     
@@ -347,10 +296,12 @@ def generateAdversarial(sat_in):
     We want the outputs of hidden layer 1 to be equal to the values stored in neuron_values_1
     """
     ad_inp = Z3Attack(sat_in, extractedModel, neuron_values_1)
+    # # ad_inp = [1,0,-1, 2]
     originalModel = loadModel()
     true_output = originalModel.predict([sat_in])
     true_label = np.argmax(true_output)
-    print(true_output)
+    print("True Label is: ", true_label)
+    # print(true_output)
     if len(ad_inp)>0:
         ad_output = originalModel.predict([ad_inp])
         print("Output after attack: ", ad_output)
@@ -366,57 +317,51 @@ def generateAdversarial(sat_in):
             # print(vals[0][i], neuron_values_1[i])
         print("Overall shift : ", ch)
         print("Maximum shift: ", max_shift)
+        linf, sumDist = findMetric(sat_in, ad_inp)
         if predicted_label!=true_label:
+            print(linf, sumDist)
             print("Attack was successful. Label changed from ",true_label," to ",predicted_label)
             # print(sat_in)
-    #         return 1
-    # return 0
-    # print()
-    # print()
-    # ad_inp2 = GurobiAttack(sat_in, extractedModel, neuron_values_1)
-    # if len(ad_inp2)>0:
-    #     ad_output = originalModel.predict([ad_inp2])
-    #     print(ad_output)
-    #     predicted_label = np.argmax(ad_output)
-    #     print(predicted_label)
-    #     vals = get_neuron_values_actual(originalModel, ad_inp2, num_layers)
-    #     ch = 0
-    #     max_shift = 0
-    #     for i in range(len(vals[0])):
-    #         ch = ch + abs(vals[0][i]-neuron_values_1[i])
-    #         if abs(vals[0][i]-neuron_values_1[i])>max_shift:
-    #             max_shift = abs(vals[0][i]-neuron_values_1[i])
-    #         # print(vals[0][i], neuron_values_1[i])
-    #     print("Overall shift : ", ch)
-    #     print("Maximum shift: ", max_shift)
-    #     if predicted_label!=true_label:
-    #         print("Attack was successful. Label changed from ",true_label," to ",predicted_label)
-    #         # print("Original Input:")
+            return 1
     return 0
-
+    
 def attack():
     inputs, outputs, count = getData()
     print("Number of inputs in consideration: ",len(inputs))
     i=15
-    indexes = [15 ,
-        29 ,
-        38 ,
-        42 ,
-        52 ,
-        71 ,
-        79 ,
-        84 ,
-        91 ,
-        96 ,
-        101 ,
-        103 ,
-        123 ,
-        140 ,
-        141 ,
-        185 ,
-        193 ,
-        196 ,
-        212 ]
+    # indexes = [15 ,
+    #     29 ,
+    #     38 ,
+    #     42 ,
+    #     52 ,
+    #     71 ,
+    #     79 ,
+    #     84 ,
+    #     91 ,
+    #     96 ]
+    indexes = [13 ,
+        18 ,
+        32 ,
+        36 ,
+        39 ,
+        62 ,
+        66 ,
+        73 ,
+        83 ,
+        90 ,
+        93]
+    # count=0
+    # for i in range(784):
+    #     # print(indexes[i])
+    #     f = 0
+    #     c = inputs[indexes[0]][i]
+    #     for j in range(0, 50):
+    #         if inputs[j][i]!=c:
+    #             f=-1
+    #     if f==0:
+    #         print(i, c)
+    #         count=count+1
+    # print(count)
     for i in range(count):
         print("...........................................................................................")
         print("Launching attack on input:", i)
@@ -427,7 +372,8 @@ def attack():
         t2 = time()
         print("Time taken in this iteration:", (t2-t1), "seconds.")
         print("...........................................................................................")
-        if i==2:
-            break
+        # break
+        # if i==5:
+        #     break
 
 attack()

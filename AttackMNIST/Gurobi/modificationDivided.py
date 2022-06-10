@@ -154,14 +154,29 @@ def find(epsilon, model, inp, expected_outputs, mode, layer_to_change, phaseGive
     # for i in range(len(result)):
     #      m.setObjectiveN(grb.abs_(result[i]-expected_outputs[i]), index = 1, priority = 1)
 
+    # thresholds = []
+    # for i in range(len(result)):
+    #     thresholds.append(m.addVar(lb=0, ub=0, vtype=GRB.CONTINUOUS))
+    #     # m.setObjectiveN(gp.abs_(result[i]-outputs[i]-thresholds[i]), index = i, priority = 1)
+    #     if expected_outputs[i]>0:
+    #         m.addConstr(result[i]-thresholds[i]<=expected_outputs[i])
+    #         m.addConstr(result[i]+thresholds[i]>=expected_outputs[i])
+    #     else:
+    #         m.addConstr(result[i]-thresholds[i]<=0)
+
+    # sum_thresholds = gp.quicksum(thresholds)
+    # epsilon_max_3 = m.addVar(lb=0,ub=10,vtype=GRB.CONTINUOUS, name="epsilon_max_3")
+    # m.addConstr(sum_thresholds>=-10)
+    # m.addConstr(sum_thresholds-epsilon_max_3<=0)
+    tr = 2
     for i in range(len(result)):
-        if expected_outputs[i]==0:
-            m.addConstr(result[i]<=-0.00001)
+        if expected_outputs[i]<=0:
+            m.addConstr(result[i]<=tr)
             z = z+1
         else:
-            m.addConstr(result[i]-expected_outputs[i]<=0.0001)
+            m.addConstr(result[i]-expected_outputs[i]<=tr)
             p=p+1
-    # print(z, p)
+    # print("Z & P:",z, p)
     
     t3 = time()
     m.update()
@@ -172,11 +187,7 @@ def find(epsilon, model, inp, expected_outputs, mode, layer_to_change, phaseGive
     m.addConstr(e2+epsilon_max_2>=0)
     m.addConstr(e2-epsilon_max_2<=0)
     m.update()
-    m.setObjective(epsilon_max_2, GRB.MAXIMIZE)
-    # m.setObjectiveN(epsilon_max, index = 2, priority = 1)
-    # m.setObjectiveN(epsilon_max_2, index = 1, priority = 0)
-    # m.setObjectiveN(epsilon_max_2, index = 1, priority = 1)
-    # m.setObjectiveN(epsilon_max_2, index = 2, priority = 10)
+    m.setObjectiveN(epsilon_max_2, index = 2, priority = 10)
     # m.setObjective(epsilon_max, GRB.MINIMIZE)
     t4 = time()
     # print("Epsilons are:", all_epsilons)

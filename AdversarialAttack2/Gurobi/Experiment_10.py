@@ -34,7 +34,7 @@ counter=0
 
 def loadModel():
     obj = ConvertNNETtoTensorFlow()
-    file = '../Models/ACASXU_run2a_1_6_batch_2000.nnet'
+    file = '../Models/ACASXU_run2a_3_8_batch_2000.nnet'
     model = obj.constructModel(fileName=file)
     # print(type(model))
     # print(model.summary())
@@ -172,7 +172,7 @@ def Z3Attack(inputs, model, outputs):
 
     for i in range(len(inputs)):
         add(m, z3.And(input_vars[i]>=inputs[i]-delta[i], input_vars[i]<=inputs[i]+delta[i]))
-        add(m, input_vars[i]!=0)
+        # add(m, input_vars[i]!=0)
         add(m, z3.And(delta[i]>=0, delta[i]<=delta_max))
     
     weights = model.get_weights()
@@ -181,7 +181,7 @@ def Z3Attack(inputs, model, outputs):
     out = w.T @ input_vars + b
     # print(out)
     layer_output = ReLU(out)
-    tolerance = 1
+    tolerance = 3
 
     for i in range(len(outputs)):
         if outputs[i]>0:
