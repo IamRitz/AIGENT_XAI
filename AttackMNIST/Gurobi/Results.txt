@@ -1,0 +1,13 @@
+When tolerance was 0.5 and tr was 3 and all pixels were allowed to change, for 500 samples:
+Input Frequencies: [30, 30, 30, 30, 30, 30, 5, 30, 30, 30]
+Output Frequencies: [16, 93, 0, 13, 2, 0, 1, 0, 148, 2]
+
+When tolerance was 0.5 and tr was 3 and only 15 pixels were allowed to change, for 500 samples:
+[3, 30, 8, 9, 12, 15, 5, 7, 23, 23]
+[5, 12, 14, 24, 18, 11, 14, 6, 18, 13]
+
+When tolerance was 1.0 and tr was 3 and only 15 pixels were allowed to change, for 500 samples:
+[9, 30, 21, 19, 30, 27, 5, 20, 30, 30]
+[7, 30, 22, 37, 19, 17, 27, 12, 34, 16]
+
+When tolerance was 0.5 and tr was 3 and only 15 pixels were allowed to change, for 1000 samples:

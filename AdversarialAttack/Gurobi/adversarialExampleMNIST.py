@@ -1,3 +1,4 @@
+from time import time
 import gurobipy as gp
 import gurobipy as gp
 from gurobipy import GRB
@@ -15,17 +16,8 @@ from relumip import AnnModel
 from relumip.utils.visualization import plot_results_2d
 
 
-def loadModel():
-    json_file = open('./Models/ACASXU_2_9.json', 'r')
-    loaded_model_json = json_file.read()
-    json_file.close()
-    loaded_model = keras.models.model_from_json(loaded_model_json)
-    # load weights into new model
-    loaded_model.load_weights("../Models/ACASXU_2_9.h5")
-    return loaded_model
-
 def getInputs():
-    inputs = genfromtxt('./data/inputs.csv', delimiter=',')
+    inputs = genfromtxt('../data/inputs.csv', delimiter=',')
     return inputs[0]
 
 def getmnist():
@@ -251,7 +243,7 @@ def example():
         print('Encountered an attribute error')
 
 if __name__ == '__main__':
-    model = tf.keras.models.load_model(os.path.abspath(os.path.join(os.getcwd(), os.pardir)) +'/Models/mnist.h5')
+    model = tf.keras.models.load_model(os.path.abspath(os.path.join(os.getcwd(), os.pardir)) +'/Models/mnist_1.h5')
     inp = getmnist()
 
     num_inputs = len(inp)
@@ -261,5 +253,14 @@ if __name__ == '__main__':
 
     print(true_label)
 
-    ann(5, model, inp, true_label, num_inputs, num_outputs)
+    # ann(5, model, inp, true_label, num_inputs, num_outputs)
+    ad = []
+    t1 = time()
     epsilons, status = find(0.5, 10, model, inp, true_label, num_inputs, num_outputs)
+    for i in range(len(inp)):
+        ad.append(epsilons[i]+inp[i])
+    t2 = time()
+    print("Time taken:", t2-t1)
+    adversarial_output = model.predict([ad])
+    adversarial_label = (np.argmax(adversarial_output))
+    print(adversarial_label, true_label)
