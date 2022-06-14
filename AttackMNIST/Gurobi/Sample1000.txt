@@ -1,0 +1,199 @@
+Number of inputs in consideration:  1000
+###########################################################################################
+Launching attack on input: 0
+
+Prediction:  3
+Prediction:  8
+Prediction:  8
+Attack was successful. Label changed from  5  to  3
+Time taken in this iteration: 2.4308605194091797 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 1
+
+Prediction:  5
+Prediction:  0
+Prediction:  0
+Time taken in this iteration: 5.057891607284546 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 2
+
+Prediction:  1
+Prediction:  8
+Prediction:  8
+Attack was successful. Label changed from  4  to  1
+Time taken in this iteration: 1.8526732921600342 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 3
+
+Prediction:  8
+Prediction:  8
+Prediction:  8
+Attack was successful. Label changed from  1  to  3
+Time taken in this iteration: 4.2644054889678955 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 4
+
+Prediction:  9
+Prediction:  8
+Prediction:  8
+Time taken in this iteration: 4.934068918228149 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 5
+
+Prediction:  1
+Prediction:  8
+Prediction:  8
+Time taken in this iteration: 5.0259177684783936 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 6
+
+Prediction:  8
+Prediction:  8
+Prediction:  8
+Time taken in this iteration: 5.073535442352295 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 7
+
+Prediction:  2
+Prediction:  0
+Prediction:  0
+Time taken in this iteration: 5.064316511154175 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 8
+
+Prediction:  8
+Prediction:  8
+Prediction:  8
+Attack was successful. Label changed from  1  to  3
+Time taken in this iteration: 1.5909485816955566 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 9
+
+Prediction:  2
+Prediction:  8
+Prediction:  8
+Time taken in this iteration: 5.184993267059326 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 10
+
+Prediction:  8
+Prediction:  3
+Prediction:  3
+Time taken in this iteration: 5.0147716999053955 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 11
+
+Prediction:  2
+Prediction:  8
+Prediction:  8
+Attack was successful. Label changed from  5  to  6
+Time taken in this iteration: 2.842348098754883 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 12
+
+Prediction:  8
+Prediction:  8
+Prediction:  8
+Time taken in this iteration: 5.034016132354736 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 13
+
+Prediction:  6
+UNSAT. Could not find a minimal modification by divide and conquer.
+Time taken in this iteration: 0.8927927017211914 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 14
+
+Prediction:  8
+Prediction:  8
+Prediction:  8
+Time taken in this iteration: 5.135537385940552 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 15
+
+Prediction:  9
+Prediction:  9
+Prediction:  9
+Time taken in this iteration: 4.979563474655151 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 16
+
+Prediction:  3
+Prediction:  8
+Prediction:  8
+Time taken in this iteration: 4.902595281600952 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 17
+
+Prediction:  9
+Prediction:  8
+Prediction:  8
+Time taken in this iteration: 5.220050573348999 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 18
+
+Prediction:  6
+UNSAT. Could not find a minimal modification by divide and conquer.
+Time taken in this iteration: 1.0842721462249756 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 19
+
+Prediction:  8
+Prediction:  8
+Prediction:  8
+Attack was successful. Label changed from  9  to  8
+Time taken in this iteration: 1.5315253734588623 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 20
+
+Prediction:  2
+Prediction:  8
+Prediction:  8
+Time taken in this iteration: 4.958216190338135 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 21
+
+Prediction:  5
+Prediction:  0
+Prediction:  0
+Time taken in this iteration: 5.137201309204102 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 22
+
+Prediction:  4
+Prediction:  8
+Prediction:  8
+Attack was successful. Label changed from  9  to  4
+Time taken in this iteration: 3.287851572036743 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 23
+
+Prediction:  8
+Prediction:  8
+Prediction:  8
+Attack was successful. Label changed from  1  to  3
+Time taken in this iteration: 4.7777698040008545 seconds.
+###########################################################################################
