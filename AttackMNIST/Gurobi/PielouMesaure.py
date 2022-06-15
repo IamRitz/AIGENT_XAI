@@ -21,7 +21,8 @@ def PielouMeaure(frequencies, num_classes):
 a = [16, 93, 0, 13, 2, 0, 1, 0, 148, 2]
 b = [5, 12, 14, 24, 18, 11, 14, 6, 18, 13]
 c = [7, 30, 22, 37, 19, 17, 27, 12, 34, 16]
-d = []
+d = [9, 26, 15, 42, 26, 20, 24, 6, 35, 23]
+e = [16, 35, 23, 49, 23, 23, 22, 12, 41, 31]
 
 print(PielouMeaure(a, len(a)))
 print()
@@ -29,4 +30,6 @@ print(PielouMeaure(b, len(b)))
 print()
 print(PielouMeaure(c, len(c)))
 print()
-# print(PielouMeaure(d, len(d)))
+print(PielouMeaure(d, len(d)))
+print()
+print(PielouMeaure(e, len(e)))

@@ -6,12 +6,12 @@ from matplotlib import pyplot as plt
 import os
 
 # create figure
-x, y = 4, 2
+x, y = 5, 1.5
 fig = plt.figure(figsize=(x, y))
 
 # setting values to rows and column variables
 rows = 2
-columns = 5
+columns = 10
 
 originalImages = []
 adversarialImages = []
@@ -51,6 +51,6 @@ while(counterAdver<len(adversarialImages)):
     
     if len(adversarialImages)-counterAdver<=columns:
         columns = len(adversarialImages)-counterAdver
-    plt.savefig("Grids/comparison_"+str(f)+".jpg")
+    plt.savefig("Grids_1/comparison_"+str(f)+".jpg")
     f = f + 1
     fig = plt.figure(figsize=(x, y))
