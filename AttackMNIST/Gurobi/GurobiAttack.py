@@ -46,7 +46,7 @@ def getData():
     outputs = []
     f1 = open('MNISTdata/inputs.csv', 'r')
     f1_reader = reader(f1)
-    stopAt = 1000
+    stopAt = 500
     f2 = open('MNISTdata/outputs.csv', 'r')
     f2_reader = reader(f2)
     i=0
@@ -188,7 +188,7 @@ def updateModel(sat_in):
 
 def GurobiAttack(inputs, model, outputs):
     # print("Launching attack with Gurobi.")
-    tolerance = 0.5
+    tolerance = 1
     env = gp.Env(empty=True)
     env.setParam('OutputFlag', 0)
     env.start()
@@ -269,7 +269,7 @@ def generateAdversarial(sat_in):
         extractedModel, neuron_values_1, epsilon = updateModel(sat_in)
     except:
         print("UNSAT. Could not find a minimal modification by divide and conquer.")
-        return 0, [], [], -1, -1
+        return 0, [], [], -1, -1, 0, 0
 
    
     # print("Finally, we have layer 0 modifications.")
@@ -293,10 +293,11 @@ def generateAdversarial(sat_in):
     
     # for i in range(len(change))
     if len(change)>0:
+        pixelCount = 1
         for j in range(50):
             
             randomlist = []
-            for i in range(0,15):
+            for i in range(0, pixelCount):
                 n = int(random.randint(1,len(change)-1))
                 randomlist.append(n)
 
@@ -326,13 +327,16 @@ def generateAdversarial(sat_in):
             # print("Maximum shift: ", max_shift)
 
             if predicted_label!=true_label:
-                
-                # print(j)
-                # print(linf, sumDist)
+                L2_norm = np.linalg.norm(np.array(sat_in)-np.array(ad_inp2))
+                print(L2_norm, linf, sumDist)
                 print("Attack was successful. Label changed from ",true_label," to ",predicted_label)
+                print("This was:", pixelCount," attack.")
                 # print("Original Input:")
-                return 1, sat_in, ad_inp2, true_label, predicted_label
-    return 0, [], [], -1, -1
+                return 1, sat_in, ad_inp2, true_label, predicted_label, L2_norm, linf
+            else:
+                if j%5==0 and pixelCount<=20:
+                    pixelCount *= 2
+    return 0, [], [], -1, -1, 0, 0
 
 def attack():
     inputs, outputs, count = getData()
@@ -340,6 +344,9 @@ def attack():
     i=0
     counter_inputs = [0]*10
     counter_outputs = [0]*10
+    l2 = 0
+    linfTotal = 0
+    adv = 0
 
     for i in range(count):
         print("###########################################################################################")
@@ -347,11 +354,14 @@ def attack():
         sat_in = inputs[i]
         print()
         t1 = time()
-        success, original, adversarial, true_label, predicted_label = generateAdversarial(sat_in)
+        success, original, adversarial, true_label, predicted_label, L2_norm, linf = generateAdversarial(sat_in)
         if success==1 and counter_inputs[true_label]<30:
             counter_inputs[true_label] = counter_inputs[true_label] + 1
             counter_outputs[predicted_label] = counter_outputs[predicted_label] + 1
-        # if success==1:
+        if success==1:
+            l2 = l2 + L2_norm
+            linfTotal = linfTotal + linf
+            adv = adv + 1
         #     break
         t2 = time()
         print("Time taken in this iteration:", (t2-t1), "seconds.")
@@ -362,6 +372,8 @@ def attack():
     
     print(counter_inputs)
     print(counter_outputs)
+    print("Average L-inf norm:", linfTotal/adv)
+    print("Average L-2 norm:", l2/adv)
 
 t1 = time()
 attack()
