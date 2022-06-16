@@ -33,9 +33,9 @@ def getImages():
     count = 0
     im1 = []
     im2 = []
-    for path in os.listdir("/home/tooba/Documents/DNNVerification/AttackMNIST/Gurobi/AdversarialImages"):
-        originalImages.append('OriginalImages/'+str(path))
-        adversarialImages.append('AdversarialImages/'+str(path))
+    for path in os.listdir("/home/tooba/Documents/DNNVerification/AttackMNIST/Gurobi/AdversarialImages3"):
+        originalImages.append('OriginalImages3/'+str(path))
+        adversarialImages.append('AdversarialImages3/'+str(path))
         count = count+1
     
     for i in range(count):

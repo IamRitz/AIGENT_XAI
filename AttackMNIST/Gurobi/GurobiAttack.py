@@ -186,14 +186,14 @@ def updateModel(sat_in):
         # print("....................................")
     return extractedNetwork, neuron_values_1,  epsilon 
 
-def GurobiAttack(inputs, model, outputs):
+def GurobiAttack(inputs, model, outputs, k):
     # print("Launching attack with Gurobi.")
     tolerance = 1
     env = gp.Env(empty=True)
     env.setParam('OutputFlag', 0)
     env.start()
     m = gp.Model("Model", env=env)
-    changes = []
+    x = []
     input_vars = []
     max_change = m.addVar(lb = 0, ub = tolerance, vtype=GRB.CONTINUOUS, name="max_change")
 
@@ -201,8 +201,9 @@ def GurobiAttack(inputs, model, outputs):
 
     for i in range(len(inputs)):
         changes.append(m.addVar(lb=-10, ub=10, vtype=GRB.CONTINUOUS))
-        m.addConstr(changes[i]<=tolerance)
-        m.addConstr(changes[i]>=-tolerance)
+        x.append(m.addVar(vtype=GRB.BINARY))
+        m.addConstr(changes[i]-tolerance*x[i]<=0)
+        m.addConstr(changes[i]+tolerance*x[i]>=0)
 
     for i in range(len(inputs)):
         input_vars.append(m.addVar(lb=-10, ub=10, vtype=GRB.CONTINUOUS))
@@ -234,6 +235,9 @@ def GurobiAttack(inputs, model, outputs):
     #     else:
     #         m.addConstr(result[i]-thresholds[i]<=0)
 
+    sumX = gp.quicksum(x)
+    m.addConstr(sumX<=k)
+
     expr = gp.quicksum(changes)
     epsilon_max_2 = m.addVar(lb=0,ub=150,vtype=GRB.CONTINUOUS, name="epsilon_max_2")
     m.addConstr(expr>=0)
@@ -243,14 +247,14 @@ def GurobiAttack(inputs, model, outputs):
     # epsilon_max_3 = m.addVar(lb=0,ub=100,vtype=GRB.CONTINUOUS, name="epsilon_max_3")
     # m.addConstr(sum_thresholds>=0)
     # m.addConstr(sum_thresholds-epsilon_max_3<=0)
-    # m.setObjective(epsilon_max_2, GRB.MINIMIZE)
+    # m.setObjective(sumX, GRB.MINIMIZE)
 
     m.optimize()
     if m.Status == GRB.INFEASIBLE:
         print("Adversarial example not found.")
         return []
     # m.write("abc.lp")
-    
+    # print(sumX)
     modifications = []
     for i in range(len(changes)):
         modifications.append(float(changes[i].X))
@@ -289,26 +293,18 @@ def generateAdversarial(sat_in):
     true_label = np.argmax(true_output)
     # print("True Label is: ", true_label)
     # print(true_output)
-    change = GurobiAttack(sat_in, extractedModel, neuron_values_1)
+    k = 2
+    change = GurobiAttack(sat_in, extractedModel, neuron_values_1, k)
     
     # for i in range(len(change))
     if len(change)>0:
         pixelCount = 1
-        for j in range(50):
+        for j in range(7):
             
-            randomlist = []
-            for i in range(0, pixelCount):
-                n = int(random.randint(1,len(change)-1))
-                randomlist.append(n)
-
             ad_inp2 = []
 
             for i in range(len(change)):
-                # ad_inp2.append(change[i]+sat_in[i])
-                if i in randomlist:
-                    ad_inp2.append(change[i]+sat_in[i])
-                else:
-                    ad_inp2.append(sat_in[i])
+                ad_inp2.append(change[i]+sat_in[i])
 
             ad_output = originalModel.predict([ad_inp2])
             # print(ad_output)
@@ -330,12 +326,14 @@ def generateAdversarial(sat_in):
                 L2_norm = np.linalg.norm(np.array(sat_in)-np.array(ad_inp2))
                 print(L2_norm, linf, sumDist)
                 print("Attack was successful. Label changed from ",true_label," to ",predicted_label)
-                print("This was:", pixelCount," attack.")
+                print("This was:", k,"pixel attack.")
                 # print("Original Input:")
                 return 1, sat_in, ad_inp2, true_label, predicted_label, L2_norm, linf
             else:
-                if j%5==0 and pixelCount<=20:
-                    pixelCount *= 2
+                k = k*2
+                change = GurobiAttack(sat_in, extractedModel, neuron_values_1, k)
+                # if j%5==0 and pixelCount<=20:
+                #     pixelCount *= 2
     return 0, [], [], -1, -1, 0, 0
 
 def attack():
@@ -362,7 +360,7 @@ def attack():
             l2 = l2 + L2_norm
             linfTotal = linfTotal + linf
             adv = adv + 1
-        #     break
+            # break
         t2 = time()
         print("Time taken in this iteration:", (t2-t1), "seconds.")
         print("###########################################################################################")

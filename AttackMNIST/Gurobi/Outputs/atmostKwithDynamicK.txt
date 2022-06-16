@@ -1,0 +1,4816 @@
+Number of inputs in consideration:  500
+###########################################################################################
+Launching attack on input: 0
+
+Prediction:  3
+Prediction:  8
+Prediction:  8
+Time taken in this iteration: 2.5831828117370605 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 1
+
+Prediction:  5
+Prediction:  0
+Prediction:  0
+Time taken in this iteration: 2.426387071609497 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 2
+
+Prediction:  1
+Prediction:  8
+Prediction:  8
+2.0 1.0 4.0
+Attack was successful. Label changed from  4  to  6
+This was: 4 pixel attack.
+Time taken in this iteration: 1.7291979789733887 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 3
+
+Prediction:  8
+Prediction:  8
+Prediction:  8
+1.4142135623730951 1.0 2.0
+Attack was successful. Label changed from  1  to  8
+This was: 2 pixel attack.
+Time taken in this iteration: 1.737147331237793 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 4
+
+Prediction:  9
+Prediction:  8
+Prediction:  8
+2.8284271247461903 1.0 8.0
+Attack was successful. Label changed from  9  to  8
+This was: 8 pixel attack.
+Time taken in this iteration: 1.942586898803711 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 5
+
+Prediction:  1
+Prediction:  8
+Prediction:  8
+Time taken in this iteration: 2.331632375717163 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 6
+
+Prediction:  8
+Prediction:  8
+Prediction:  8
+4.0 1.0 16.0
+Attack was successful. Label changed from  1  to  8
+This was: 16 pixel attack.
+Time taken in this iteration: 2.1736702919006348 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 7
+
+Prediction:  2
+Prediction:  0
+Prediction:  0
+4.0 1.0 16.0
+Attack was successful. Label changed from  3  to  8
+This was: 16 pixel attack.
+Time taken in this iteration: 2.2382113933563232 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 8
+
+Prediction:  8
+Prediction:  8
+Prediction:  8
+2.8284271247461903 1.0 8.0
+Attack was successful. Label changed from  1  to  3
+This was: 8 pixel attack.
+Time taken in this iteration: 2.057833671569824 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 9
+
+Prediction:  2
+Prediction:  8
+Prediction:  8
+2.8284271247461903 1.0 8.0
+Attack was successful. Label changed from  4  to  6
+This was: 8 pixel attack.
+Time taken in this iteration: 1.8947346210479736 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 10
+
+Prediction:  8
+Prediction:  3
+Prediction:  3
+Time taken in this iteration: 2.2870254516601562 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 11
+
+Prediction:  2
+Prediction:  8
+Prediction:  8
+3.872983346207417 1.0 15.000000000000014
+Attack was successful. Label changed from  5  to  6
+This was: 16 pixel attack.
+Time taken in this iteration: 2.1102075576782227 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 12
+
+Prediction:  8
+Prediction:  8
+Prediction:  8
+Time taken in this iteration: 2.84063458442688 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 13
+
+Prediction:  6
+UNSAT. Could not find a minimal modification by divide and conquer.
+Time taken in this iteration: 0.9102520942687988 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 14
+
+Prediction:  8
+Prediction:  8
+Prediction:  8
+4.0 1.0 16.0
+Attack was successful. Label changed from  1  to  8
+This was: 16 pixel attack.
+Time taken in this iteration: 2.117095470428467 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 15
+
+Prediction:  9
+Prediction:  9
+Prediction:  9
+5.656854249492381 1.0 32.000000000000014
+Attack was successful. Label changed from  7  to  8
+This was: 32 pixel attack.
+Time taken in this iteration: 2.167797088623047 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 16
+
+Prediction:  3
+Prediction:  8
+Prediction:  8
+4.0 1.0 16.0
+Attack was successful. Label changed from  2  to  8
+This was: 16 pixel attack.
+Time taken in this iteration: 2.05892276763916 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 17
+
+Prediction:  9
+Prediction:  8
+Prediction:  8
+Time taken in this iteration: 2.1661036014556885 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 18
+
+Prediction:  6
+UNSAT. Could not find a minimal modification by divide and conquer.
+Time taken in this iteration: 1.0665555000305176 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 19
+
+Prediction:  8
+Prediction:  8
+Prediction:  8
+4.0 1.0 16.0
+Attack was successful. Label changed from  9  to  8
+This was: 16 pixel attack.
+Time taken in this iteration: 2.147477388381958 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 20
+
+Prediction:  2
+Prediction:  8
+Prediction:  8
+2.0 1.0 4.0
+Attack was successful. Label changed from  4  to  6
+This was: 4 pixel attack.
+Time taken in this iteration: 1.7746810913085938 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 21
+
+Prediction:  5
+Prediction:  0
+Prediction:  0
+Time taken in this iteration: 2.288790225982666 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 22
+
+Prediction:  4
+Prediction:  8
+Prediction:  8
+2.8284271247461903 1.0 8.0
+Attack was successful. Label changed from  9  to  8
+This was: 8 pixel attack.
+Time taken in this iteration: 1.9417665004730225 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 23
+
+Prediction:  8
+Prediction:  8
+Prediction:  8
+2.8284271247461903 1.0 8.0
+Attack was successful. Label changed from  1  to  8
+This was: 8 pixel attack.
+Time taken in this iteration: 1.9907984733581543 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 24
+
+Prediction:  5
+Prediction:  8
+Prediction:  8
+1.4142135623730951 1.0 2.0
+Attack was successful. Label changed from  8  to  5
+This was: 2 pixel attack.
+Time taken in this iteration: 1.5825021266937256 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 25
+
+Prediction:  3
+Prediction:  8
+Prediction:  8
+Time taken in this iteration: 2.303901195526123 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 26
+
+Prediction:  9
+Prediction:  8
+Prediction:  8
+2.6457513110645907 1.0 7.000000000000014
+Attack was successful. Label changed from  4  to  6
+This was: 8 pixel attack.
+Time taken in this iteration: 1.9239156246185303 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 27
+
+Prediction:  7
+Prediction:  3
+Prediction:  3
+Time taken in this iteration: 2.347296953201294 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 28
+
+Prediction:  7
+Prediction:  8
+Prediction:  8
+Time taken in this iteration: 2.1304972171783447 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 29
+
+Prediction:  1
+Prediction:  3
+Prediction:  3
+5.656854249492381 1.0 32.0
+Attack was successful. Label changed from  7  to  8
+This was: 32 pixel attack.
+Time taken in this iteration: 2.2295358180999756 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 30
+
+Prediction:  1
+Prediction:  8
+Prediction:  8
+3.875568900009021 1.0 15.141542568569076
+Attack was successful. Label changed from  3  to  6
+This was: 16 pixel attack.
+Time taken in this iteration: 2.087773561477661 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 31
+
+Prediction:  9
+Prediction:  8
+Prediction:  8
+Time taken in this iteration: 2.2912628650665283 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 32
+
+Prediction:  6
+UNSAT. Could not find a minimal modification by divide and conquer.
+Time taken in this iteration: 0.8989999294281006 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 33
+
+Prediction:  7
+Prediction:  9
+Prediction:  9
+3.872983346207417 1.0 15.000000000000004
+Attack was successful. Label changed from  9  to  8
+This was: 16 pixel attack.
+Time taken in this iteration: 2.033132791519165 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 34
+
+Prediction:  5
+Prediction:  8
+Prediction:  8
+5.656854249492381 1.0 32.0
+Attack was successful. Label changed from  0  to  8
+This was: 32 pixel attack.
+Time taken in this iteration: 2.139356851577759 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 35
+
+Prediction:  2
+Prediction:  8
+Prediction:  8
+Time taken in this iteration: 2.2438693046569824 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 36
+
+Prediction:  6
+UNSAT. Could not find a minimal modification by divide and conquer.
+Time taken in this iteration: 0.9011533260345459 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 37
+
+Prediction:  5
+Prediction:  8
+Prediction:  8
+Time taken in this iteration: 2.3069334030151367 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 38
+
+Prediction:  7
+Prediction:  8
+Prediction:  8
+4.0 1.0 16.0
+Attack was successful. Label changed from  7  to  6
+This was: 16 pixel attack.
+Time taken in this iteration: 2.103715181350708 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 39
+
+Prediction:  6
+UNSAT. Could not find a minimal modification by divide and conquer.
+Time taken in this iteration: 0.9323403835296631 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 40
+
+Prediction:  8
+Prediction:  8
+Prediction:  8
+Time taken in this iteration: 2.3005192279815674 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 41
+
+Prediction:  9
+Prediction:  6
+Prediction:  6
+Time taken in this iteration: 2.381244421005249 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 42
+
+Prediction:  1
+Prediction:  7
+Prediction:  7
+5.656854249492381 1.0 32.0
+Attack was successful. Label changed from  7  to  5
+This was: 32 pixel attack.
+Time taken in this iteration: 2.193155527114868 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 43
+
+Prediction:  7
+Prediction:  9
+Prediction:  9
+2.8284271247461903 1.0 8.0
+Attack was successful. Label changed from  9  to  8
+This was: 8 pixel attack.
+Time taken in this iteration: 1.812375783920288 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 44
+
+Prediction:  1
+Prediction:  8
+Prediction:  8
+3.872983346207417 1.0 15.000000000000014
+Attack was successful. Label changed from  3  to  8
+This was: 16 pixel attack.
+Time taken in this iteration: 2.1409101486206055 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 45
+
+Prediction:  7
+Prediction:  9
+Prediction:  9
+2.8284271247461903 1.0 8.0
+Attack was successful. Label changed from  9  to  8
+This was: 8 pixel attack.
+Time taken in this iteration: 2.0194509029388428 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 46
+
+Prediction:  9
+Prediction:  6
+Prediction:  6
+Time taken in this iteration: 2.208770751953125 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 47
+
+Prediction:  0
+Prediction:  8
+Prediction:  8
+Time taken in this iteration: 2.3443691730499268 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 48
+
+Prediction:  8
+Prediction:  8
+Prediction:  8
+5.656854249492381 1.0 32.0
+Attack was successful. Label changed from  5  to  8
+This was: 32 pixel attack.
+Time taken in this iteration: 2.201342821121216 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 49
+
+Prediction:  9
+Prediction:  3
+Prediction:  3
+Time taken in this iteration: 2.292210817337036 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 50
+
+Prediction:  1
+Prediction:  3
+Prediction:  3
+Time taken in this iteration: 2.304124593734741 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 51
+
+Prediction:  1
+Prediction:  8
+Prediction:  8
+Time taken in this iteration: 2.2350826263427734 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 52
+
+Prediction:  9
+Prediction:  7
+Prediction:  7
+Time taken in this iteration: 2.3736672401428223 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 53
+
+Prediction:  7
+Prediction:  8
+Prediction:  8
+2.8284271247461903 1.0 8.0
+Attack was successful. Label changed from  4  to  8
+This was: 8 pixel attack.
+Time taken in this iteration: 1.8329253196716309 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 54
+
+Prediction:  9
+Prediction:  9
+Prediction:  9
+4.0 1.0 16.0
+Attack was successful. Label changed from  9  to  8
+This was: 16 pixel attack.
+Time taken in this iteration: 2.107180118560791 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 55
+
+Prediction:  9
+Prediction:  9
+Prediction:  9
+Time taken in this iteration: 2.2106783390045166 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 56
+
+Prediction:  1
+Prediction:  0
+Prediction:  0
+Time taken in this iteration: 2.3162949085235596 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 57
+
+Prediction:  9
+Prediction:  8
+Prediction:  8
+5.656854249492381 1.0 32.0
+Attack was successful. Label changed from  9  to  8
+This was: 32 pixel attack.
+Time taken in this iteration: 2.1797847747802734 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 58
+
+Prediction:  2
+Prediction:  8
+Prediction:  8
+2.6457513110645907 1.0 7.000000000000011
+Attack was successful. Label changed from  4  to  6
+This was: 8 pixel attack.
+Time taken in this iteration: 1.8280069828033447 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 59
+
+Prediction:  8
+Prediction:  8
+Prediction:  8
+4.0 1.0 16.0
+Attack was successful. Label changed from  1  to  8
+This was: 16 pixel attack.
+Time taken in this iteration: 2.1051673889160156 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 60
+
+Prediction:  2
+Prediction:  8
+Prediction:  8
+4.0 1.0 16.0
+Attack was successful. Label changed from  4  to  6
+This was: 16 pixel attack.
+Time taken in this iteration: 2.089718818664551 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 61
+
+Prediction:  2
+Prediction:  8
+Prediction:  8
+1.4142135623730951 1.0 2.0
+Attack was successful. Label changed from  4  to  6
+This was: 2 pixel attack.
+Time taken in this iteration: 1.5910348892211914 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 62
+
+Prediction:  6
+UNSAT. Could not find a minimal modification by divide and conquer.
+Time taken in this iteration: 1.021172046661377 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 63
+
+Prediction:  5
+Prediction:  8
+Prediction:  8
+5.656854249492381 1.0 32.0
+Attack was successful. Label changed from  0  to  8
+This was: 32 pixel attack.
+Time taken in this iteration: 2.219869613647461 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 64
+
+Prediction:  8
+Prediction:  8
+Prediction:  8
+1.4142135623730951 1.0 2.0
+Attack was successful. Label changed from  4  to  6
+This was: 2 pixel attack.
+Time taken in this iteration: 1.6866717338562012 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 65
+
+Prediction:  0
+Prediction:  8
+Prediction:  8
+Time taken in this iteration: 2.1489531993865967 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 66
+
+Prediction:  6
+UNSAT. Could not find a minimal modification by divide and conquer.
+Time taken in this iteration: 1.0060675144195557 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 67
+
+Prediction:  3
+Prediction:  8
+Prediction:  8
+2.7387920162090036 1.0 7.707800613202743
+Attack was successful. Label changed from  1  to  3
+This was: 8 pixel attack.
+Time taken in this iteration: 1.9505689144134521 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 68
+
+Prediction:  2
+Prediction:  2
+Prediction:  2
+4.0 1.0 16.0
+Attack was successful. Label changed from  0  to  8
+This was: 16 pixel attack.
+Time taken in this iteration: 2.061678409576416 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 69
+
+Prediction:  1
+Prediction:  8
+Prediction:  8
+Time taken in this iteration: 2.327346086502075 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 70
+
+Prediction:  2
+Prediction:  0
+Prediction:  0
+2.8284271247461903 1.0 8.0
+Attack was successful. Label changed from  3  to  5
+This was: 8 pixel attack.
+Time taken in this iteration: 2.0124146938323975 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 71
+
+Prediction:  5
+Prediction:  7
+Prediction:  7
+5.656854249492381 1.0 32.000000000000014
+Attack was successful. Label changed from  7  to  8
+This was: 32 pixel attack.
+Time taken in this iteration: 2.1933205127716064 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 72
+
+Prediction:  7
+Prediction:  8
+Prediction:  8
+4.0 1.0 16.0
+Attack was successful. Label changed from  1  to  8
+This was: 16 pixel attack.
+Time taken in this iteration: 2.167388677597046 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 73
+
+Prediction:  6
+UNSAT. Could not find a minimal modification by divide and conquer.
+Time taken in this iteration: 0.9047374725341797 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 74
+
+Prediction:  9
+Prediction:  3
+Prediction:  3
+4.0 1.0 16.0
+Attack was successful. Label changed from  3  to  8
+This was: 16 pixel attack.
+Time taken in this iteration: 2.0756566524505615 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 75
+
+Prediction:  8
+Prediction:  8
+Prediction:  8
+Time taken in this iteration: 2.354900360107422 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 76
+
+Prediction:  3
+Prediction:  8
+Prediction:  8
+5.656854249492381 1.0 32.0
+Attack was successful. Label changed from  2  to  8
+This was: 32 pixel attack.
+Time taken in this iteration: 2.0597124099731445 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 77
+
+Prediction:  8
+Prediction:  8
+Prediction:  8
+2.0 1.0 4.0
+Attack was successful. Label changed from  1  to  3
+This was: 4 pixel attack.
+Time taken in this iteration: 1.8313829898834229 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 78
+
+Prediction:  9
+Prediction:  8
+Prediction:  8
+2.0 1.0 4.0
+Attack was successful. Label changed from  1  to  9
+This was: 4 pixel attack.
+Time taken in this iteration: 1.819014310836792 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 79
+
+Prediction:  9
+Prediction:  9
+Prediction:  9
+Time taken in this iteration: 2.2334117889404297 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 80
+
+Prediction:  8
+Prediction:  6
+Prediction:  6
+2.0 1.0 4.0
+Attack was successful. Label changed from  0  to  8
+This was: 4 pixel attack.
+Time taken in this iteration: 1.8430321216583252 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 81
+
+Prediction:  5
+Prediction:  1
+Prediction:  1
+Time taken in this iteration: 2.3296256065368652 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 82
+
+Prediction:  1
+Prediction:  8
+Prediction:  8
+Time taken in this iteration: 2.5283515453338623 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 83
+
+Prediction:  6
+UNSAT. Could not find a minimal modification by divide and conquer.
+Time taken in this iteration: 0.912266731262207 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 84
+
+Prediction:  9
+Prediction:  7
+Prediction:  7
+2.0 1.0 4.0
+Attack was successful. Label changed from  7  to  8
+This was: 4 pixel attack.
+Time taken in this iteration: 1.8052916526794434 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 85
+
+Prediction:  1
+Prediction:  8
+Prediction:  8
+Time taken in this iteration: 2.2367043495178223 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 86
+
+Prediction:  5
+Prediction:  7
+Prediction:  7
+1.4142135623730951 1.0 2.0
+Attack was successful. Label changed from  3  to  8
+This was: 2 pixel attack.
+Time taken in this iteration: 1.7531142234802246 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 87
+
+Prediction:  7
+Prediction:  9
+Prediction:  9
+4.0 1.0 16.0
+Attack was successful. Label changed from  9  to  8
+This was: 16 pixel attack.
+Time taken in this iteration: 2.0745763778686523 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 88
+
+Prediction:  5
+Prediction:  0
+Prediction:  0
+Time taken in this iteration: 2.382561206817627 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 89
+
+Prediction:  2
+Prediction:  8
+Prediction:  8
+4.0 1.0 16.0
+Attack was successful. Label changed from  4  to  6
+This was: 16 pixel attack.
+Time taken in this iteration: 2.0226240158081055 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 90
+
+Prediction:  6
+UNSAT. Could not find a minimal modification by divide and conquer.
+Time taken in this iteration: 0.9056227207183838 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 91
+
+Prediction:  5
+Prediction:  9
+Prediction:  9
+3.9948471029262675 1.0 15.979185056952154
+Attack was successful. Label changed from  7  to  8
+This was: 16 pixel attack.
+Time taken in this iteration: 2.074052095413208 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 92
+
+Prediction:  2
+Prediction:  8
+Prediction:  8
+2.8284271247461903 1.0 8.0
+Attack was successful. Label changed from  4  to  6
+This was: 8 pixel attack.
+Time taken in this iteration: 1.9331777095794678 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 93
+
+Prediction:  6
+UNSAT. Could not find a minimal modification by divide and conquer.
+Time taken in this iteration: 0.9064080715179443 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 94
+
+Prediction:  5
+Prediction:  8
+Prediction:  8
+Time taken in this iteration: 2.195150852203369 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 95
+
+Prediction:  1
+Prediction:  0
+Prediction:  0
+Time taken in this iteration: 2.350161075592041 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 96
+
+Prediction:  9
+Prediction:  7
+Prediction:  7
+5.656854249492385 1.0000000000000266 32.00000000000003
+Attack was successful. Label changed from  7  to  8
+This was: 32 pixel attack.
+Time taken in this iteration: 2.2472152709960938 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 97
+
+Prediction:  9
+Prediction:  6
+Prediction:  6
+Time taken in this iteration: 2.3872311115264893 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 98
+
+Prediction:  5
+Prediction:  3
+Prediction:  3
+5.656854249492381 1.0 32.0
+Attack was successful. Label changed from  3  to  8
+This was: 32 pixel attack.
+Time taken in this iteration: 2.177123546600342 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 99
+
+Prediction:  7
+Prediction:  8
+Prediction:  8
+2.8284271247461903 1.0 8.0
+Attack was successful. Label changed from  1  to  8
+This was: 8 pixel attack.
+Time taken in this iteration: 2.0983805656433105 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 100
+
+Prediction:  5
+Prediction:  8
+Prediction:  8
+Time taken in this iteration: 2.2381200790405273 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 101
+
+Prediction:  5
+Prediction:  7
+Prediction:  7
+5.656854249492381 1.0 32.0
+Attack was successful. Label changed from  7  to  8
+This was: 32 pixel attack.
+Time taken in this iteration: 2.209764242172241 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 102
+
+Prediction:  7
+Prediction:  8
+Prediction:  8
+4.0 1.0 16.0
+Attack was successful. Label changed from  1  to  8
+This was: 16 pixel attack.
+Time taken in this iteration: 2.040865421295166 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 103
+
+Prediction:  7
+Prediction:  7
+Prediction:  7
+5.656854249492381 1.0 32.0
+Attack was successful. Label changed from  7  to  5
+This was: 32 pixel attack.
+Time taken in this iteration: 2.01023530960083 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 104
+
+Prediction:  9
+Prediction:  8
+Prediction:  8
+4.0 1.0 16.0
+Attack was successful. Label changed from  1  to  8
+This was: 16 pixel attack.
+Time taken in this iteration: 2.0744781494140625 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 105
+
+Prediction:  5
+Prediction:  8
+Prediction:  8
+2.8284271247461903 1.0 8.0
+Attack was successful. Label changed from  1  to  8
+This was: 8 pixel attack.
+Time taken in this iteration: 1.8772075176239014 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 106
+
+Prediction:  6
+UNSAT. Could not find a minimal modification by divide and conquer.
+Time taken in this iteration: 0.8786981105804443 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 107
+
+Prediction:  2
+Prediction:  8
+Prediction:  8
+Time taken in this iteration: 2.2060840129852295 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 108
+
+Prediction:  5
+Prediction:  8
+Prediction:  8
+3.97970990125322 1.0 15.915473046098526
+Attack was successful. Label changed from  0  to  8
+This was: 16 pixel attack.
+Time taken in this iteration: 2.0409188270568848 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 109
+
+Prediction:  5
+Prediction:  8
+Prediction:  8
+2.8284271247461903 1.0 8.0
+Attack was successful. Label changed from  2  to  6
+This was: 8 pixel attack.
+Time taken in this iteration: 1.941218614578247 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 110
+
+Prediction:  2
+Prediction:  9
+Prediction:  9
+4.0 1.0 16.0
+Attack was successful. Label changed from  9  to  8
+This was: 16 pixel attack.
+Time taken in this iteration: 2.142157554626465 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 111
+
+Prediction:  2
+Prediction:  0
+Prediction:  0
+2.8284271247461903 1.0 8.0
+Attack was successful. Label changed from  3  to  8
+This was: 8 pixel attack.
+Time taken in this iteration: 2.091181755065918 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 112
+
+Prediction:  1
+Prediction:  1
+Prediction:  1
+5.586453306002904 1.0 31.55464500137541
+Attack was successful. Label changed from  1  to  8
+This was: 32 pixel attack.
+Time taken in this iteration: 2.2195141315460205 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 113
+
+Prediction:  8
+Prediction:  8
+Prediction:  8
+2.0 1.0 4.0
+Attack was successful. Label changed from  1  to  3
+This was: 4 pixel attack.
+Time taken in this iteration: 1.7027857303619385 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 114
+
+Prediction:  5
+Prediction:  6
+Prediction:  6
+Time taken in this iteration: 3.1549882888793945 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 115
+
+Prediction:  2
+Prediction:  8
+Prediction:  8
+3.8868088877435123 1.0 15.327541340660929
+Attack was successful. Label changed from  4  to  6
+This was: 16 pixel attack.
+Time taken in this iteration: 2.1184003353118896 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 116
+
+Prediction:  2
+Prediction:  8
+Prediction:  8
+4.0 1.0 16.0
+Attack was successful. Label changed from  9  to  8
+This was: 16 pixel attack.
+Time taken in this iteration: 2.1239216327667236 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 117
+
+Prediction:  3
+Prediction:  7
+Prediction:  7
+Time taken in this iteration: 2.176464080810547 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 118
+
+Prediction:  5
+Prediction:  0
+Prediction:  0
+5.6333571714689645 1.0 31.857154024280824
+Attack was successful. Label changed from  0  to  8
+This was: 32 pixel attack.
+Time taken in this iteration: 2.169545888900757 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 119
+
+Prediction:  1
+Prediction:  0
+Prediction:  0
+Time taken in this iteration: 2.2508559226989746 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 120
+
+Prediction:  7
+Prediction:  0
+Prediction:  0
+Time taken in this iteration: 2.29315447807312 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 121
+
+Prediction:  5
+Prediction:  8
+Prediction:  8
+5.656854249492381 1.0 32.0
+Attack was successful. Label changed from  0  to  8
+This was: 32 pixel attack.
+Time taken in this iteration: 2.2061312198638916 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 122
+
+Prediction:  3
+Prediction:  8
+Prediction:  8
+5.656854249492381 1.0 32.0
+Attack was successful. Label changed from  2  to  6
+This was: 32 pixel attack.
+Time taken in this iteration: 1.9977571964263916 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 123
+
+Prediction:  5
+Prediction:  7
+Prediction:  7
+4.0 1.0 16.0
+Attack was successful. Label changed from  7  to  8
+This was: 16 pixel attack.
+Time taken in this iteration: 1.999161720275879 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 124
+
+Prediction:  3
+Prediction:  8
+Prediction:  8
+1.4142135623730951 1.0 2.0
+Attack was successful. Label changed from  1  to  3
+This was: 2 pixel attack.
+Time taken in this iteration: 1.6606528759002686 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 125
+
+Prediction:  5
+Prediction:  8
+Prediction:  8
+Time taken in this iteration: 2.3255021572113037 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 126
+
+Prediction:  6
+UNSAT. Could not find a minimal modification by divide and conquer.
+Time taken in this iteration: 0.8813679218292236 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 127
+
+Prediction:  2
+Prediction:  8
+Prediction:  8
+4.0 1.0 16.0
+Attack was successful. Label changed from  4  to  6
+This was: 16 pixel attack.
+Time taken in this iteration: 2.085662841796875 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 128
+
+Prediction:  8
+Prediction:  8
+Prediction:  8
+4.0 1.0 16.0
+Attack was successful. Label changed from  1  to  8
+This was: 16 pixel attack.
+Time taken in this iteration: 2.0666561126708984 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 129
+
+Prediction:  6
+UNSAT. Could not find a minimal modification by divide and conquer.
+Time taken in this iteration: 0.9777016639709473 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 130
+
+Prediction:  8
+Prediction:  8
+Prediction:  8
+Time taken in this iteration: 2.3222765922546387 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 131
+
+Prediction:  7
+Prediction:  8
+Prediction:  8
+4.0 1.0 16.0
+Attack was successful. Label changed from  4  to  6
+This was: 16 pixel attack.
+Time taken in this iteration: 2.0727479457855225 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 132
+
+Prediction:  1
+Prediction:  8
+Prediction:  8
+2.8284271247461903 1.0 8.0
+Attack was successful. Label changed from  3  to  8
+This was: 8 pixel attack.
+Time taken in this iteration: 1.8485701084136963 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 133
+
+Prediction:  9
+Prediction:  9
+Prediction:  9
+1.4142135623730951 1.0 2.0
+Attack was successful. Label changed from  9  to  8
+This was: 2 pixel attack.
+Time taken in this iteration: 1.6869463920593262 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 134
+
+Prediction:  5
+Prediction:  9
+Prediction:  9
+1.4142135623730951 1.0 2.0
+Attack was successful. Label changed from  8  to  5
+This was: 2 pixel attack.
+Time taken in this iteration: 1.7303216457366943 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 135
+
+Prediction:  8
+Prediction:  3
+Prediction:  3
+Time taken in this iteration: 2.2325069904327393 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 136
+
+Prediction:  1
+Prediction:  0
+Prediction:  0
+5.6568542494923815 1.000000000000007 32.00000000000001
+Attack was successful. Label changed from  3  to  8
+This was: 32 pixel attack.
+Time taken in this iteration: 2.222877264022827 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 137
+
+Prediction:  7
+Prediction:  7
+Prediction:  7
+Time taken in this iteration: 2.2895565032958984 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 138
+
+Prediction:  5
+Prediction:  8
+Prediction:  8
+Time taken in this iteration: 2.405461311340332 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 139
+
+Prediction:  2
+Prediction:  8
+Prediction:  8
+2.0 1.0 4.0
+Attack was successful. Label changed from  4  to  6
+This was: 4 pixel attack.
+Time taken in this iteration: 2.0330710411071777 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 140
+
+Prediction:  3
+Prediction:  8
+Prediction:  8
+1.4142135623730951 1.0 2.0
+Attack was successful. Label changed from  7  to  3
+This was: 2 pixel attack.
+Time taken in this iteration: 1.6985924243927002 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 141
+
+Prediction:  1
+Prediction:  3
+Prediction:  3
+5.630962461757291 1.0 31.8481007795679
+Attack was successful. Label changed from  7  to  8
+This was: 32 pixel attack.
+Time taken in this iteration: 2.3439931869506836 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 142
+
+Prediction:  7
+Prediction:  8
+Prediction:  8
+4.0 1.0 16.000000000000007
+Attack was successful. Label changed from  4  to  6
+This was: 16 pixel attack.
+Time taken in this iteration: 2.142587661743164 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 143
+
+Prediction:  1
+Prediction:  8
+Prediction:  8
+Time taken in this iteration: 2.399543285369873 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 144
+
+Prediction:  5
+Prediction:  8
+Prediction:  8
+Time taken in this iteration: 2.3537344932556152 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 145
+
+Prediction:  0
+Prediction:  8
+Prediction:  8
+Time taken in this iteration: 2.293281316757202 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 146
+
+Prediction:  9
+Prediction:  2
+Prediction:  2
+Time taken in this iteration: 2.4341888427734375 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 147
+
+Prediction:  6
+UNSAT. Could not find a minimal modification by divide and conquer.
+Time taken in this iteration: 1.1354396343231201 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 148
+
+Prediction:  7
+Prediction:  8
+Prediction:  8
+2.6460529398108563 1.0 7.039951974690567
+Attack was successful. Label changed from  9  to  8
+This was: 8 pixel attack.
+Time taken in this iteration: 2.044268846511841 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 149
+
+Prediction:  2
+Prediction:  3
+Prediction:  3
+Time taken in this iteration: 2.407824754714966 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 150
+
+Prediction:  2
+Prediction:  8
+Prediction:  8
+2.8284271247461903 1.0 8.0
+Attack was successful. Label changed from  4  to  6
+This was: 8 pixel attack.
+Time taken in this iteration: 1.9071593284606934 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 151
+
+Prediction:  6
+UNSAT. Could not find a minimal modification by divide and conquer.
+Time taken in this iteration: 1.001053810119629 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 152
+
+Prediction:  3
+Prediction:  8
+Prediction:  8
+2.8284271247461903 1.0 8.0
+Attack was successful. Label changed from  1  to  8
+This was: 8 pixel attack.
+Time taken in this iteration: 1.9664831161499023 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 153
+
+Prediction:  5
+Prediction:  9
+Prediction:  9
+Time taken in this iteration: 2.169386386871338 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 154
+
+Prediction:  9
+Prediction:  9
+Prediction:  9
+2.8284271247461903 1.0 8.0
+Attack was successful. Label changed from  9  to  8
+This was: 8 pixel attack.
+Time taken in this iteration: 1.9166655540466309 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 155
+
+Prediction:  6
+UNSAT. Could not find a minimal modification by divide and conquer.
+Time taken in this iteration: 1.0169055461883545 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 156
+
+Prediction:  5
+Prediction:  8
+Prediction:  8
+Time taken in this iteration: 2.1462812423706055 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 157
+
+Prediction:  2
+Prediction:  0
+Prediction:  0
+4.0 1.0 16.0
+Attack was successful. Label changed from  3  to  8
+This was: 16 pixel attack.
+Time taken in this iteration: 2.030941963195801 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 158
+
+Prediction:  7
+Prediction:  7
+Prediction:  7
+2.0 1.0 4.0
+Attack was successful. Label changed from  9  to  7
+This was: 4 pixel attack.
+Time taken in this iteration: 1.8623888492584229 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 159
+
+Prediction:  1
+Prediction:  8
+Prediction:  8
+Time taken in this iteration: 2.2861273288726807 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 160
+
+Prediction:  4
+Prediction:  9
+Prediction:  9
+2.8284271247461903 1.0 8.0
+Attack was successful. Label changed from  9  to  8
+This was: 8 pixel attack.
+Time taken in this iteration: 1.8716423511505127 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 161
+
+Prediction:  8
+Prediction:  1
+Prediction:  1
+Time taken in this iteration: 2.4354658126831055 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 162
+
+Prediction:  9
+Prediction:  9
+Prediction:  9
+4.0 1.0 16.0
+Attack was successful. Label changed from  9  to  8
+This was: 16 pixel attack.
+Time taken in this iteration: 2.078415632247925 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 163
+
+Prediction:  2
+Prediction:  8
+Prediction:  8
+4.0 1.0 16.000000000000014
+Attack was successful. Label changed from  4  to  6
+This was: 16 pixel attack.
+Time taken in this iteration: 2.1097190380096436 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 164
+
+Prediction:  2
+Prediction:  8
+Prediction:  8
+4.0 1.0 16.000000000000018
+Attack was successful. Label changed from  4  to  6
+This was: 16 pixel attack.
+Time taken in this iteration: 1.972693920135498 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 165
+
+Prediction:  6
+UNSAT. Could not find a minimal modification by divide and conquer.
+Time taken in this iteration: 1.0288171768188477 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 166
+
+Prediction:  2
+Prediction:  8
+Prediction:  8
+4.0 1.0 16.0
+Attack was successful. Label changed from  4  to  6
+This was: 16 pixel attack.
+Time taken in this iteration: 2.14224910736084 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 167
+
+Prediction:  9
+Prediction:  8
+Prediction:  8
+5.595260639637073 1.0 31.616750831434373
+Attack was successful. Label changed from  9  to  8
+This was: 32 pixel attack.
+Time taken in this iteration: 2.1922175884246826 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 168
+
+Prediction:  7
+Prediction:  8
+Prediction:  8
+Time taken in this iteration: 2.2078030109405518 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 169
+
+Prediction:  5
+Prediction:  8
+Prediction:  8
+Time taken in this iteration: 2.3158788681030273 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 170
+
+Prediction:  9
+Prediction:  9
+Prediction:  9
+5.656854249492382 1.0000000000000142 32.000000000000014
+Attack was successful. Label changed from  9  to  8
+This was: 32 pixel attack.
+Time taken in this iteration: 2.300992488861084 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 171
+
+Prediction:  1
+Prediction:  8
+Prediction:  8
+Time taken in this iteration: 2.6164042949676514 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 172
+
+Prediction:  4
+Prediction:  7
+Prediction:  7
+5.656854249492381 1.0 32.0
+Attack was successful. Label changed from  9  to  8
+This was: 32 pixel attack.
+Time taken in this iteration: 2.1912660598754883 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 173
+
+Prediction:  5
+Prediction:  8
+Prediction:  8
+4.0 1.0 16.0
+Attack was successful. Label changed from  8  to  6
+This was: 16 pixel attack.
+Time taken in this iteration: 2.0027823448181152 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 174
+
+Prediction:  8
+Prediction:  8
+Prediction:  8
+5.656854249492381 1.0 32.0
+Attack was successful. Label changed from  1  to  8
+This was: 32 pixel attack.
+Time taken in this iteration: 2.174431800842285 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 175
+
+Prediction:  2
+Prediction:  8
+Prediction:  8
+5.656854249492382 1.0000000000000142 32.000000000000014
+Attack was successful. Label changed from  5  to  6
+This was: 32 pixel attack.
+Time taken in this iteration: 2.2295188903808594 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 176
+
+Prediction:  7
+Prediction:  9
+Prediction:  9
+5.656854249492381 1.0 32.0
+Attack was successful. Label changed from  9  to  8
+This was: 32 pixel attack.
+Time taken in this iteration: 2.266068696975708 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 177
+
+Prediction:  8
+Prediction:  8
+Prediction:  8
+2.0 1.0 4.0
+Attack was successful. Label changed from  1  to  8
+This was: 4 pixel attack.
+Time taken in this iteration: 1.7221932411193848 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 178
+
+Prediction:  8
+Prediction:  8
+Prediction:  8
+2.8284271247461903 1.0 8.0
+Attack was successful. Label changed from  2  to  6
+This was: 8 pixel attack.
+Time taken in this iteration: 1.9518241882324219 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 179
+
+Prediction:  9
+Prediction:  3
+Prediction:  3
+2.0 1.0 4.0
+Attack was successful. Label changed from  2  to  8
+This was: 4 pixel attack.
+Time taken in this iteration: 1.8235347270965576 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 180
+
+Prediction:  9
+Prediction:  8
+Prediction:  8
+5.656854249492381 1.0 32.0
+Attack was successful. Label changed from  2  to  6
+This was: 32 pixel attack.
+Time taken in this iteration: 2.1122090816497803 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 181
+
+Prediction:  2
+Prediction:  2
+Prediction:  2
+Time taken in this iteration: 2.2825112342834473 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 182
+
+Prediction:  9
+Prediction:  8
+Prediction:  8
+4.0 1.0 16.0
+Attack was successful. Label changed from  5  to  8
+This was: 16 pixel attack.
+Time taken in this iteration: 2.1243765354156494 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 183
+
+Prediction:  9
+Prediction:  8
+Prediction:  8
+4.0 1.0 16.0
+Attack was successful. Label changed from  9  to  8
+This was: 16 pixel attack.
+Time taken in this iteration: 2.058554172515869 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 184
+
+Prediction:  7
+Prediction:  7
+Prediction:  7
+4.0 1.0 16.0
+Attack was successful. Label changed from  1  to  8
+This was: 16 pixel attack.
+Time taken in this iteration: 2.0379385948181152 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 185
+
+Prediction:  7
+Prediction:  7
+Prediction:  7
+Time taken in this iteration: 2.16413950920105 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 186
+
+Prediction:  2
+Prediction:  8
+Prediction:  8
+Time taken in this iteration: 2.2278685569763184 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 187
+
+Prediction:  0
+Prediction:  1
+Prediction:  1
+5.6568542494923815 1.000000000000007 32.00000000000001
+Attack was successful. Label changed from  2  to  5
+This was: 32 pixel attack.
+Time taken in this iteration: 2.153089761734009 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 188
+
+Prediction:  5
+Prediction:  8
+Prediction:  8
+Time taken in this iteration: 2.2795255184173584 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 189
+
+Prediction:  7
+Prediction:  8
+Prediction:  8
+Time taken in this iteration: 2.3050537109375 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 190
+
+Prediction:  3
+Prediction:  8
+Prediction:  8
+Time taken in this iteration: 2.1742804050445557 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 191
+
+Prediction:  0
+Prediction:  8
+Prediction:  8
+Time taken in this iteration: 2.3416712284088135 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 192
+
+Prediction:  5
+Prediction:  7
+Prediction:  7
+Time taken in this iteration: 2.32901930809021 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 193
+
+Prediction:  5
+Prediction:  7
+Prediction:  7
+Time taken in this iteration: 2.331605911254883 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 194
+
+Prediction:  2
+Prediction:  8
+Prediction:  8
+3.872983346207417 1.0 15.000000000000021
+Attack was successful. Label changed from  4  to  8
+This was: 16 pixel attack.
+Time taken in this iteration: 2.1027121543884277 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 195
+
+Prediction:  7
+Prediction:  9
+Prediction:  9
+4.0 1.0 16.0
+Attack was successful. Label changed from  9  to  8
+This was: 16 pixel attack.
+Time taken in this iteration: 2.0413131713867188 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 196
+
+Prediction:  5
+Prediction:  7
+Prediction:  7
+5.656854249492381 1.0 32.0
+Attack was successful. Label changed from  7  to  8
+This was: 32 pixel attack.
+Time taken in this iteration: 2.26530385017395 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 197
+
+Prediction:  9
+Prediction:  8
+Prediction:  8
+Time taken in this iteration: 2.473600387573242 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 198
+
+Prediction:  2
+Prediction:  0
+Prediction:  0
+Time taken in this iteration: 2.624910354614258 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 199
+
+Prediction:  1
+Prediction:  8
+Prediction:  8
+5.656854249492381 1.0 32.0
+Attack was successful. Label changed from  2  to  8
+This was: 32 pixel attack.
+Time taken in this iteration: 2.3378591537475586 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 200
+
+Prediction:  8
+Prediction:  8
+Prediction:  8
+2.8284271247461903 1.0 8.0
+Attack was successful. Label changed from  1  to  8
+This was: 8 pixel attack.
+Time taken in this iteration: 2.062181234359741 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 201
+
+Prediction:  5
+Prediction:  8
+Prediction:  8
+4.0 1.0 16.0
+Attack was successful. Label changed from  1  to  8
+This was: 16 pixel attack.
+Time taken in this iteration: 2.065030336380005 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 202
+
+Prediction:  5
+Prediction:  8
+Prediction:  8
+Time taken in this iteration: 2.40474009513855 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 203
+
+Prediction:  2
+Prediction:  3
+Prediction:  3
+2.0 1.0 4.0
+Attack was successful. Label changed from  3  to  8
+This was: 4 pixel attack.
+Time taken in this iteration: 1.8758184909820557 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 204
+
+Prediction:  6
+UNSAT. Could not find a minimal modification by divide and conquer.
+Time taken in this iteration: 0.9116744995117188 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 205
+
+Prediction:  3
+Prediction:  8
+Prediction:  8
+Time taken in this iteration: 2.306729316711426 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 206
+
+Prediction:  1
+Prediction:  8
+Prediction:  8
+Time taken in this iteration: 2.3520641326904297 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 207
+
+Prediction:  9
+Prediction:  8
+Prediction:  8
+2.8284271247461903 1.0 8.0
+Attack was successful. Label changed from  2  to  8
+This was: 8 pixel attack.
+Time taken in this iteration: 2.028465747833252 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 208
+
+Prediction:  7
+Prediction:  8
+Prediction:  8
+2.8284271247461903 1.0 8.0
+Attack was successful. Label changed from  1  to  8
+This was: 8 pixel attack.
+Time taken in this iteration: 1.9974570274353027 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 209
+
+Prediction:  5
+Prediction:  8
+Prediction:  8
+Time taken in this iteration: 2.310636281967163 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 210
+
+Prediction:  5
+Prediction:  8
+Prediction:  8
+4.0 1.0 16.0
+Attack was successful. Label changed from  0  to  8
+This was: 16 pixel attack.
+Time taken in this iteration: 2.127828598022461 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 211
+
+Prediction:  9
+Prediction:  6
+Prediction:  6
+4.0 1.0 16.0
+Attack was successful. Label changed from  1  to  8
+This was: 16 pixel attack.
+Time taken in this iteration: 2.1676127910614014 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 212
+
+Prediction:  9
+Prediction:  7
+Prediction:  7
+2.0 1.0 4.0
+Attack was successful. Label changed from  7  to  8
+This was: 4 pixel attack.
+Time taken in this iteration: 1.9528186321258545 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 213
+
+Prediction:  8
+Prediction:  8
+Prediction:  8
+Time taken in this iteration: 2.764047145843506 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 214
+
+Prediction:  9
+Prediction:  7
+Prediction:  7
+Time taken in this iteration: 2.2473204135894775 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 215
+
+Prediction:  8
+Prediction:  1
+Prediction:  1
+Time taken in this iteration: 2.2743871212005615 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 216
+
+Prediction:  8
+Prediction:  8
+Prediction:  8
+4.0 1.0 16.0
+Attack was successful. Label changed from  0  to  8
+This was: 16 pixel attack.
+Time taken in this iteration: 2.139841318130493 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 217
+
+Prediction:  2
+Prediction:  8
+Prediction:  8
+4.0 1.0 16.0
+Attack was successful. Label changed from  4  to  6
+This was: 16 pixel attack.
+Time taken in this iteration: 2.1824793815612793 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 218
+
+Prediction:  6
+UNSAT. Could not find a minimal modification by divide and conquer.
+Time taken in this iteration: 0.9544429779052734 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 219
+
+Prediction:  0
+Prediction:  8
+Prediction:  8
+Time taken in this iteration: 2.345266342163086 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 220
+
+Prediction:  1
+Prediction:  8
+Prediction:  8
+Time taken in this iteration: 2.3761141300201416 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 221
+
+Prediction:  6
+UNSAT. Could not find a minimal modification by divide and conquer.
+Time taken in this iteration: 0.9023056030273438 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 222
+
+Prediction:  2
+Prediction:  8
+Prediction:  8
+2.8284271247461903 1.0 8.0
+Attack was successful. Label changed from  4  to  6
+This was: 8 pixel attack.
+Time taken in this iteration: 2.040860414505005 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 223
+
+Prediction:  7
+Prediction:  7
+Prediction:  7
+5.656854249492381 1.0 32.0
+Attack was successful. Label changed from  7  to  8
+This was: 32 pixel attack.
+Time taken in this iteration: 2.3955581188201904 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 224
+
+Prediction:  7
+Prediction:  9
+Prediction:  9
+5.656854249492381 1.0 32.0
+Attack was successful. Label changed from  8  to  5
+This was: 32 pixel attack.
+Time taken in this iteration: 2.279824733734131 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 225
+
+Prediction:  9
+Prediction:  8
+Prediction:  8
+Time taken in this iteration: 2.4505906105041504 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 226
+
+Prediction:  9
+Prediction:  9
+Prediction:  9
+5.656854249492381 1.0 32.0
+Attack was successful. Label changed from  9  to  8
+This was: 32 pixel attack.
+Time taken in this iteration: 2.2338011264801025 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 227
+
+Prediction:  9
+Prediction:  9
+Prediction:  9
+2.8284271247461903 1.0 8.0
+Attack was successful. Label changed from  9  to  8
+This was: 8 pixel attack.
+Time taken in this iteration: 1.90913724899292 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 228
+
+Prediction:  8
+Prediction:  8
+Prediction:  8
+1.4142135623730951 1.0 2.0
+Attack was successful. Label changed from  5  to  8
+This was: 2 pixel attack.
+Time taken in this iteration: 1.773733377456665 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 229
+
+Prediction:  1
+Prediction:  8
+Prediction:  8
+Time taken in this iteration: 2.387371301651001 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 230
+
+Prediction:  9
+Prediction:  7
+Prediction:  7
+5.656854249492381 1.0 32.0
+Attack was successful. Label changed from  7  to  8
+This was: 32 pixel attack.
+Time taken in this iteration: 2.2423624992370605 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 231
+
+Prediction:  9
+Prediction:  8
+Prediction:  8
+2.8284271247461903 1.0 8.0
+Attack was successful. Label changed from  1  to  8
+This was: 8 pixel attack.
+Time taken in this iteration: 1.8369970321655273 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 232
+
+Prediction:  6
+Prediction:  7
+Prediction:  7
+2.0 1.0 4.0
+Attack was successful. Label changed from  0  to  6
+This was: 4 pixel attack.
+Time taken in this iteration: 1.8412489891052246 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 233
+
+Prediction:  3
+Prediction:  8
+Prediction:  8
+Time taken in this iteration: 2.3573522567749023 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 234
+
+Prediction:  5
+Prediction:  5
+Prediction:  5
+Time taken in this iteration: 2.3950228691101074 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 235
+
+Prediction:  5
+Prediction:  3
+Prediction:  3
+Time taken in this iteration: 2.317218780517578 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 236
+
+Prediction:  1
+Prediction:  8
+Prediction:  8
+Time taken in this iteration: 2.3367621898651123 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 237
+
+Prediction:  2
+Prediction:  8
+Prediction:  8
+4.0 1.0 16.0
+Attack was successful. Label changed from  4  to  6
+This was: 16 pixel attack.
+Time taken in this iteration: 1.9387125968933105 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 238
+
+Prediction:  6
+UNSAT. Could not find a minimal modification by divide and conquer.
+Time taken in this iteration: 1.1223740577697754 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 239
+
+Prediction:  3
+Prediction:  8
+Prediction:  8
+Time taken in this iteration: 2.379148006439209 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 240
+
+Prediction:  8
+Prediction:  8
+Prediction:  8
+2.0 1.0 4.0
+Attack was successful. Label changed from  1  to  8
+This was: 4 pixel attack.
+Time taken in this iteration: 1.709641695022583 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 241
+
+Prediction:  6
+UNSAT. Could not find a minimal modification by divide and conquer.
+Time taken in this iteration: 1.0649352073669434 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 242
+
+Prediction:  2
+Prediction:  0
+Prediction:  0
+Time taken in this iteration: 2.3995273113250732 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 243
+
+Prediction:  9
+Prediction:  7
+Prediction:  7
+5.656854249492381 1.0 32.0
+Attack was successful. Label changed from  7  to  8
+This was: 32 pixel attack.
+Time taken in this iteration: 2.425443649291992 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 244
+
+Prediction:  5
+Prediction:  8
+Prediction:  8
+Time taken in this iteration: 2.477053165435791 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 245
+
+Prediction:  9
+Prediction:  6
+Prediction:  6
+Time taken in this iteration: 3.4142537117004395 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 246
+
+Prediction:  8
+Prediction:  8
+Prediction:  8
+2.0 1.0 4.0
+Attack was successful. Label changed from  0  to  8
+This was: 4 pixel attack.
+Time taken in this iteration: 1.9775893688201904 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 247
+
+Prediction:  9
+Prediction:  9
+Prediction:  9
+2.8284271247461903 1.0 8.0
+Attack was successful. Label changed from  9  to  8
+This was: 8 pixel attack.
+Time taken in this iteration: 1.95786714553833 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 248
+
+Prediction:  8
+Prediction:  8
+Prediction:  8
+2.8284271247461903 1.0 8.0
+Attack was successful. Label changed from  1  to  3
+This was: 8 pixel attack.
+Time taken in this iteration: 2.086544990539551 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 249
+
+Prediction:  5
+Prediction:  8
+Prediction:  8
+Time taken in this iteration: 2.4422671794891357 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 250
+
+Prediction:  2
+Prediction:  8
+Prediction:  8
+2.8284271247461903 1.0 8.0
+Attack was successful. Label changed from  3  to  6
+This was: 8 pixel attack.
+Time taken in this iteration: 2.01619815826416 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 251
+
+Prediction:  8
+Prediction:  8
+Prediction:  8
+4.0 1.0 16.0
+Attack was successful. Label changed from  1  to  8
+This was: 16 pixel attack.
+Time taken in this iteration: 2.067192792892456 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 252
+
+Prediction:  1
+Prediction:  8
+Prediction:  8
+Time taken in this iteration: 2.3626327514648438 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 253
+
+Prediction:  8
+Prediction:  8
+Prediction:  8
+5.656854249492381 1.0 32.0
+Attack was successful. Label changed from  2  to  6
+This was: 32 pixel attack.
+Time taken in this iteration: 2.4033260345458984 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 254
+
+Prediction:  1
+Prediction:  3
+Prediction:  3
+5.656854249492382 1.0000000000000142 32.000000000000014
+Attack was successful. Label changed from  3  to  1
+This was: 32 pixel attack.
+Time taken in this iteration: 2.3188674449920654 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 255
+
+Prediction:  8
+Prediction:  8
+Prediction:  8
+4.0 1.0 16.0
+Attack was successful. Label changed from  3  to  5
+This was: 16 pixel attack.
+Time taken in this iteration: 2.0703318119049072 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 256
+
+Prediction:  6
+UNSAT. Could not find a minimal modification by divide and conquer.
+Time taken in this iteration: 1.1666336059570312 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 257
+
+Prediction:  2
+Prediction:  8
+Prediction:  8
+2.8284271247461903 1.0 8.0
+Attack was successful. Label changed from  4  to  6
+This was: 8 pixel attack.
+Time taken in this iteration: 2.09582257270813 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 258
+
+Prediction:  2
+Prediction:  7
+Prediction:  7
+Time taken in this iteration: 2.4529385566711426 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 259
+
+Prediction:  0
+Prediction:  4
+Prediction:  4
+5.656854249492385 1.0000000000000249 32.00000000000003
+Attack was successful. Label changed from  5  to  6
+This was: 32 pixel attack.
+Time taken in this iteration: 2.3472023010253906 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 260
+
+Prediction:  1
+Prediction:  6
+Prediction:  6
+Time taken in this iteration: 2.395599603652954 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 261
+
+Prediction:  6
+UNSAT. Could not find a minimal modification by divide and conquer.
+Time taken in this iteration: 1.0755772590637207 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 262
+
+Prediction:  0
+Prediction:  7
+Prediction:  7
+1.4142135623730951 1.0 2.0
+Attack was successful. Label changed from  5  to  0
+This was: 2 pixel attack.
+Time taken in this iteration: 1.7614686489105225 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 263
+
+Prediction:  5
+Prediction:  7
+Prediction:  7
+Time taken in this iteration: 2.1819143295288086 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 264
+
+Prediction:  4
+Prediction:  8
+Prediction:  8
+2.0 1.0 4.0
+Attack was successful. Label changed from  9  to  8
+This was: 4 pixel attack.
+Time taken in this iteration: 1.8771233558654785 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 265
+
+Prediction:  9
+Prediction:  8
+Prediction:  8
+Adversarial example not found.
+Time taken in this iteration: 1.8952140808105469 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 266
+
+Prediction:  2
+Prediction:  8
+Prediction:  8
+5.656854249492381 1.0 32.0
+Attack was successful. Label changed from  5  to  8
+This was: 32 pixel attack.
+Time taken in this iteration: 2.266648292541504 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 267
+
+Prediction:  9
+Prediction:  9
+Prediction:  9
+4.0 1.0 16.0
+Attack was successful. Label changed from  9  to  8
+This was: 16 pixel attack.
+Time taken in this iteration: 2.058764696121216 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 268
+
+Prediction:  5
+Prediction:  8
+Prediction:  8
+4.0 1.0 16.0
+Attack was successful. Label changed from  7  to  8
+This was: 16 pixel attack.
+Time taken in this iteration: 2.115670919418335 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 269
+
+Prediction:  8
+Prediction:  8
+Prediction:  8
+4.0 1.0 16.000000000000007
+Attack was successful. Label changed from  1  to  8
+This was: 16 pixel attack.
+Time taken in this iteration: 2.2278714179992676 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 270
+
+Prediction:  8
+Prediction:  8
+Prediction:  8
+4.0 1.0 16.0
+Attack was successful. Label changed from  1  to  8
+This was: 16 pixel attack.
+Time taken in this iteration: 2.129979372024536 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 271
+
+Prediction:  2
+Prediction:  8
+Prediction:  8
+3.9665305341505155 1.0 15.856367023155594
+Attack was successful. Label changed from  4  to  6
+This was: 16 pixel attack.
+Time taken in this iteration: 2.022343873977661 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 272
+
+Prediction:  2
+Prediction:  6
+Prediction:  6
+4.0 1.0 16.00000000000001
+Attack was successful. Label changed from  4  to  6
+This was: 16 pixel attack.
+Time taken in this iteration: 2.1369433403015137 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 273
+
+Prediction:  5
+Prediction:  8
+Prediction:  8
+2.8284271247461903 1.0 8.0
+Attack was successful. Label changed from  3  to  5
+This was: 8 pixel attack.
+Time taken in this iteration: 1.976297378540039 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 274
+
+Prediction:  1
+Prediction:  8
+Prediction:  8
+5.656854249492381 1.0 32.0
+Attack was successful. Label changed from  6  to  5
+This was: 32 pixel attack.
+Time taken in this iteration: 2.250624179840088 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 275
+
+Prediction:  2
+Prediction:  8
+Prediction:  8
+2.0 1.0 4.0
+Attack was successful. Label changed from  4  to  6
+This was: 4 pixel attack.
+Time taken in this iteration: 1.7070643901824951 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 276
+
+Prediction:  9
+Prediction:  8
+Prediction:  8
+4.0 1.0 16.0
+Attack was successful. Label changed from  1  to  2
+This was: 16 pixel attack.
+Time taken in this iteration: 2.0578832626342773 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 277
+
+Prediction:  8
+Prediction:  8
+Prediction:  8
+Time taken in this iteration: 2.3237717151641846 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 278
+
+Prediction:  2
+Prediction:  8
+Prediction:  8
+Time taken in this iteration: 2.298473358154297 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 279
+
+Prediction:  2
+Prediction:  8
+Prediction:  8
+2.713189956942667 1.0 7.650090750507106
+Attack was successful. Label changed from  3  to  8
+This was: 8 pixel attack.
+Time taken in this iteration: 2.0502803325653076 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 280
+
+Prediction:  4
+Prediction:  8
+Prediction:  8
+5.656854249492381 1.0 32.000000000000014
+Attack was successful. Label changed from  9  to  5
+This was: 32 pixel attack.
+Time taken in this iteration: 2.2378273010253906 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 281
+
+Prediction:  1
+Prediction:  0
+Prediction:  0
+Time taken in this iteration: 2.4185192584991455 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 282
+
+Prediction:  7
+Prediction:  8
+Prediction:  8
+4.0 1.0 16.0
+Attack was successful. Label changed from  9  to  8
+This was: 16 pixel attack.
+Time taken in this iteration: 2.18290376663208 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 283
+
+Prediction:  5
+Prediction:  8
+Prediction:  8
+Time taken in this iteration: 2.531191825866699 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 284
+
+Prediction:  3
+Prediction:  5
+Prediction:  5
+Time taken in this iteration: 2.320474624633789 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 285
+
+Prediction:  9
+Prediction:  9
+Prediction:  9
+2.8284271247461903 1.0 8.0
+Attack was successful. Label changed from  9  to  8
+This was: 8 pixel attack.
+Time taken in this iteration: 1.886892318725586 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 286
+
+Prediction:  6
+UNSAT. Could not find a minimal modification by divide and conquer.
+Time taken in this iteration: 1.1108789443969727 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 287
+
+Prediction:  9
+Prediction:  5
+Prediction:  5
+Time taken in this iteration: 2.2803189754486084 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 288
+
+Prediction:  9
+Prediction:  7
+Prediction:  7
+5.5704476096091735 1.0 31.172877330499283
+Attack was successful. Label changed from  7  to  8
+This was: 32 pixel attack.
+Time taken in this iteration: 2.299346446990967 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 289
+
+Prediction:  2
+Prediction:  8
+Prediction:  8
+2.8284271247461903 1.0 8.0
+Attack was successful. Label changed from  4  to  6
+This was: 8 pixel attack.
+Time taken in this iteration: 1.8801648616790771 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 290
+
+Prediction:  4
+Prediction:  8
+Prediction:  8
+1.4142135623730951 1.0 2.0
+Attack was successful. Label changed from  1  to  8
+This was: 2 pixel attack.
+Time taken in this iteration: 1.7001574039459229 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 291
+
+Prediction:  5
+Prediction:  0
+Prediction:  0
+Time taken in this iteration: 2.3641021251678467 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 292
+
+Prediction:  2
+Prediction:  8
+Prediction:  8
+2.8284271247461903 1.0 8.0
+Attack was successful. Label changed from  4  to  6
+This was: 8 pixel attack.
+Time taken in this iteration: 1.851095199584961 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 293
+
+Prediction:  5
+Prediction:  7
+Prediction:  7
+Time taken in this iteration: 2.308138370513916 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 294
+
+Prediction:  2
+Prediction:  8
+Prediction:  8
+5.477225575051661 1.0 30.0
+Attack was successful. Label changed from  4  to  6
+This was: 32 pixel attack.
+Time taken in this iteration: 2.150402307510376 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 295
+
+Prediction:  5
+Prediction:  8
+Prediction:  8
+Time taken in this iteration: 2.2729568481445312 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 296
+
+Prediction:  5
+Prediction:  8
+Prediction:  8
+Time taken in this iteration: 2.3723154067993164 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 297
+
+Prediction:  2
+Prediction:  8
+Prediction:  8
+5.656854249492381 1.0 32.0
+Attack was successful. Label changed from  4  to  6
+This was: 32 pixel attack.
+Time taken in this iteration: 2.1973111629486084 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 298
+
+Prediction:  2
+Prediction:  8
+Prediction:  8
+Time taken in this iteration: 2.3128750324249268 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 299
+
+Prediction:  6
+UNSAT. Could not find a minimal modification by divide and conquer.
+Time taken in this iteration: 0.9899835586547852 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 300
+
+Prediction:  5
+Prediction:  8
+Prediction:  8
+Time taken in this iteration: 2.254251718521118 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 301
+
+Prediction:  9
+Prediction:  7
+Prediction:  7
+4.0 1.0 16.0
+Attack was successful. Label changed from  7  to  8
+This was: 16 pixel attack.
+Time taken in this iteration: 2.0845892429351807 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 302
+
+Prediction:  6
+UNSAT. Could not find a minimal modification by divide and conquer.
+Time taken in this iteration: 0.9453394412994385 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 303
+
+Prediction:  5
+Prediction:  8
+Prediction:  8
+Time taken in this iteration: 2.543492078781128 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 304
+
+Prediction:  9
+Prediction:  7
+Prediction:  7
+2.8284271247461903 1.0 8.0
+Attack was successful. Label changed from  7  to  8
+This was: 8 pixel attack.
+Time taken in this iteration: 1.9555962085723877 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 305
+
+Prediction:  5
+Prediction:  7
+Prediction:  7
+5.656854249492381 1.0 32.0
+Attack was successful. Label changed from  7  to  8
+This was: 32 pixel attack.
+Time taken in this iteration: 2.2767319679260254 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 306
+
+Prediction:  0
+Prediction:  8
+Prediction:  8
+5.656854249492381 1.0 32.0
+Attack was successful. Label changed from  5  to  8
+This was: 32 pixel attack.
+Time taken in this iteration: 2.2729744911193848 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 307
+
+Prediction:  4
+Prediction:  7
+Prediction:  7
+4.0 1.0 16.0
+Attack was successful. Label changed from  7  to  8
+This was: 16 pixel attack.
+Time taken in this iteration: 2.2221860885620117 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 308
+
+Prediction:  1
+Prediction:  8
+Prediction:  8
+Time taken in this iteration: 2.371364116668701 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 309
+
+Prediction:  8
+Prediction:  8
+Prediction:  8
+5.604018931701123 1.0 31.636418248374916
+Attack was successful. Label changed from  1  to  8
+This was: 32 pixel attack.
+Time taken in this iteration: 2.355031728744507 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 310
+
+Prediction:  7
+Prediction:  8
+Prediction:  8
+2.8284271247461903 1.0 8.0
+Attack was successful. Label changed from  1  to  3
+This was: 8 pixel attack.
+Time taken in this iteration: 1.8184752464294434 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 311
+
+Prediction:  6
+UNSAT. Could not find a minimal modification by divide and conquer.
+Time taken in this iteration: 1.075692892074585 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 312
+
+Prediction:  6
+Prediction:  8
+Prediction:  8
+Time taken in this iteration: 2.4330787658691406 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 313
+
+Prediction:  9
+Prediction:  9
+Prediction:  9
+4.0 1.0 16.00000000000001
+Attack was successful. Label changed from  9  to  8
+This was: 16 pixel attack.
+Time taken in this iteration: 2.1354050636291504 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 314
+
+Prediction:  8
+Prediction:  8
+Prediction:  8
+1.4142135623730951 1.0 2.0
+Attack was successful. Label changed from  4  to  6
+This was: 2 pixel attack.
+Time taken in this iteration: 1.6092712879180908 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 315
+
+Prediction:  7
+Prediction:  8
+Prediction:  8
+5.656854249492381 1.0 32.0
+Attack was successful. Label changed from  1  to  8
+This was: 32 pixel attack.
+Time taken in this iteration: 2.395639657974243 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 316
+
+Prediction:  9
+Prediction:  5
+Prediction:  5
+Time taken in this iteration: 2.431657075881958 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 317
+
+Prediction:  3
+Prediction:  8
+Prediction:  8
+Time taken in this iteration: 2.1949591636657715 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 318
+
+Prediction:  3
+Prediction:  8
+Prediction:  8
+Time taken in this iteration: 2.257535696029663 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 319
+
+Prediction:  9
+Prediction:  9
+Prediction:  9
+5.656854249492381 1.0 32.0
+Attack was successful. Label changed from  9  to  8
+This was: 32 pixel attack.
+Time taken in this iteration: 2.121530055999756 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 320
+
+Prediction:  5
+Prediction:  8
+Prediction:  8
+Time taken in this iteration: 2.2497289180755615 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 321
+
+Prediction:  5
+Prediction:  0
+Prediction:  0
+5.5677643628300215 1.0 31.0
+Attack was successful. Label changed from  3  to  8
+This was: 32 pixel attack.
+Time taken in this iteration: 2.214372396469116 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 322
+
+Prediction:  9
+Prediction:  8
+Prediction:  8
+2.706420174260394 1.0 7.569833449038981
+Attack was successful. Label changed from  9  to  8
+This was: 8 pixel attack.
+Time taken in this iteration: 1.9375109672546387 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 323
+
+Prediction:  6
+UNSAT. Could not find a minimal modification by divide and conquer.
+Time taken in this iteration: 0.912285327911377 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 324
+
+Prediction:  2
+Prediction:  8
+Prediction:  8
+4.0 1.0 16.0
+Attack was successful. Label changed from  7  to  8
+This was: 16 pixel attack.
+Time taken in this iteration: 2.0774729251861572 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 325
+
+Prediction:  1
+Prediction:  8
+Prediction:  8
+Time taken in this iteration: 2.4046952724456787 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 326
+
+Prediction:  5
+Prediction:  0
+Prediction:  0
+5.656854249492381 1.0 32.0
+Attack was successful. Label changed from  0  to  8
+This was: 32 pixel attack.
+Time taken in this iteration: 2.2858264446258545 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 327
+
+Prediction:  1
+Prediction:  3
+Prediction:  3
+5.656854249492381 1.0 32.0
+Attack was successful. Label changed from  3  to  8
+This was: 32 pixel attack.
+Time taken in this iteration: 2.338489294052124 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 328
+
+Prediction:  2
+Prediction:  8
+Prediction:  8
+4.0 1.0 16.0
+Attack was successful. Label changed from  5  to  6
+This was: 16 pixel attack.
+Time taken in this iteration: 2.189366579055786 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 329
+
+Prediction:  2
+Prediction:  8
+Prediction:  8
+4.0 1.0 16.0
+Attack was successful. Label changed from  4  to  6
+This was: 16 pixel attack.
+Time taken in this iteration: 2.0872106552124023 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 330
+
+Prediction:  5
+Prediction:  0
+Prediction:  0
+Time taken in this iteration: 2.5004208087921143 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 331
+
+Prediction:  6
+UNSAT. Could not find a minimal modification by divide and conquer.
+Time taken in this iteration: 1.1433513164520264 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 332
+
+Prediction:  9
+Prediction:  8
+Prediction:  8
+5.656854249492381 1.0 32.0
+Attack was successful. Label changed from  5  to  8
+This was: 32 pixel attack.
+Time taken in this iteration: 2.383263111114502 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 333
+
+Prediction:  9
+Prediction:  6
+Prediction:  6
+Time taken in this iteration: 2.424424886703491 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 334
+
+Prediction:  9
+Prediction:  8
+Prediction:  8
+2.8284271247461903 1.0 8.0
+Attack was successful. Label changed from  9  to  8
+This was: 8 pixel attack.
+Time taken in this iteration: 2.1626908779144287 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 335
+
+Prediction:  2
+Prediction:  4
+Prediction:  4
+Time taken in this iteration: 2.4386136531829834 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 336
+
+Prediction:  7
+Prediction:  8
+Prediction:  8
+1.4142135623730951 1.0 2.0
+Attack was successful. Label changed from  4  to  6
+This was: 2 pixel attack.
+Time taken in this iteration: 1.8092458248138428 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 337
+
+Prediction:  9
+Prediction:  7
+Prediction:  7
+5.656854249492381 1.0 32.0
+Attack was successful. Label changed from  7  to  8
+This was: 32 pixel attack.
+Time taken in this iteration: 2.431642532348633 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 338
+
+Prediction:  4
+Prediction:  8
+Prediction:  8
+3.8842895447127646 1.0 15.296150750741738
+Attack was successful. Label changed from  4  to  6
+This was: 16 pixel attack.
+Time taken in this iteration: 2.0565035343170166 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 339
+
+Prediction:  8
+Prediction:  8
+Prediction:  8
+Time taken in this iteration: 2.3868494033813477 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 340
+
+Prediction:  1
+Prediction:  8
+Prediction:  8
+4.0 1.0 16.0
+Attack was successful. Label changed from  7  to  8
+This was: 16 pixel attack.
+Time taken in this iteration: 2.2725276947021484 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 341
+
+Prediction:  5
+Prediction:  0
+Prediction:  0
+Time taken in this iteration: 2.371809244155884 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 342
+
+Prediction:  2
+Prediction:  8
+Prediction:  8
+1.4142135623730951 1.0 2.0
+Attack was successful. Label changed from  4  to  6
+This was: 2 pixel attack.
+Time taken in this iteration: 1.6681525707244873 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 343
+
+Prediction:  5
+Prediction:  8
+Prediction:  8
+Time taken in this iteration: 2.5902209281921387 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 344
+
+Prediction:  4
+Prediction:  8
+Prediction:  8
+4.0 1.0 16.000000000000004
+Attack was successful. Label changed from  9  to  8
+This was: 16 pixel attack.
+Time taken in this iteration: 2.2257680892944336 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 345
+
+Prediction:  7
+Prediction:  8
+Prediction:  8
+2.8284271247461903 1.0 8.0
+Attack was successful. Label changed from  1  to  8
+This was: 8 pixel attack.
+Time taken in this iteration: 2.0176212787628174 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 346
+
+Prediction:  9
+Prediction:  8
+Prediction:  8
+2.8284271247461903 1.0 8.0
+Attack was successful. Label changed from  9  to  8
+This was: 8 pixel attack.
+Time taken in this iteration: 1.9494307041168213 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 347
+
+Prediction:  8
+Prediction:  8
+Prediction:  8
+Time taken in this iteration: 2.3756611347198486 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 348
+
+Prediction:  5
+Prediction:  1
+Prediction:  1
+Time taken in this iteration: 2.3058485984802246 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 349
+
+Prediction:  9
+Prediction:  7
+Prediction:  7
+3.9999999999999982 1.0 15.999999999999993
+Attack was successful. Label changed from  7  to  8
+This was: 16 pixel attack.
+Time taken in this iteration: 2.2976176738739014 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 350
+
+Prediction:  9
+Prediction:  8
+Prediction:  8
+2.0 1.0 4.0
+Attack was successful. Label changed from  9  to  8
+This was: 4 pixel attack.
+Time taken in this iteration: 1.7498447895050049 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 351
+
+Prediction:  7
+Prediction:  8
+Prediction:  8
+2.8284271247461903 1.0 8.0
+Attack was successful. Label changed from  1  to  2
+This was: 8 pixel attack.
+Time taken in this iteration: 2.011749267578125 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 352
+
+Prediction:  5
+Prediction:  6
+Prediction:  6
+Time taken in this iteration: 2.348806381225586 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 353
+
+Prediction:  9
+Prediction:  7
+Prediction:  7
+4.0 1.0 16.0
+Attack was successful. Label changed from  7  to  8
+This was: 16 pixel attack.
+Time taken in this iteration: 2.0738370418548584 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 354
+
+Prediction:  2
+Prediction:  4
+Prediction:  4
+2.8284271247461903 1.0 8.0
+Attack was successful. Label changed from  4  to  9
+This was: 8 pixel attack.
+Time taken in this iteration: 1.9245316982269287 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 355
+
+Prediction:  2
+Prediction:  8
+Prediction:  8
+4.0 1.0 16.0
+Attack was successful. Label changed from  1  to  8
+This was: 16 pixel attack.
+Time taken in this iteration: 2.1146934032440186 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 356
+
+Prediction:  0
+Prediction:  3
+Prediction:  3
+5.656854249492381 1.0 32.0
+Attack was successful. Label changed from  3  to  8
+This was: 32 pixel attack.
+Time taken in this iteration: 2.3157758712768555 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 357
+
+Prediction:  9
+Prediction:  8
+Prediction:  8
+2.8191793082021235 1.0 7.973713237425844
+Attack was successful. Label changed from  1  to  9
+This was: 8 pixel attack.
+Time taken in this iteration: 1.9315216541290283 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 358
+
+Prediction:  9
+Prediction:  8
+Prediction:  8
+2.8284271247461903 1.0 8.0
+Attack was successful. Label changed from  1  to  9
+This was: 8 pixel attack.
+Time taken in this iteration: 1.9845032691955566 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 359
+
+Prediction:  1
+Prediction:  8
+Prediction:  8
+Time taken in this iteration: 2.377523899078369 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 360
+
+Prediction:  1
+Prediction:  8
+Prediction:  8
+Time taken in this iteration: 2.2770543098449707 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 361
+
+Prediction:  9
+Prediction:  2
+Prediction:  2
+Time taken in this iteration: 2.334536075592041 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 362
+
+Prediction:  5
+Prediction:  8
+Prediction:  8
+5.656854249492381 1.0 32.0
+Attack was successful. Label changed from  9  to  8
+This was: 32 pixel attack.
+Time taken in this iteration: 2.1585867404937744 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 363
+
+Prediction:  2
+Prediction:  8
+Prediction:  8
+2.8284271247461903 1.0 8.0
+Attack was successful. Label changed from  4  to  6
+This was: 8 pixel attack.
+Time taken in this iteration: 2.1519253253936768 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 364
+
+Prediction:  2
+Prediction:  8
+Prediction:  8
+2.0 1.0 4.0
+Attack was successful. Label changed from  9  to  8
+This was: 4 pixel attack.
+Time taken in this iteration: 2.0552399158477783 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 365
+
+Prediction:  1
+Prediction:  8
+Prediction:  8
+Time taken in this iteration: 2.3844785690307617 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 366
+
+Prediction:  8
+Prediction:  8
+Prediction:  8
+2.8284271247461903 1.0 8.0
+Attack was successful. Label changed from  1  to  8
+This was: 8 pixel attack.
+Time taken in this iteration: 1.9961233139038086 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 367
+
+Prediction:  6
+UNSAT. Could not find a minimal modification by divide and conquer.
+Time taken in this iteration: 1.0345683097839355 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 368
+
+Prediction:  1
+Prediction:  8
+Prediction:  8
+4.0 1.0 16.0
+Attack was successful. Label changed from  8  to  3
+This was: 16 pixel attack.
+Time taken in this iteration: 1.9541444778442383 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 369
+
+Prediction:  2
+Prediction:  8
+Prediction:  8
+2.0 1.0 4.0
+Attack was successful. Label changed from  4  to  6
+This was: 4 pixel attack.
+Time taken in this iteration: 1.8278565406799316 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 370
+
+Prediction:  7
+Prediction:  7
+Prediction:  7
+2.8284271247461903 1.0 8.0
+Attack was successful. Label changed from  1  to  8
+This was: 8 pixel attack.
+Time taken in this iteration: 2.012211322784424 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 371
+
+Prediction:  9
+Prediction:  7
+Prediction:  7
+4.0 1.0 16.0
+Attack was successful. Label changed from  7  to  8
+This was: 16 pixel attack.
+Time taken in this iteration: 1.9918978214263916 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 372
+
+Prediction:  2
+Prediction:  8
+Prediction:  8
+4.0 1.0 16.000000000000014
+Attack was successful. Label changed from  4  to  6
+This was: 16 pixel attack.
+Time taken in this iteration: 2.1258089542388916 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 373
+
+Prediction:  2
+Prediction:  8
+Prediction:  8
+4.0 1.0 16.0
+Attack was successful. Label changed from  4  to  6
+This was: 16 pixel attack.
+Time taken in this iteration: 2.067260265350342 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 374
+
+Prediction:  9
+Prediction:  8
+Prediction:  8
+4.0 1.0 16.000000000000014
+Attack was successful. Label changed from  4  to  6
+This was: 16 pixel attack.
+Time taken in this iteration: 2.343749523162842 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 375
+
+Prediction:  8
+Prediction:  8
+Prediction:  8
+5.656854249492381 1.0 32.0
+Attack was successful. Label changed from  2  to  8
+This was: 32 pixel attack.
+Time taken in this iteration: 2.511990785598755 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 376
+
+Prediction:  2
+Prediction:  8
+Prediction:  8
+4.0 1.0 16.0
+Attack was successful. Label changed from  5  to  2
+This was: 16 pixel attack.
+Time taken in this iteration: 2.1291308403015137 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 377
+
+Prediction:  9
+Prediction:  7
+Prediction:  7
+Time taken in this iteration: 2.3508317470550537 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 378
+
+Prediction:  8
+Prediction:  8
+Prediction:  8
+Time taken in this iteration: 2.892298460006714 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 379
+
+Prediction:  2
+Prediction:  8
+Prediction:  8
+2.8284271247461903 1.0 8.0
+Attack was successful. Label changed from  4  to  6
+This was: 8 pixel attack.
+Time taken in this iteration: 2.0718986988067627 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 380
+
+Prediction:  2
+Prediction:  8
+Prediction:  8
+4.0 1.0 16.0
+Attack was successful. Label changed from  4  to  6
+This was: 16 pixel attack.
+Time taken in this iteration: 1.979982614517212 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 381
+
+Prediction:  1
+Prediction:  8
+Prediction:  8
+Time taken in this iteration: 2.29280424118042 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 382
+
+Prediction:  8
+Prediction:  8
+Prediction:  8
+2.8284271247461903 1.0 8.0
+Attack was successful. Label changed from  1  to  8
+This was: 8 pixel attack.
+Time taken in this iteration: 1.9576666355133057 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 383
+
+Prediction:  5
+Prediction:  8
+Prediction:  8
+5.656854249492381 1.0 32.00000000000001
+Attack was successful. Label changed from  9  to  8
+This was: 32 pixel attack.
+Time taken in this iteration: 2.2817397117614746 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 384
+
+Prediction:  4
+Prediction:  8
+Prediction:  8
+4.0 1.0 16.0
+Attack was successful. Label changed from  7  to  6
+This was: 16 pixel attack.
+Time taken in this iteration: 2.0903472900390625 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 385
+
+Prediction:  8
+Prediction:  8
+Prediction:  8
+Time taken in this iteration: 2.2901408672332764 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 386
+
+Prediction:  5
+Prediction:  1
+Prediction:  1
+Time taken in this iteration: 2.2670536041259766 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 387
+
+Prediction:  9
+Prediction:  7
+Prediction:  7
+4.0 1.0 16.0
+Attack was successful. Label changed from  7  to  3
+This was: 16 pixel attack.
+Time taken in this iteration: 2.105403423309326 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 388
+
+Prediction:  2
+Prediction:  8
+Prediction:  8
+Time taken in this iteration: 2.332624673843384 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 389
+
+Prediction:  9
+Prediction:  8
+Prediction:  8
+4.0 1.0 16.0
+Attack was successful. Label changed from  9  to  8
+This was: 16 pixel attack.
+Time taken in this iteration: 2.0808513164520264 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 390
+
+Prediction:  9
+Prediction:  8
+Prediction:  8
+4.0 1.0 16.0
+Attack was successful. Label changed from  2  to  8
+This was: 16 pixel attack.
+Time taken in this iteration: 2.0453908443450928 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 391
+
+Prediction:  9
+Prediction:  8
+Prediction:  8
+2.0 1.0 4.0
+Attack was successful. Label changed from  2  to  5
+This was: 4 pixel attack.
+Time taken in this iteration: 1.8229784965515137 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 392
+
+Prediction:  2
+Prediction:  0
+Prediction:  0
+Time taken in this iteration: 2.3873066902160645 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 393
+
+Prediction:  9
+Prediction:  6
+Prediction:  6
+Time taken in this iteration: 2.3644590377807617 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 394
+
+Prediction:  8
+Prediction:  8
+Prediction:  8
+2.0 1.0 4.0
+Attack was successful. Label changed from  1  to  8
+This was: 4 pixel attack.
+Time taken in this iteration: 1.7253103256225586 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 395
+
+Prediction:  6
+UNSAT. Could not find a minimal modification by divide and conquer.
+Time taken in this iteration: 1.0236797332763672 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 396
+
+Prediction:  9
+Prediction:  7
+Prediction:  7
+4.0 1.0 16.0
+Attack was successful. Label changed from  5  to  8
+This was: 16 pixel attack.
+Time taken in this iteration: 2.137681722640991 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 397
+
+Prediction:  7
+Prediction:  8
+Prediction:  8
+4.0 1.0 16.0
+Attack was successful. Label changed from  1  to  3
+This was: 16 pixel attack.
+Time taken in this iteration: 1.989745855331421 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 398
+
+Prediction:  8
+Prediction:  3
+Prediction:  3
+3.9385752550680255 1.0 15.715803771877574
+Attack was successful. Label changed from  1  to  3
+This was: 16 pixel attack.
+Time taken in this iteration: 2.1445579528808594 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 399
+
+Prediction:  5
+Prediction:  8
+Prediction:  8
+Time taken in this iteration: 2.2883975505828857 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 400
+
+Prediction:  8
+Prediction:  8
+Prediction:  8
+Time taken in this iteration: 2.429086923599243 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 401
+
+Prediction:  6
+UNSAT. Could not find a minimal modification by divide and conquer.
+Time taken in this iteration: 0.9952237606048584 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 402
+
+Prediction:  2
+Prediction:  8
+Prediction:  8
+2.8284271247461903 1.0 8.0
+Attack was successful. Label changed from  4  to  6
+This was: 8 pixel attack.
+Time taken in this iteration: 1.9890687465667725 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 403
+
+Prediction:  0
+Prediction:  0
+Prediction:  0
+Time taken in this iteration: 2.4418909549713135 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 404
+
+Prediction:  9
+Prediction:  0
+Prediction:  0
+Time taken in this iteration: 2.2855799198150635 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 405
+
+Prediction:  2
+Prediction:  0
+Prediction:  0
+Time taken in this iteration: 2.3112173080444336 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 406
+
+Prediction:  8
+Prediction:  8
+Prediction:  8
+4.0 1.0 16.0
+Attack was successful. Label changed from  1  to  8
+This was: 16 pixel attack.
+Time taken in this iteration: 1.9099900722503662 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 407
+
+Prediction:  0
+Prediction:  8
+Prediction:  8
+Time taken in this iteration: 2.300114631652832 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 408
+
+Prediction:  8
+Prediction:  8
+Prediction:  8
+5.656854249492381 1.0 32.0
+Attack was successful. Label changed from  1  to  3
+This was: 32 pixel attack.
+Time taken in this iteration: 2.1529290676116943 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 409
+
+Prediction:  5
+Prediction:  8
+Prediction:  8
+4.0 1.0 16.000000000000007
+Attack was successful. Label changed from  9  to  8
+This was: 16 pixel attack.
+Time taken in this iteration: 2.096735715866089 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 410
+
+Prediction:  1
+Prediction:  8
+Prediction:  8
+Time taken in this iteration: 2.3187265396118164 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 411
+
+Prediction:  9
+Prediction:  7
+Prediction:  7
+4.0 1.0 16.0
+Attack was successful. Label changed from  7  to  8
+This was: 16 pixel attack.
+Time taken in this iteration: 1.9623558521270752 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 412
+
+Prediction:  0
+Prediction:  4
+Prediction:  4
+4.0 1.0 16.0
+Attack was successful. Label changed from  4  to  6
+This was: 16 pixel attack.
+Time taken in this iteration: 2.093628406524658 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 413
+
+Prediction:  2
+Prediction:  8
+Prediction:  8
+5.656854249492381 1.0 32.0
+Attack was successful. Label changed from  4  to  6
+This was: 32 pixel attack.
+Time taken in this iteration: 2.198080539703369 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 414
+
+Prediction:  8
+Prediction:  8
+Prediction:  8
+1.4142135623730951 1.0 2.0
+Attack was successful. Label changed from  4  to  6
+This was: 2 pixel attack.
+Time taken in this iteration: 1.669856071472168 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 415
+
+Prediction:  9
+Prediction:  8
+Prediction:  8
+Time taken in this iteration: 2.2103335857391357 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 416
+
+Prediction:  9
+Prediction:  8
+Prediction:  8
+2.0 1.0 4.0
+Attack was successful. Label changed from  1  to  8
+This was: 4 pixel attack.
+Time taken in this iteration: 1.8377220630645752 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 417
+
+Prediction:  0
+Prediction:  8
+Prediction:  8
+Time taken in this iteration: 2.2959272861480713 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 418
+
+Prediction:  2
+Prediction:  8
+Prediction:  8
+Time taken in this iteration: 2.3420302867889404 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 419
+
+Prediction:  9
+Prediction:  9
+Prediction:  9
+2.8284271247461903 1.0 8.0
+Attack was successful. Label changed from  9  to  8
+This was: 8 pixel attack.
+Time taken in this iteration: 1.909252405166626 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 420
+
+Prediction:  9
+Prediction:  9
+Prediction:  9
+5.656854249492376 1.0 31.99999999999998
+Attack was successful. Label changed from  5  to  8
+This was: 32 pixel attack.
+Time taken in this iteration: 2.2540438175201416 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 421
+
+Prediction:  6
+UNSAT. Could not find a minimal modification by divide and conquer.
+Time taken in this iteration: 1.0125980377197266 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 422
+
+Prediction:  7
+Prediction:  2
+Prediction:  2
+4.0 1.0 16.0
+Attack was successful. Label changed from  7  to  8
+This was: 16 pixel attack.
+Time taken in this iteration: 2.0478174686431885 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 423
+
+Prediction:  5
+Prediction:  9
+Prediction:  9
+5.656854249492381 1.0 32.0
+Attack was successful. Label changed from  9  to  8
+This was: 32 pixel attack.
+Time taken in this iteration: 2.0065383911132812 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 424
+
+Prediction:  8
+Prediction:  8
+Prediction:  8
+2.0 1.0 4.0
+Attack was successful. Label changed from  9  to  8
+This was: 4 pixel attack.
+Time taken in this iteration: 1.8167459964752197 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 425
+
+Prediction:  3
+Prediction:  8
+Prediction:  8
+Time taken in this iteration: 2.3059942722320557 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 426
+
+Prediction:  7
+Prediction:  7
+Prediction:  7
+Time taken in this iteration: 2.1990911960601807 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 427
+
+Prediction:  5
+Prediction:  8
+Prediction:  8
+Time taken in this iteration: 2.7396247386932373 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 428
+
+Prediction:  9
+Prediction:  9
+Prediction:  9
+4.0 1.0 16.0
+Attack was successful. Label changed from  9  to  8
+This was: 16 pixel attack.
+Time taken in this iteration: 1.914273977279663 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 429
+
+Prediction:  1
+Prediction:  8
+Prediction:  8
+Time taken in this iteration: 2.2503089904785156 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 430
+
+Prediction:  6
+UNSAT. Could not find a minimal modification by divide and conquer.
+Time taken in this iteration: 1.007340669631958 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 431
+
+Prediction:  6
+UNSAT. Could not find a minimal modification by divide and conquer.
+Time taken in this iteration: 0.9036614894866943 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 432
+
+Prediction:  3
+Prediction:  8
+Prediction:  8
+5.656854249492381 1.0 32.000000000000014
+Attack was successful. Label changed from  2  to  5
+This was: 32 pixel attack.
+Time taken in this iteration: 2.213715076446533 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 433
+
+Prediction:  8
+Prediction:  3
+Prediction:  3
+4.0 1.0 16.0
+Attack was successful. Label changed from  3  to  8
+This was: 16 pixel attack.
+Time taken in this iteration: 2.066894054412842 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 434
+
+Prediction:  9
+Prediction:  8
+Prediction:  8
+2.8284271247461903 1.0 8.0
+Attack was successful. Label changed from  9  to  8
+This was: 8 pixel attack.
+Time taken in this iteration: 2.0166425704956055 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 435
+
+Prediction:  5
+Prediction:  7
+Prediction:  7
+Time taken in this iteration: 2.22128963470459 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 436
+
+Prediction:  5
+Prediction:  0
+Prediction:  0
+Time taken in this iteration: 2.212691307067871 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 437
+
+Prediction:  4
+Prediction:  8
+Prediction:  8
+2.8284271247461903 1.0 8.0
+Attack was successful. Label changed from  5  to  6
+This was: 8 pixel attack.
+Time taken in this iteration: 1.9584662914276123 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 438
+
+Prediction:  2
+Prediction:  8
+Prediction:  8
+5.656854249492378 1.0 31.99999999999999
+Attack was successful. Label changed from  4  to  6
+This was: 32 pixel attack.
+Time taken in this iteration: 2.241157054901123 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 439
+
+Prediction:  9
+Prediction:  8
+Prediction:  8
+Time taken in this iteration: 2.1067538261413574 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 440
+
+Prediction:  5
+Prediction:  8
+Prediction:  8
+Time taken in this iteration: 2.2277841567993164 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 441
+
+Prediction:  9
+Prediction:  9
+Prediction:  9
+2.8284271247461903 1.0 8.0
+Attack was successful. Label changed from  9  to  8
+This was: 8 pixel attack.
+Time taken in this iteration: 2.002939224243164 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 442
+
+Prediction:  2
+Prediction:  8
+Prediction:  8
+Time taken in this iteration: 2.3045053482055664 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 443
+
+Prediction:  2
+Prediction:  8
+Prediction:  8
+2.8284271247461903 1.0 8.0
+Attack was successful. Label changed from  1  to  8
+This was: 8 pixel attack.
+Time taken in this iteration: 1.9292070865631104 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 444
+
+Prediction:  7
+Prediction:  8
+Prediction:  8
+2.6457513110645907 1.0 7.000000000000003
+Attack was successful. Label changed from  9  to  5
+This was: 8 pixel attack.
+Time taken in this iteration: 1.8594088554382324 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 445
+
+Prediction:  9
+Prediction:  8
+Prediction:  8
+Time taken in this iteration: 2.8504796028137207 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 446
+
+Prediction:  9
+Prediction:  7
+Prediction:  7
+3.9484816134692333 1.0 15.768444566578879
+Attack was successful. Label changed from  7  to  8
+This was: 16 pixel attack.
+Time taken in this iteration: 2.1132407188415527 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 447
+
+Prediction:  2
+Prediction:  8
+Prediction:  8
+2.0 1.0 4.0
+Attack was successful. Label changed from  1  to  8
+This was: 4 pixel attack.
+Time taken in this iteration: 1.9550261497497559 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 448
+
+Prediction:  9
+Prediction:  8
+Prediction:  8
+2.8284271247461903 1.0 8.0
+Attack was successful. Label changed from  2  to  8
+This was: 8 pixel attack.
+Time taken in this iteration: 1.8905079364776611 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 449
+
+Prediction:  6
+UNSAT. Could not find a minimal modification by divide and conquer.
+Time taken in this iteration: 1.0082273483276367 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 450
+
+Prediction:  8
+Prediction:  8
+Prediction:  8
+4.0 1.0 16.000000000000014
+Attack was successful. Label changed from  1  to  8
+This was: 16 pixel attack.
+Time taken in this iteration: 2.0941553115844727 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 451
+
+Prediction:  5
+Prediction:  8
+Prediction:  8
+Time taken in this iteration: 2.189579486846924 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 452
+
+Prediction:  1
+Prediction:  3
+Prediction:  3
+5.656854249492381 1.0 32.0
+Attack was successful. Label changed from  3  to  8
+This was: 32 pixel attack.
+Time taken in this iteration: 2.3004729747772217 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 453
+
+Prediction:  5
+Prediction:  8
+Prediction:  8
+Time taken in this iteration: 2.3301610946655273 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 454
+
+Prediction:  8
+Prediction:  8
+Prediction:  8
+4.0 1.0 16.0
+Attack was successful. Label changed from  1  to  9
+This was: 16 pixel attack.
+Time taken in this iteration: 2.0710997581481934 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 455
+
+Prediction:  3
+Prediction:  8
+Prediction:  8
+4.0 1.0 16.0
+Attack was successful. Label changed from  1  to  3
+This was: 16 pixel attack.
+Time taken in this iteration: 2.1182706356048584 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 456
+
+Prediction:  5
+Prediction:  6
+Prediction:  6
+Time taken in this iteration: 2.1596922874450684 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 457
+
+Prediction:  9
+Prediction:  8
+Prediction:  8
+5.656854249492381 1.0 32.0
+Attack was successful. Label changed from  2  to  8
+This was: 32 pixel attack.
+Time taken in this iteration: 2.2207391262054443 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 458
+
+Prediction:  1
+Prediction:  8
+Prediction:  8
+Time taken in this iteration: 2.2078330516815186 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 459
+
+Prediction:  9
+Prediction:  8
+Prediction:  8
+1.4142135623730951 1.0 2.0
+Attack was successful. Label changed from  9  to  3
+This was: 2 pixel attack.
+Time taken in this iteration: 1.6836514472961426 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 460
+
+Prediction:  7
+Prediction:  8
+Prediction:  8
+2.8284271247461903 1.0 8.000000000000014
+Attack was successful. Label changed from  9  to  8
+This was: 8 pixel attack.
+Time taken in this iteration: 1.953796625137329 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 461
+
+Prediction:  2
+Prediction:  8
+Prediction:  8
+5.656854249492381 1.0 32.00000000000001
+Attack was successful. Label changed from  4  to  8
+This was: 32 pixel attack.
+Time taken in this iteration: 2.1151187419891357 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 462
+
+Prediction:  5
+Prediction:  8
+Prediction:  8
+Time taken in this iteration: 2.3195645809173584 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 463
+
+Prediction:  0
+Prediction:  8
+Prediction:  8
+2.8284271247461903 1.0 8.0
+Attack was successful. Label changed from  5  to  6
+This was: 8 pixel attack.
+Time taken in this iteration: 1.9049460887908936 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 464
+
+Prediction:  8
+Prediction:  8
+Prediction:  8
+Time taken in this iteration: 2.240997791290283 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 465
+
+Prediction:  6
+UNSAT. Could not find a minimal modification by divide and conquer.
+Time taken in this iteration: 0.9647588729858398 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 466
+
+Prediction:  9
+Prediction:  8
+Prediction:  8
+1.4142135623730951 1.0 2.0
+Attack was successful. Label changed from  1  to  8
+This was: 2 pixel attack.
+Time taken in this iteration: 1.7288262844085693 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 467
+
+Prediction:  9
+Prediction:  8
+Prediction:  8
+Time taken in this iteration: 2.289830446243286 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 468
+
+Prediction:  1
+Prediction:  7
+Prediction:  7
+4.0 1.0 16.0
+Attack was successful. Label changed from  7  to  8
+This was: 16 pixel attack.
+Time taken in this iteration: 2.078113555908203 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 469
+
+Prediction:  9
+Prediction:  8
+Prediction:  8
+Time taken in this iteration: 2.0876801013946533 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 470
+
+Prediction:  5
+Prediction:  8
+Prediction:  8
+5.656854249492381 1.0 32.0
+Attack was successful. Label changed from  8  to  6
+This was: 32 pixel attack.
+Time taken in this iteration: 2.254948616027832 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 471
+
+Prediction:  9
+Prediction:  9
+Prediction:  9
+5.656854249492381 1.0 32.0
+Attack was successful. Label changed from  9  to  8
+This was: 32 pixel attack.
+Time taken in this iteration: 2.4251668453216553 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 472
+
+Prediction:  3
+Prediction:  0
+Prediction:  0
+2.0 1.0 4.0
+Attack was successful. Label changed from  2  to  3
+This was: 4 pixel attack.
+Time taken in this iteration: 1.9088056087493896 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 473
+
+Prediction:  5
+Prediction:  8
+Prediction:  8
+Time taken in this iteration: 2.260979652404785 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 474
+
+Prediction:  0
+Prediction:  8
+Prediction:  8
+Time taken in this iteration: 2.148836374282837 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 475
+
+Prediction:  7
+Prediction:  8
+Prediction:  8
+4.0 1.0 16.0
+Attack was successful. Label changed from  1  to  8
+This was: 16 pixel attack.
+Time taken in this iteration: 2.0975630283355713 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 476
+
+Prediction:  7
+Prediction:  8
+Prediction:  8
+Time taken in this iteration: 2.318873882293701 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 477
+
+Prediction:  3
+Prediction:  8
+Prediction:  8
+Time taken in this iteration: 2.232988119125366 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 478
+
+Prediction:  5
+Prediction:  8
+Prediction:  8
+4.000000000000003 1.0000000000000107 16.00000000000001
+Attack was successful. Label changed from  7  to  8
+This was: 16 pixel attack.
+Time taken in this iteration: 1.984344482421875 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 479
+
+Prediction:  8
+Prediction:  1
+Prediction:  1
+Time taken in this iteration: 2.463188409805298 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 480
+
+Prediction:  5
+Prediction:  8
+Prediction:  8
+1.4142135623730951 1.0 2.0
+Attack was successful. Label changed from  8  to  5
+This was: 2 pixel attack.
+Time taken in this iteration: 1.734736680984497 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 481
+
+Prediction:  2
+Prediction:  8
+Prediction:  8
+2.8284271247461903 1.0 8.0
+Attack was successful. Label changed from  4  to  6
+This was: 8 pixel attack.
+Time taken in this iteration: 1.9604766368865967 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 482
+
+Prediction:  4
+Prediction:  8
+Prediction:  8
+4.0 1.0 16.0
+Attack was successful. Label changed from  9  to  8
+This was: 16 pixel attack.
+Time taken in this iteration: 1.9529755115509033 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 483
+
+Prediction:  9
+Prediction:  7
+Prediction:  7
+Time taken in this iteration: 2.3301842212677 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 484
+
+Prediction:  7
+Prediction:  8
+Prediction:  8
+4.0 1.0 16.0
+Attack was successful. Label changed from  1  to  8
+This was: 16 pixel attack.
+Time taken in this iteration: 2.074702739715576 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 485
+
+Prediction:  5
+Prediction:  8
+Prediction:  8
+Time taken in this iteration: 2.326598882675171 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 486
+
+Prediction:  1
+Prediction:  8
+Prediction:  8
+Time taken in this iteration: 2.3345744609832764 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 487
+
+Prediction:  9
+Prediction:  9
+Prediction:  9
+5.656854249492378 1.0 31.999999999999986
+Attack was successful. Label changed from  9  to  8
+This was: 32 pixel attack.
+Time taken in this iteration: 2.1332194805145264 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 488
+
+Prediction:  4
+Prediction:  8
+Prediction:  8
+Time taken in this iteration: 2.2315433025360107 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 489
+
+Prediction:  5
+Prediction:  8
+Prediction:  8
+Time taken in this iteration: 2.2516417503356934 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 490
+
+Prediction:  2
+Prediction:  5
+Prediction:  5
+Time taken in this iteration: 2.2961926460266113 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 491
+
+Prediction:  3
+Prediction:  8
+Prediction:  8
+4.0 1.0 16.0
+Attack was successful. Label changed from  1  to  8
+This was: 16 pixel attack.
+Time taken in this iteration: 1.985295057296753 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 492
+
+Prediction:  3
+Prediction:  8
+Prediction:  8
+2.6457513110645907 1.0 7.000000000000014
+Attack was successful. Label changed from  1  to  8
+This was: 8 pixel attack.
+Time taken in this iteration: 1.9409799575805664 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 493
+
+Prediction:  3
+Prediction:  8
+Prediction:  8
+Time taken in this iteration: 2.287552833557129 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 494
+
+Prediction:  8
+Prediction:  8
+Prediction:  8
+5.656854249492381 1.0 32.0
+Attack was successful. Label changed from  0  to  6
+This was: 32 pixel attack.
+Time taken in this iteration: 2.3735082149505615 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 495
+
+Prediction:  1
+Prediction:  8
+Prediction:  8
+Time taken in this iteration: 2.2663092613220215 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 496
+
+Prediction:  2
+Prediction:  8
+Prediction:  8
+Time taken in this iteration: 2.3166308403015137 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 497
+
+Prediction:  7
+Prediction:  8
+Prediction:  8
+5.656854249492381 1.0 32.0
+Attack was successful. Label changed from  7  to  8
+This was: 32 pixel attack.
+Time taken in this iteration: 2.2608094215393066 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 498
+
+Prediction:  6
+UNSAT. Could not find a minimal modification by divide and conquer.
+Time taken in this iteration: 1.0251755714416504 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 499
+
+Prediction:  9
+Prediction:  6
+Prediction:  6
+Time taken in this iteration: 2.258606195449829 seconds.
+###########################################################################################
+[13, 30, 18, 22, 30, 16, 1, 30, 7, 30]
+[1, 1, 1, 9, 0, 14, 46, 1, 123, 1]
+Average L-inf norm: 1.0000000000000004
+Average L-2 norm: 3.7678837326344445
+TIME TAKEN IN GENERATION OF ABOVE EXAMPLES:  1033.8020737171173 seconds.

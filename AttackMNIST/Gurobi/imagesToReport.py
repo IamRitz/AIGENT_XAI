@@ -47,7 +47,7 @@ def attack():
         sat_in = inputs[i]
         # print()
         t1 = time()
-        success, original, adversarial, true_label, adversarial_label = generateAdversarial(sat_in)
+        success, original, adversarial, true_label, adversarial_label, L2_norm, linf = generateAdversarial(sat_in)
         # print(success)
         if success==1:
             L2_norm = np.linalg.norm(np.array(original)-np.array(adversarial))
@@ -66,8 +66,8 @@ def attack():
             mat2 = convertToMtarix(adversarial, m, n)
             image_adversarial = show(mat2, m, n)
 
-            image_original.save("OriginalImages/Image_"+str(i)+".jpg")
-            image_adversarial.save("AdversarialImages/Image_"+str(i)+".jpg")
+            image_original.save("OriginalImages3/Image_"+str(i)+".jpg")
+            image_adversarial.save("AdversarialImages3/Image_"+str(i)+".jpg")
             # break
 
 
