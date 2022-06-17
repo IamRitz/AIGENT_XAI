@@ -24,16 +24,16 @@ Setting verbosity of tensorflow to minimum.
 """
 from findModificationsLayerK import find as find
 
-def convertToMtarix(array, m, n):
-    for i in range(m*n):
+def convertToMtarix(array, m, n, channels):
+    for i in range(32*32*3):
         array[i] = 255*array[i]
     matrix = np.array(array)
-    return matrix.reshape((m,n))
+    return matrix.reshape((m, n, channels))
 
-def show(pixelMatrix, w, h):
+def show(pixelMatrix, m, n, channels):
     data = np.array(pixelMatrix)
-    im = Image.fromarray(data.astype(np.uint8), mode='L')
-    im = im.resize((56, 56))
+    im = Image.fromarray(data.astype(np.uint8), mode='RGB')
+    # im = im.resize((m, n, channels))
     # im.show()
     return im
 
@@ -41,7 +41,7 @@ def attack():
     inputs, outputs, count = getData()
     print("Number of inputs in consideration: ",len(inputs))
     i=15
-    m, n = 28, 28
+    m, n, channels = 32, 32, 3
     for i in range(count):
         print("Launching attack on input:", i)
         sat_in = inputs[i]
@@ -60,20 +60,14 @@ def attack():
             """
             Now, here we will generate images for original and adversarial image.
             """
-            mat1 = convertToMtarix(original, m, n)
-            image_original = show(mat1, m, n)
+            mat1 = convertToMtarix(original, m, n, channels)
+            image_original = show(mat1, m, n, channels)
 
-            mat2 = convertToMtarix(adversarial, m, n)
-            image_adversarial = show(mat2, m, n)
+            mat2 = convertToMtarix(adversarial, m, n, channels)
+            image_adversarial = show(mat2, m, n, channels)
 
             image_original.save("OriginalImages/Image_"+str(i)+".jpg")
             image_adversarial.save("AdversarialImages/Image_"+str(i)+".jpg")
             # break
-
-
-        
-        # break
-        # if i==0:
-        #     break
 
 attack()

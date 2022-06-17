@@ -353,7 +353,7 @@ def attack():
     # print("Average L-inf norm:", linfTotal/adv)
     # print("Average L-2 norm:", l2/adv)
 
-t1 = time()
-attack()
-t2 = time()
-print("TIME TAKEN IN GENERATION OF ABOVE EXAMPLES: ", (t2-t1), "seconds.")
+# t1 = time()
+# attack()
+# t2 = time()
+# print("TIME TAKEN IN GENERATION OF ABOVE EXAMPLES: ", (t2-t1), "seconds.")
