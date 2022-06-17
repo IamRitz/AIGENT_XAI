@@ -30,9 +30,11 @@ def train():
     print(num_classes)
     model = Sequential()
 
-    model.add(Dense(100, input_dim = 32 * 32 * 3, activation= 'relu'))
+    model.add(Dense(50, input_dim = 32 * 32 * 3, activation= 'relu'))
     model.add(Dense(50, activation = 'relu'))
-    model.add(Dense(25, activation = 'relu'))
+    model.add(Dense(50, activation = 'relu'))
+    model.add(Dense(50, activation = 'relu'))
+    model.add(Dense(50, activation = 'relu'))
 
 
     model.add(Dense(10))

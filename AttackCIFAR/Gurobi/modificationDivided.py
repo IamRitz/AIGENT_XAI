@@ -58,9 +58,9 @@ def FindCutoff(w):
     # print(len(positive_vals))
     # print()
     # print(len(negative_vals))
-    mark = 4000/(len(positive_vals)+len(negative_vals))
+    # mark = 4000/(len(positive_vals)+len(negative_vals))
     # print("Marks is:", mark)
-    # mark = 0.25
+    mark = 0.25
     # positive_vals.sort()
     positive_index = ceil(mark*len(positive_vals))
     positive_heuristic = positive_vals[len(positive_vals)-positive_index]
@@ -71,7 +71,6 @@ def FindCutoff(w):
     negative_heuristic = negative_vals[negative_index]
     return positive_heuristic, negative_heuristic
     
-
 def get_neuron_values(loaded_model, input, num_layers, values, gurobi_model, epsilon_max, mode, layer_to_change):
         neurons = []
         val_max = 50
@@ -169,8 +168,7 @@ def find(epsilon, model, inp, expected_outputs, mode, layer_to_change, phaseGive
     # print(result)
     m.update()
     t2 = time()
-    # diff = 0.0000001
-    # print(len(result))
+    
     z, p = 0, 0
     tr = 2
     for i in range(len(result)):

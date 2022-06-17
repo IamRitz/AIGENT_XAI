@@ -26,18 +26,23 @@ e = [3, 12, 2, 8, 1, 24, 58, 1, 146, 17]
 f = [5, 10, 9, 8, 2, 32, 53, 7, 121, 28]
 g = [5, 10, 8, 8, 2, 37, 52, 7, 118, 28]
 h = [5, 5, 11, 10, 10, 27, 49, 19, 122, 17]
-print(PielouMeaure(a, len(a)))
+cifar = [5, 69, 32, 63, 30, 5, 39, 29, 6, 22]
+
+
+# print(PielouMeaure(a, len(a)))
+# print()
+# print(PielouMeaure(b, len(b)))
+# print()
+# print(PielouMeaure(c, len(c)))
+# print()
+# print(PielouMeaure(d, len(d)))
+# print()
+# print(PielouMeaure(e, len(e)))
+# print()
+# print(PielouMeaure(f, len(f)))
+# print()
+# print(PielouMeaure(g, len(g)))
+# print()
+# print(PielouMeaure(h, len(h)))
 print()
-print(PielouMeaure(b, len(b)))
-print()
-print(PielouMeaure(c, len(c)))
-print()
-print(PielouMeaure(d, len(d)))
-print()
-print(PielouMeaure(e, len(e)))
-print()
-print(PielouMeaure(f, len(f)))
-print()
-print(PielouMeaure(g, len(g)))
-print()
-print(PielouMeaure(h, len(h)))
+print(PielouMeaure(cifar, len(cifar)))

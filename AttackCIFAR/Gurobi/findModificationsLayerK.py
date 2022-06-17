@@ -1,3 +1,4 @@
+from math import ceil
 from time import time
 import gurobipy as gp
 from gurobipy import GRB
@@ -43,9 +44,36 @@ def get_neuron_values_actual(loaded_model, input, num_layers):
         # print(neurons[len(neurons)-1])
         return neurons
 
+def FindCutoff(w):
+    positive_vals = []
+    negative_vals = []
+    for i in range(len(w)):
+        for j in range(len(w[i])):
+            if w[i][j]>0:
+                positive_vals.append(w[i][j])
+            else:
+                negative_vals.append(w[i][j])
+    positive_vals.sort()
+    negative_vals.sort()
+    # print(len(positive_vals))
+    # print()
+    # print(len(negative_vals))
+    # mark = 4000/(len(positive_vals)+len(negative_vals))
+    # print("Marks is:", mark)
+    mark = 0.50
+    # positive_vals.sort()
+    positive_index = ceil(mark*len(positive_vals))
+    positive_heuristic = positive_vals[len(positive_vals)-positive_index]
+    # print(positive_index)
+    # negative_vals.sort()
+    negative_index = ceil(mark*len(negative_vals))
+    # print(negative_index)
+    negative_heuristic = negative_vals[negative_index]
+    return positive_heuristic, negative_heuristic
+
 def get_neuron_values(loaded_model, input, num_layers, values, gurobi_model, epsilon_max, mode, layer_to_change):
         neurons = []
-        val_max = 100
+        val_max = 1000
         l = 0
         epsilons = []
         last_layer = num_layers-1
@@ -61,30 +89,25 @@ def get_neuron_values(loaded_model, input, num_layers, values, gurobi_model, eps
             shape0 = w.shape[0]
             shape1 = w.shape[1]
             epsilon = []
-            
+            v=0
             # print(np.shape(input), np.shape(values[int(i/2)]), np.shape(w))
             if int(i/2) == layer_to_change:
-                # print("Adding modifications to layer:", layer_to_change)
+                cutOffP, cutOffN = FindCutoff(w)
+                # print(cutOffP, cutOffN)
+                # print("Adding modifications to layer:", layer_to_change, np.shape(w))
                 for row in range(shape0):
                     ep = []
                     for col in range(shape1):
-                        # mode =0
-                        if mode==1:
+                        if w[row][col]>=cutOffP or w[row][col]<=cutOffN:
+                            v= v+1
                             ep.append(gurobi_model.addVar(lb=-val_max, ub = val_max, vtype=grb.GRB.CONTINUOUS))
                             gurobi_model.addConstr(ep[col]-epsilon_max<=0)
                             gurobi_model.addConstr(ep[col]+epsilon_max>=0)
                             gurobi_model.update()
                         else:
-                            if col==0 :
-                                ep.append(gurobi_model.addVar(vtype=grb.GRB.CONTINUOUS))
-                                gurobi_model.addConstr(ep[col]-epsilon_max<=0)
-                                gurobi_model.addConstr(ep[col]>=0)
-                                gurobi_model.update()
-                            else:
-                                ep.append(gurobi_model.addVar(vtype=grb.GRB.CONTINUOUS))
-                                gurobi_model.addConstr(ep[col]<=0)
-                                gurobi_model.addConstr(ep[col]+epsilon_max>=0)
-                                gurobi_model.update()
+                            ep.append(0)
+                            # gurobi_model.addConstr(ep[col]-epsilon_max==0)
+                            # gurobi_model.update()
                     epsilon.append(ep)
             
             else:
@@ -95,6 +118,7 @@ def get_neuron_values(loaded_model, input, num_layers, values, gurobi_model, eps
                     epsilon.append(ep)
             
             if int(i/2) == layer_to_change:
+                # print("Number of edges changed:", v)
                 result = np.matmul(input, w + epsilon) + b
                 epsilons.append(epsilon)
             else:
@@ -123,6 +147,7 @@ def get_neuron_values(loaded_model, input, num_layers, values, gurobi_model, eps
         return neurons[len(neurons)-1], epsilons
 
 def find(epsilon, model, inp, expected_label, num_inputs, num_outputs, mode, layer_to_change):
+    epsilon = 100
     num_layers = len(model.layers)
     env = gp.Env(empty=True)
     env.setParam('OutputFlag', 0)
@@ -149,7 +174,7 @@ def find(epsilon, model, inp, expected_label, num_inputs, num_outputs, mode, lay
     # print(len(result))
     # expected_label=3
     resultVar = m.addVar(lb = -100, ub = 100, vtype=GRB.CONTINUOUS, name="resultVar")
-    m.addConstr(resultVar-result[6]==0)
+    m.addConstr(resultVar-result[expected_label]==0)
     for i in range(len(result)):
         if i==expected_label:
             continue
@@ -182,17 +207,14 @@ def find(epsilon, model, inp, expected_label, num_inputs, num_outputs, mode, lay
     # print("Times taken respectively: ",(t2-t1), (t3-t2), (t4-t3), (t5-t4), (t6-t5),)
     summation = 0
 
-    # print("Query has: ", m.NumObj, " objectives.")
-    # print(m.getVarByName("epsilon_max"))
-    # print(m.getVarByName("epsilon_max_2"))
-    # print(m.getVarByName("resultVar"))
-    # print(len(all_epsilons))
     c = 0
     neg = 0
     for i in range(len(all_epsilons)):
         # print(np.shape(all_epsilons[i]))
         for j in range(len(all_epsilons[i])):
             for k in range(len(all_epsilons[i][j])):
+                if type(all_epsilons[i][j][k])==int:
+                    continue
                 if all_epsilons[i][j][k].X!=0:
                     summation = summation + abs(all_epsilons[i][j][k].X)
                     # print(i,j,k, all_epsilons[i][j][k].X)
@@ -211,6 +233,9 @@ def find(epsilon, model, inp, expected_label, num_inputs, num_outputs, mode, lay
         eps_1 = np.zeros_like(all_epsilons[i])
         for j in range(len(all_epsilons[i])):
             for k in range(len(all_epsilons[i][j])):
+                if type(all_epsilons[i][j][k])==int:
+                    eps_1[j][k] = all_epsilons[i][j][k]
+                    continue
                 eps_1[j][k] = float(all_epsilons[i][j][k].X)
         eps.append(eps_1)
     # print(len(eps))
