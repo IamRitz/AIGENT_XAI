@@ -234,8 +234,10 @@ def GurobiAttack(inputs, model, outputs, k):
     m.addConstr(expr>=0)
     m.addConstr(expr-epsilon_max_2<=0)
     m.update()
-    
+    # a1 = time()
     m.optimize()
+    # a2 = time()
+    # print(a2-a1," seconds.")
     if m.Status == GRB.INFEASIBLE:
         print("Adversarial example not found.")
         return []
