@@ -66,8 +66,8 @@ def attack():
             mat2 = convertToMtarix(adversarial, m, n)
             image_adversarial = show(mat2, m, n)
 
-            image_original.save("OriginalImages3/Image_"+str(i)+".jpg")
-            image_adversarial.save("AdversarialImages3/Image_"+str(i)+".jpg")
+            image_original.save("OriginalImages2/Image_"+str(i)+".jpg")
+            image_adversarial.save("AdversarialImages2/Image_"+str(i)+".jpg")
             # break
 
 

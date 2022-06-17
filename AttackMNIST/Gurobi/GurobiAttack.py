@@ -293,14 +293,12 @@ def generateAdversarial(sat_in):
     true_label = np.argmax(true_output)
     # print("True Label is: ", true_label)
     # print(true_output)
-    k = 2
+    k = 3
     change = GurobiAttack(sat_in, extractedModel, neuron_values_1, k)
     
     # for i in range(len(change))
     if len(change)>0:
-        pixelCount = 1
-        for j in range(7):
-            
+        for j in range(8):
             ad_inp2 = []
 
             for i in range(len(change)):
@@ -332,8 +330,6 @@ def generateAdversarial(sat_in):
             else:
                 k = k*2
                 change = GurobiAttack(sat_in, extractedModel, neuron_values_1, k)
-                # if j%5==0 and pixelCount<=20:
-                #     pixelCount *= 2
     return 0, [], [], -1, -1, 0, 0
 
 def attack():
@@ -373,7 +369,7 @@ def attack():
     print("Average L-inf norm:", linfTotal/adv)
     print("Average L-2 norm:", l2/adv)
 
-t1 = time()
-attack()
-t2 = time()
-print("TIME TAKEN IN GENERATION OF ABOVE EXAMPLES: ", (t2-t1), "seconds.")
+# t1 = time()
+# attack()
+# t2 = time()
+# print("TIME TAKEN IN GENERATION OF ABOVE EXAMPLES: ", (t2-t1), "seconds.")
