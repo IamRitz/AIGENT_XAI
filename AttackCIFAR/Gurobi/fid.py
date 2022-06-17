@@ -24,7 +24,7 @@ from numpy import asarray
   
 
 def loadModel():
-    model = tf.keras.models.load_model(os.path.abspath(os.path.join(os.getcwd(), os.pardir)) +'/Models/mnist.h5')
+    model = tf.keras.models.load_model(os.path.abspath(os.path.join(os.getcwd(), os.pardir)) +'/Models/cifar.h5')
     return model
 
 def getImages():
@@ -33,27 +33,27 @@ def getImages():
     count = 0
     im1 = []
     im2 = []
-    for path in os.listdir("/home/tooba/Documents/DNNVerification/AttackMNIST/Gurobi/AdversarialImages2"):
-        originalImages.append('OriginalImages2/'+str(path))
-        adversarialImages.append('AdversarialImages2/'+str(path))
+    for path in os.listdir("/home/tooba/Documents/DNNVerification/AttackCIFAR/Gurobi/AdversarialImages"):
+        originalImages.append('OriginalImages/'+str(path))
+        adversarialImages.append('AdversarialImages/'+str(path))
         count = count+1
     
     for i in range(count):
         img = Image.open(originalImages[i])
-        img = img.resize((28, 28))
+        #img = img.resize((28, 28))
         numpydata = asarray(img)
         im1.append(numpydata)
 
         img = Image.open(adversarialImages[i])
-        img = img.resize((28, 28))
+        #img = img.resize((28, 28))
         numpydata = asarray(img)
         im2.append(numpydata)
 
     im1 = np.array(im1)
     im2 = np.array(im2)
 
-    im1 = im1.reshape((im1.shape[0], 28*28)).astype('float32')
-    im2 = im2.reshape((im2.shape[0], 28*28)).astype('float32')
+    im1 = im1.reshape((im1.shape[0], 32*32*3)).astype('float32')
+    im2 = im2.reshape((im2.shape[0], 32*32*3)).astype('float32')
 
     im1 = im1/255
     im2 = im2/255
@@ -82,4 +82,4 @@ model = loadModel()
 im1, im2 = getImages()
 
 fid = calculate_fid(model, im1, im2)
-print(f'FID for {len(im1)} images is: {fid:.3f}')
+print(f'FID for {len(im1)} images is: {fid:.30f}')
