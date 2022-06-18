@@ -48,7 +48,6 @@ def getData():
         i=i+1
         if i==stopAt:
             break
-        # break
     i=0
     for row in f2_reader:
         out = [float(x) for x in row]
@@ -56,65 +55,38 @@ def getData():
         i=i+1
         if i==stopAt:
             break
-        # break
-
     return inputs, outputs, len(inputs)
-
-# def getInputs():
-    inputs, outputs, count = getData()
-    return inputs[0]
 
 def get_neuron_values_actual(loaded_model, input, num_layers):
         neurons = []
         l = 1
-        # print(len(loaded_model.layers))
         for layer in loaded_model.layers:
             w = layer.get_weights()[0]
             b = layer.get_weights()[1]
-            # print(w)
             result = np.matmul(input,w)+b
-            # print(l)
             if l == num_layers:
                 input = result
                 neurons.append(input)
                 continue
-            # print(w, b, result)
             input = [max(0, r) for r in result]
             neurons.append(input)
             l = l + 1
-        # print(neurons)
         return neurons
 
 def getEpsilons(layer_to_change, inp):
     model = loadModel()
-    # inp = getInputs()
-
     num_inputs = len(inp)
-    # print(type(inp), np.shape(inp))
     sample_output = model.predict(np.array([inp]))[0]
-    # print(sample_output)
-    # num_outputs = len(sample_output)
     true_label = np.argmax(sample_output)
     num_outputs = len(sample_output)
-    # expected_label = random.randint(0, 1000)%(num_outputs-1)
-    # while true_label==expected_label:
-    #     expected_label = random.randint(0, 1000)%(num_outputs-1)
     expected_label = sample_output.argsort()[-2]
     print("Attack label is:", expected_label)
-    # expected_label = 4
-    # print(true_label, expected_label)
     all_epsilons = find(10, model, inp, true_label, num_inputs, num_outputs, 1, layer_to_change)
     
     return all_epsilons, inp
 
 def predict(epsilon, layer_to_change, sat_in):
-    # print("predicting for: ", layer_to_change)
     model = loadModel()
-
-    """
-    Change the name of the epsilon file according to what was generated in findCorrection.py
-    """
-    # layer_to_change = 0
     weights = model.get_weights()
 
     weights[2*layer_to_change] = weights[2*layer_to_change]+ np.array(epsilon[0])
@@ -122,10 +94,7 @@ def predict(epsilon, layer_to_change, sat_in):
     model.set_weights(weights)
     model.compile(optimizer=tf.optimizers.Adam(),loss='sparse_categorical_crossentropy',metrics=['accuracy'])
 
-    # sat_in = getInputs()
-    # print(sat_in)
     prediction = model.predict([sat_in])
-    # print("Final prediction: ",prediction)
     print("Prediction: ",np.argmax(prediction[0]))
     return model
 
@@ -133,48 +102,26 @@ def updateModel(sat_in):
     model = loadModel()
     num_layers = int(len(model.get_weights())/2)
     layer_to_change = int(num_layers/2)
-    # layer_to_change = 0
-    # print("Modifying weights for weight layer:",layer_to_change)
     originalModel = model
-    # print("Layer to change in this iteration:", layer_to_change)
     epsilon, inp = getEpsilons(layer_to_change, sat_in)
-    # sat_in = getInputs()
-    # print("Model loaded")
-    # ACASXU_2_9_0to04.vals.npy
+    
     tempModel = predict(epsilon, layer_to_change, sat_in)
-    # print("...........................................................................................")
-    # print("Dividing Network.")
-    # print("...........................................................................................")
     """
     Now we have modifications in the middle layer of the netwrok.
     Next, we will run a loop to divide the network and find modifications in lower half of the network.
     """
     o1 = extractNetwork()
-    # o3 = labelNeurons()
-    # phases1 = get_neuron_values_actual(originalModel, sat_in, num_layers)
     phases = get_neuron_values_actual(tempModel, sat_in, num_layers)
     neuron_values_1 = phases[layer_to_change]
-    # for i in range(len(neuron_values_1)):
-    #     print(phases[layer_to_change-1][i], phases1[layer_to_change-1][i])
+    
     while layer_to_change>0:
-        # print("##############################")
-        
-        # print("Extracting model till layer: ", layer_to_change+1)
         extractedNetwork = o1.extractModel(originalModel, layer_to_change+1)
-        # print(extractedNetwork.summary())
-        # print("Number of weights: ",len(extractedNetwork.get_weights())/2)
-        # print(len(extractedNetwork.get_weights()))
         layer_to_change = int(layer_to_change/2)
-        # print("Applying modifications to: ", layer_to_change)
-        
         epsilon = find2(100, extractedNetwork, inp, neuron_values_1, 1, layer_to_change, 0, phases)
 
         tempModel = predict(epsilon, layer_to_change, sat_in)
         phases = get_neuron_values_actual(tempModel, sat_in, num_layers)
         neuron_values_1 = phases[layer_to_change]
-        # print("....................................")
-        # print("Dividing Network.")
-        # print("....................................")
     return extractedNetwork, neuron_values_1,  epsilon 
 
 def GurobiAttack(inputs, model, outputs, k):
@@ -255,7 +202,6 @@ def generateAdversarial(sat_in):
         print("UNSAT. Could not find a minimal modification by divide and conquer.")
         return 0, [], [], -1, -1, 0, 0, -1
 
-    # return 0, [], [], -1, -1, 0, 0
     tempModel = predict(epsilon, 0, sat_in)
     
     num_layers = int(len(tempModel.get_weights())/2)
@@ -269,12 +215,9 @@ def generateAdversarial(sat_in):
     originalModel = loadModel()
     true_output = originalModel.predict([sat_in])
     true_label = np.argmax(true_output)
-    # print("True Label is: ", true_label)
-    # print(true_output)
     k = 12
     change = GurobiAttack(sat_in, extractedModel, neuron_values_1, k)
     
-    # for i in range(len(change))
     if len(change)>0:
         for j in range(8):
             ad_inp2 = []
@@ -336,20 +279,9 @@ def attack():
             linfTotal = linfTotal + linf
             adversarial_count = adversarial_count + 1
             ks.append(k)
-            # modelAnother = model = tf.keras.models.load_model(os.path.abspath(os.path.join(os.getcwd(), os.pardir)) +'/Models/cifar1.h5')
-            # o1 = modelAnother.predict([original])
-            # o2 = modelAnother.predict([adversarial])
-            # o3, o4 = np.argmax(o1), np.argmax(o2)
-            # print(o3, o4)
-            # if o3!=o4:
-            #     print("Indeed.")
-            #break
         t2 = time()
         print("Time taken in this iteration:", (t2-t1), "seconds.")
         print("###########################################################################################")
-        # break
-        # if i==5:
-        #     break
     
     print("Attack was successful on:", adversarial_count," images.")
     print(counter_inputs)
@@ -358,7 +290,6 @@ def attack():
     print("Average L-2 norm:", l2/adversarial_count)
     print("Mean k value:",np.mean(ks))
     print("Median k value:",np.median(ks))
-
 
 t1 = time()
 attack()

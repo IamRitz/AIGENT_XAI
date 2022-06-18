@@ -4,7 +4,6 @@ from extractNetwork import extractNetwork
 import numpy as np
 import os
 import gurobipy as gp
-import z3
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3' 
 """
 To supress the tensorflow warnings. 
@@ -20,7 +19,6 @@ Setting verbosity of tensorflow to minimum.
 """
 from findModificationsLayerK import find as find
 from modificationDivided import find as find2
-from labelNeurons import labelNeurons
 from gurobipy import GRB
 """
 What this file does?
@@ -47,7 +45,6 @@ def getData():
         i=i+1
         if i==stopAt:
             break
-        # break
     i=0
     for row in f2_reader:
         out = [float(x) for x in row]
@@ -55,65 +52,37 @@ def getData():
         i=i+1
         if i==stopAt:
             break
-        # break
-
     return inputs, outputs, len(inputs)
-
-# def getInputs():
-    inputs, outputs, count = getData()
-    return inputs[0]
 
 def get_neuron_values_actual(loaded_model, input, num_layers):
         neurons = []
         l = 1
-        # print(len(loaded_model.layers))
         for layer in loaded_model.layers:
             w = layer.get_weights()[0]
             b = layer.get_weights()[1]
-            # print(w)
             result = np.matmul(input,w)+b
-            # print(l)
             if l == num_layers:
                 input = result
                 neurons.append(input)
                 continue
-            # print(w, b, result)
             input = [max(0, r) for r in result]
             neurons.append(input)
             l = l + 1
-        # print(neurons)
         return neurons
 
 def getEpsilons(layer_to_change, inp):
     model = loadModel()
-    # inp = getInputs()
-
     num_inputs = len(inp)
-    # print(type(inp), np.shape(inp))
     sample_output = model.predict(np.array([inp]))[0]
-    # print(sample_output)
-    # num_outputs = len(sample_output)
     true_label = np.argmax(sample_output)
     num_outputs = len(sample_output)
-    # expected_label = random.randint(0, 1000)%(num_outputs-1)
-    # while true_label==expected_label:
-    #     expected_label = random.randint(0, 1000)%(num_outputs-1)
     expected_label = sample_output.argsort()[-2]
-    # print("Attack label is:", expected_label)
-    # expected_label = 4
-    # print(true_label, expected_label)
     all_epsilons = find(10, model, inp, expected_label, num_inputs, num_outputs, 1, layer_to_change)
     
     return all_epsilons, inp
 
 def predict(epsilon, layer_to_change, sat_in):
-    # print("predicting for: ", layer_to_change)
     model = loadModel()
-
-    """
-    Change the name of the epsilon file according to what was generated in findCorrection.py
-    """
-    # layer_to_change = 0
     weights = model.get_weights()
 
     weights[2*layer_to_change] = weights[2*layer_to_change]+ np.array(epsilon[0])
@@ -121,10 +90,7 @@ def predict(epsilon, layer_to_change, sat_in):
     model.set_weights(weights)
     model.compile(optimizer=tf.optimizers.Adam(),loss='sparse_categorical_crossentropy',metrics=['accuracy'])
 
-    # sat_in = getInputs()
-    # print(sat_in)
     prediction = model.predict([sat_in])
-    # print("Final prediction: ",prediction)
     print("Prediction: ",np.argmax(prediction[0]))
     return model
 
@@ -132,53 +98,26 @@ def updateModel(sat_in):
     model = loadModel()
     num_layers = int(len(model.get_weights())/2)
     layer_to_change = int(num_layers/2)
-    # layer_to_change = 0
-    # print("Modifying weights for weight layer:",layer_to_change)
     originalModel = model
-    # print("Layer to change in this iteration:", layer_to_change)
     epsilon, inp = getEpsilons(layer_to_change, sat_in)
-    # sat_in = getInputs()
-    # print("Model loaded")
-    # ACASXU_2_9_0to04.vals.npy
     tempModel = predict(epsilon, layer_to_change, sat_in)
-    # print("...........................................................................................")
-    # print("Dividing Network.")
-    # print("...........................................................................................")
     """
     Now we have modifications in the middle layer of the netwrok.
     Next, we will run a loop to divide the network and find modifications in lower half of the network.
     """
     o1 = extractNetwork()
-    o3 = labelNeurons()
-    # phases1 = get_neuron_values_actual(originalModel, sat_in, num_layers)
     phases = get_neuron_values_actual(tempModel, sat_in, num_layers)
-    neuron_values_1 = phases[layer_to_change]
-    # for i in range(len(neuron_values_1)):
-    #     print(phases[layer_to_change-1][i], phases1[layer_to_change-1][i])
-
     while layer_to_change>0:
-        # print("##############################")
-        
-        # print("Extracting model till layer: ", layer_to_change+1)
         extractedNetwork = o1.extractModel(originalModel, layer_to_change+1)
-        # print(extractedNetwork.summary())
-        # print("Number of weights: ",len(extractedNetwork.get_weights())/2)
-        # print(len(extractedNetwork.get_weights()))
         layer_to_change = int(layer_to_change/2)
-        # print("Applying modifications to: ", layer_to_change)
-        
         epsilon = find2(10, extractedNetwork, inp, neuron_values_1, 1, layer_to_change, 0, phases)
 
         tempModel = predict(epsilon, layer_to_change, sat_in)
         phases = get_neuron_values_actual(tempModel, sat_in, num_layers)
         neuron_values_1 = phases[layer_to_change]
-        # print("....................................")
-        # print("Dividing Network.")
-        # print("....................................")
     return extractedNetwork, neuron_values_1,  epsilon 
 
 def GurobiAttack(inputs, model, outputs, k):
-    # print("Launching attack with Gurobi.")
     tolerance = 1
     env = gp.Env(empty=True)
     env.setParam('OutputFlag', 0)
@@ -186,8 +125,6 @@ def GurobiAttack(inputs, model, outputs, k):
     m = gp.Model("Model", env=env)
     x = []
     input_vars = []
-    max_change = m.addVar(lb = 0, ub = tolerance, vtype=GRB.CONTINUOUS, name="max_change")
-
     changes = []
 
     for i in range(len(inputs)):
@@ -198,8 +135,6 @@ def GurobiAttack(inputs, model, outputs, k):
 
     for i in range(len(inputs)):
         input_vars.append(m.addVar(lb=-10, ub=10, vtype=GRB.CONTINUOUS))
-        # m.addConstr(input_vars[i]+changes[i]>=inputs[i])
-        # m.addConstr(input_vars[i]-changes[i]<=inputs[i])
         m.addConstr(input_vars[i]-changes[i]==inputs[i])
     
     weights = model.get_weights()
@@ -214,17 +149,6 @@ def GurobiAttack(inputs, model, outputs, k):
             # z = z+1
         else:
             m.addConstr(result[i]-outputs[i]<=tr)
-            # p=p+1
-    # thresholds = []
-    # # threshold = m.addVar(lb = 0, ub = 1, vtype=GRB.CONTINUOUS, name="threshold")
-    # for i in range(len(result)):
-    #     thresholds.append(m.addVar(lb=0, ub=2, vtype=GRB.CONTINUOUS))
-    #     # m.setObjectiveN(gp.abs_(result[i]-outputs[i]-thresholds[i]), index = i, priority = 1)
-    #     if outputs[i]>0:
-    #         m.addConstr(result[i]-thresholds[i]<=outputs[i])
-    #         m.addConstr(result[i]+thresholds[i]>=outputs[i])
-    #     else:
-    #         m.addConstr(result[i]-thresholds[i]<=0)
 
     sumX = gp.quicksum(x)
     m.addConstr(sumX<=k)
@@ -234,18 +158,11 @@ def GurobiAttack(inputs, model, outputs, k):
     m.addConstr(expr>=0)
     m.addConstr(expr-epsilon_max_2<=0)
     m.update()
-    # sum_thresholds = gp.quicksum(thresholds)
-    # epsilon_max_3 = m.addVar(lb=0,ub=100,vtype=GRB.CONTINUOUS, name="epsilon_max_3")
-    # m.addConstr(sum_thresholds>=0)
-    # m.addConstr(sum_thresholds-epsilon_max_3<=0)
-    # m.setObjective(sumX, GRB.MINIMIZE)
-
+    
     m.optimize()
     if m.Status == GRB.INFEASIBLE:
         print("Adversarial example not found.")
         return []
-    # m.write("abc.lp")
-    # print(sumX)
     modifications = []
     for i in range(len(changes)):
         modifications.append(float(changes[i].X))
@@ -267,7 +184,6 @@ def generateAdversarial(sat_in):
         return 0, [], [], -1, -1, 0, 0, -1
 
    
-    # print("Finally, we have layer 0 modifications.")
     tempModel = predict(epsilon, 0, sat_in)
     
     
@@ -282,12 +198,9 @@ def generateAdversarial(sat_in):
     originalModel = loadModel()
     true_output = originalModel.predict([sat_in])
     true_label = np.argmax(true_output)
-    # print("True Label is: ", true_label)
-    # print(true_output)
     k = 3
     change = GurobiAttack(sat_in, extractedModel, neuron_values_1, k)
     
-    # for i in range(len(change))
     if len(change)>0:
         for j in range(8):
             ad_inp2 = []
@@ -296,9 +209,7 @@ def generateAdversarial(sat_in):
                 ad_inp2.append(change[i]+sat_in[i])
 
             ad_output = originalModel.predict([ad_inp2])
-            # print(ad_output)
             predicted_label = np.argmax(ad_output)
-            # print(predicted_label)
             vals = get_neuron_values_actual(originalModel, ad_inp2, num_layers)
             ch = 0
             max_shift = 0
@@ -306,17 +217,12 @@ def generateAdversarial(sat_in):
                 ch = ch + abs(vals[0][i]-neuron_values_1[i])
                 if abs(vals[0][i]-neuron_values_1[i])>max_shift:
                     max_shift = abs(vals[0][i]-neuron_values_1[i])
-                # print(vals[0][i], neuron_values_1[i])
             linf, sumDist = findMetric(sat_in, ad_inp2)
-            # print("Overall shift : ", ch)
-            # print("Maximum shift: ", max_shift)
-
             if predicted_label!=true_label:
                 L2_norm = np.linalg.norm(np.array(sat_in)-np.array(ad_inp2))
                 print(L2_norm, linf, sumDist)
                 print("Attack was successful. Label changed from ",true_label," to ",predicted_label)
                 print("This was:", k,"pixel attack.")
-                # print("Original Input:")
                 return 1, sat_in, ad_inp2, true_label, predicted_label, L2_norm, linf, k
             else:
                 k = k*2
@@ -349,14 +255,9 @@ def attack():
             linfTotal = linfTotal + linf
             adversarial_count = adversarial_count + 1
             ks.append(k)
-            # break
         t2 = time()
         print("Time taken in this iteration:", (t2-t1), "seconds.")
-        print("###########################################################################################")
-        # break
-        # if i==5:
-        #     break
-    
+        print("###########################################################################################")    
     
     print("Attack was successful on:", adversarial_count," images.")
     print(counter_inputs)
