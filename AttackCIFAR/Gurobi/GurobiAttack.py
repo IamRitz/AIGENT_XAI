@@ -1,15 +1,9 @@
-from cProfile import label
 from csv import reader
 from time import time
-
-from numpy import genfromtxt
-from ConvertNNETtoTensor import ConvertNNETtoTensorFlow
 from extractNetwork import extractNetwork
-import random
 import numpy as np
 import os
 import gurobipy as gp
-import z3
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3' 
 """
 To supress the tensorflow warnings. 
@@ -18,7 +12,6 @@ To supress the tensorflow warnings.
 2 = INFO and WARNING messages are not printed
 3 = INFO, WARNING, and ERROR messages are not printed
 """
-import keras
 import tensorflow as tf
 tf.compat.v1.logging.set_verbosity(tf.compat.v1.logging.ERROR)
 """
@@ -32,8 +25,7 @@ from gurobipy import GRB
 import random
 """
 What this file does?
-Calls any particular Experiment file to get the epsilons generated.
-Updates the original network with the epsilons and generates a comparison between original and modified network.
+Find modification in intermediate layers and converts that modification into an adversarial input.
 """
 counter=0
 

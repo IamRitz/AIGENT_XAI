@@ -23,7 +23,7 @@ with192 = [6, 11, 8, 7, 2, 23, 56, 6, 123, 31]
 print(PielouMeaure(with192, len(with192)))
 print()
 
-with384 = [6, 11, 8, 7, 2, 23, 56, 6, 123, 31]
+with384 = [5, 10, 9, 6, 2, 32, 53, 7, 121, 30]
 
 print(PielouMeaure(with384, len(with384)))
 print()
