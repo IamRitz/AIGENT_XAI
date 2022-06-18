@@ -273,7 +273,7 @@ def generateAdversarial(sat_in):
         extractedModel, neuron_values_1, epsilon = updateModel(sat_in)
     except:
         print("UNSAT. Could not find a minimal modification by divide and conquer.")
-        return 0, [], [], -1, -1, 0, 0
+        return 0, [], [], -1, -1, 0, 0, -1
 
    
     # print("Finally, we have layer 0 modifications.")
@@ -298,7 +298,7 @@ def generateAdversarial(sat_in):
     
     # for i in range(len(change))
     if len(change)>0:
-        for j in range(8):
+        for j in range(7):
             ad_inp2 = []
 
             for i in range(len(change)):
@@ -326,11 +326,11 @@ def generateAdversarial(sat_in):
                 print("Attack was successful. Label changed from ",true_label," to ",predicted_label)
                 print("This was:", k,"pixel attack.")
                 # print("Original Input:")
-                return 1, sat_in, ad_inp2, true_label, predicted_label, L2_norm, linf
+                return 1, sat_in, ad_inp2, true_label, predicted_label, L2_norm, linf, k
             else:
                 k = k*2
                 change = GurobiAttack(sat_in, extractedModel, neuron_values_1, k)
-    return 0, [], [], -1, -1, 0, 0
+    return 0, [], [], -1, -1, 0, 0, -1
 
 def attack():
     inputs, outputs, count = getData()
@@ -340,7 +340,8 @@ def attack():
     counter_outputs = [0]*10
     l2 = 0
     linfTotal = 0
-    adv = 0
+    adversarial_count = 0
+    ks = []
 
     for i in range(count):
         print("###########################################################################################")
@@ -348,14 +349,15 @@ def attack():
         sat_in = inputs[i]
         print()
         t1 = time()
-        success, original, adversarial, true_label, predicted_label, L2_norm, linf = generateAdversarial(sat_in)
+        success, original, adversarial, true_label, predicted_label, L2_norm, linf, k = generateAdversarial(sat_in)
         if success==1 and counter_inputs[true_label]<30:
             counter_inputs[true_label] = counter_inputs[true_label] + 1
             counter_outputs[predicted_label] = counter_outputs[predicted_label] + 1
         if success==1:
             l2 = l2 + L2_norm
             linfTotal = linfTotal + linf
-            adv = adv + 1
+            adversarial_count = adversarial_count + 1
+            ks.append(k)
             # break
         t2 = time()
         print("Time taken in this iteration:", (t2-t1), "seconds.")
@@ -364,12 +366,16 @@ def attack():
         # if i==5:
         #     break
     
+    
+    print("Attack was successful on:", adversarial_count," images.")
     print(counter_inputs)
     print(counter_outputs)
-    print("Average L-inf norm:", linfTotal/adv)
-    print("Average L-2 norm:", l2/adv)
+    print("Average L-inf norm:", linfTotal/adversarial_count)
+    print("Average L-2 norm:", l2/adversarial_count)
+    print("Mean k value:",np.mean(ks))
+    print("Median k value:",np.median(ks))
 
-# t1 = time()
-# attack()
-# t2 = time()
-# print("TIME TAKEN IN GENERATION OF ABOVE EXAMPLES: ", (t2-t1), "seconds.")
+t1 = time()
+attack()
+t2 = time()
+print("TIME TAKEN IN GENERATION OF ABOVE EXAMPLES: ", (t2-t1), "seconds.")

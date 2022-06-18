@@ -73,18 +73,18 @@ def get_neuron_values(loaded_model, input, num_layers, values, gurobi_model, eps
                             ep.append(gurobi_model.addVar(lb = -val_max, ub = val_max, vtype=grb.GRB.CONTINUOUS))
                             gurobi_model.addConstr(ep[col]-epsilon_max<=0)
                             gurobi_model.addConstr(ep[col]+epsilon_max>=0)
-                            gurobi_model.update()
+                            # gurobi_model.update()
                         else:
                             if col==0 :
                                 ep.append(gurobi_model.addVar(vtype=grb.GRB.CONTINUOUS))
                                 gurobi_model.addConstr(ep[col]-epsilon_max<=0)
                                 gurobi_model.addConstr(ep[col]>=0)
-                                gurobi_model.update()
+                                # gurobi_model.update()
                             else:
                                 ep.append(gurobi_model.addVar(vtype=grb.GRB.CONTINUOUS))
                                 gurobi_model.addConstr(ep[col]<=0)
                                 gurobi_model.addConstr(ep[col]+epsilon_max>=0)
-                                gurobi_model.update()
+                                # gurobi_model.update()
                     epsilon.append(ep)
             
             else:
@@ -93,7 +93,7 @@ def get_neuron_values(loaded_model, input, num_layers, values, gurobi_model, eps
                     for col in range(shape1):
                         ep.append(0)
                     epsilon.append(ep)
-            
+            gurobi_model.update()
             if int(i/2) == layer_to_change:
                 result = np.matmul(input, w + epsilon) + b
                 epsilons.append(epsilon)
