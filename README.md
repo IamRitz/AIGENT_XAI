@@ -29,3 +29,5 @@ This is a black box approach which generates adversarial examples for a Network.
 <h3>Supervisors: Subodh Vishnu Sharma and Kumar Madhukar, IIT Delhi.</h3>
 
 Link for datasets used and adversarial dataset generated: [Datasets.](https://drive.google.com/drive/folders/1ZUmj_j5fvPiEDmmdNx2QT6gpzIgGubt8?usp=sharing)
+
+Comparitive analysis of different attacks can be found at: [Comparitive analysis.](https://docs.google.com/spreadsheets/d/1sjgXiB_wOy-A0DOaev2TLBRVxU05cY_G9p3KHFTPoRo/edit#gid=0)

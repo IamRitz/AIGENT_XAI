@@ -18,7 +18,7 @@ def PielouMeaure(frequencies, num_classes):
     return -1*measure/log(num_classes)
 
 beforeChangingUpdateStatement = [5, 69, 32, 63, 30, 5, 39, 29, 6, 22]
-afterChangingUpdateStatement = []
+afterChangingUpdateStatement = [6, 40, 28, 49, 45, 16, 51, 31, 5, 29]
 
 print()
 print(PielouMeaure(beforeChangingUpdateStatement, len(beforeChangingUpdateStatement)))
