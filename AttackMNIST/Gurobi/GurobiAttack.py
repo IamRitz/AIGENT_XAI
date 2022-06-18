@@ -298,7 +298,7 @@ def generateAdversarial(sat_in):
     
     # for i in range(len(change))
     if len(change)>0:
-        for j in range(7):
+        for j in range(8):
             ad_inp2 = []
 
             for i in range(len(change)):
