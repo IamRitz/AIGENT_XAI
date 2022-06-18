@@ -1,13 +1,15 @@
 from time import time
-import gurobipy as gp
 from gurobipy import GRB
 import numpy as np
 import gurobipy as grb
 
 """
-Finds minimal modification in any k-th layer for the ACAS-Xu Networks so that Output 0 is highest.
+Finds minimal modification in the k-th layer of the divided network.
+What is the difference?
+In findModuficationsLayerK, the objective function was concerned only 
+with maximizing the value of attack label and minimizing the value of true label.
+But, in modificationDivided, the objective function is to retain the values found in previos modifications.
 """
-
 
 def getInputs():
     inp = [0.6399288845, 0.0, 0.0, 0.475, -0.475]
@@ -116,18 +118,15 @@ def get_neuron_values(loaded_model, input, num_layers, values, gurobi_model, eps
                 
             neurons.append(input)
             l = l + 1
-        # print(np.shape(neurons))
-        # print(len(epsilons), np.shape(epsilons[0]))
-        # print(neurons[len(neurons)-1])
         return neurons[len(neurons)-1], epsilons
 
 def find(epsilon, model, inp, expected_outputs, mode, layer_to_change, phaseGiven, phases):
     num_layers = len(model.layers)
-    env = gp.Env(empty=True)
+    env = grb.Env(empty=True)
     env.setParam('OutputFlag', 0)
     env.start()
-    m = gp.Model("Model", env=env)
-    # m = gp.Model("Model")
+    m = grb.Model("Model", env=env)
+    # m = grb.Model("Model")
     m.setParam('NonConvex', 2)
     ep = []
     input_vars = []
@@ -149,25 +148,6 @@ def find(epsilon, model, inp, expected_outputs, mode, layer_to_change, phaseGive
     # diff = 0.0000001
     # print(len(result))
     z, p = 0, 0
-    resultVar = m.addVar(lb = -1000, ub = 1000, vtype=GRB.CONTINUOUS, name="resultVar")
-    # m.addConstr(resultVar-result[3]==0)
-    # for i in range(len(result)):
-    #      m.setObjectiveN(grb.abs_(result[i]-expected_outputs[i]), index = 1, priority = 1)
-
-    # thresholds = []
-    # for i in range(len(result)):
-    #     thresholds.append(m.addVar(lb=0, ub=0, vtype=GRB.CONTINUOUS))
-    #     # m.setObjectiveN(gp.abs_(result[i]-outputs[i]-thresholds[i]), index = i, priority = 1)
-    #     if expected_outputs[i]>0:
-    #         m.addConstr(result[i]-thresholds[i]<=expected_outputs[i])
-    #         m.addConstr(result[i]+thresholds[i]>=expected_outputs[i])
-    #     else:
-    #         m.addConstr(result[i]-thresholds[i]<=0)
-
-    # sum_thresholds = gp.quicksum(thresholds)
-    # epsilon_max_3 = m.addVar(lb=0,ub=10,vtype=GRB.CONTINUOUS, name="epsilon_max_3")
-    # m.addConstr(sum_thresholds>=-10)
-    # m.addConstr(sum_thresholds-epsilon_max_3<=0)
     tr = 2
     for i in range(len(result)):
         if expected_outputs[i]<=0:
@@ -176,9 +156,6 @@ def find(epsilon, model, inp, expected_outputs, mode, layer_to_change, phaseGive
         else:
             m.addConstr(result[i]-expected_outputs[i]<=tr)
             p=p+1
-    # print("Z & P:",z, p)
-    
-    t3 = time()
     m.update()
     
     e2 = grb.quicksum([grb.quicksum([grb.quicksum(y) for y in all_epsilons[x]]) for x in range(len(all_epsilons))])
@@ -188,23 +165,10 @@ def find(epsilon, model, inp, expected_outputs, mode, layer_to_change, phaseGive
     m.addConstr(e2-epsilon_max_2<=0)
     m.update()
     m.setObjectiveN(epsilon_max_2, index = 2, priority = 10)
-    # m.setObjective(epsilon_max, GRB.MINIMIZE)
-    t4 = time()
-    # print("Epsilons are:", all_epsilons)
-    t5 = time()
-    # print("Begin optimization.")
+    
     m.optimize()
-    # m.computeIIS()
-    # m.write("abc2.ilp")
-    t6 = time()
-    # print("Times taken respectively: ",(t2-t1), (t3-t2), (t4-t3), (t5-t4), (t6-t5),)
     summation = 0
 
-    # print("Query has: ", m.NumObj, " objectives.")
-    # print(m.getVarByName("epsilon_max"))
-    # print(m.getVarByName("epsilon_max_2"))
-    # # print(len(all_epsilons), np.shape(all_epsilons))
-    c = 0
     neg = 0
     for i in range(len(all_epsilons)):
         # print(np.shape(all_epsilons[i]))
@@ -216,13 +180,7 @@ def find(epsilon, model, inp, expected_outputs, mode, layer_to_change, phaseGive
                     c = c + 1
                 if all_epsilons[i][j][k].X<0:
                     neg = neg + 1
-                # print(all_epsilons[i][j][k].VarName, all_epsilons[i][j][k].X)
-                # print(m.getVarByName(all_epsilons[i][j][k]))
-        # print(np.shape(all_epsilons[i]), c, neg)
-    
-    # print("Effective change was: ", summation)
-    # print("The number of weights changed were: ",c)
-    # print("The number of decrements were: ",neg)
+                
     eps = []
     for i in range(len(all_epsilons)):
         eps_1 = np.zeros_like(all_epsilons[i])
@@ -230,5 +188,4 @@ def find(epsilon, model, inp, expected_outputs, mode, layer_to_change, phaseGive
             for k in range(len(all_epsilons[i][j])):
                 eps_1[j][k] = float(all_epsilons[i][j][k].X)
         eps.append(eps_1)
-    # print(len(eps), np.shape(eps[0]))
     return eps

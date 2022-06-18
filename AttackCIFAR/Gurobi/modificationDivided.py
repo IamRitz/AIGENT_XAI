@@ -1,12 +1,15 @@
 from math import ceil
 from time import time
-import gurobipy as gp
 from gurobipy import GRB
 import numpy as np
 import gurobipy as grb
 
 """
-Finds minimal modification in any k-th layer for the ACAS-Xu Networks so that Output 0 is highest.
+Finds minimal modification in the k-th layer of the divided network.
+What is the difference?
+In findModuficationsLayerK, the objective function was concerned only 
+with maximizing the value of attack label and minimizing the value of true label.
+But, in modificationDivided, the objective function is to retain the values found in previos modifications.
 """
 
 
@@ -145,11 +148,11 @@ def get_neuron_values(loaded_model, input, num_layers, values, gurobi_model, eps
 def find(epsilon, model, inp, expected_outputs, mode, layer_to_change, phaseGiven, phases):
     # print("Entered.")
     num_layers = len(model.layers)
-    env = gp.Env(empty=True)
+    env = grb.Env(empty=True)
     env.setParam('OutputFlag', 0)
     env.start()
-    m = gp.Model("Model", env=env)
-    # m = gp.Model("Model")
+    m = grb.Model("Model", env=env)
+    # m = grb.Model("Model")
     m.setParam('NonConvex', 2)
     ep = []
     input_vars = []
