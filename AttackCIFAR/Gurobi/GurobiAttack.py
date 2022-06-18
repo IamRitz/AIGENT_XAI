@@ -344,14 +344,14 @@ def attack():
             linfTotal = linfTotal + linf
             adversarial_count = adversarial_count + 1
             ks.append(k)
-            modelAnother = model = tf.keras.models.load_model(os.path.abspath(os.path.join(os.getcwd(), os.pardir)) +'/Models/cifar1.h5')
-            o1 = modelAnother.predict([original])
-            o2 = modelAnother.predict([adversarial])
-            o3, o4 = np.argmax(o1), np.argmax(o2)
-            print(o3, o4)
-            if o3!=o4:
-                print("Indeed.")
-            break
+            # modelAnother = model = tf.keras.models.load_model(os.path.abspath(os.path.join(os.getcwd(), os.pardir)) +'/Models/cifar1.h5')
+            # o1 = modelAnother.predict([original])
+            # o2 = modelAnother.predict([adversarial])
+            # o3, o4 = np.argmax(o1), np.argmax(o2)
+            # print(o3, o4)
+            # if o3!=o4:
+            #     print("Indeed.")
+            #break
         t2 = time()
         print("Time taken in this iteration:", (t2-t1), "seconds.")
         print("###########################################################################################")
