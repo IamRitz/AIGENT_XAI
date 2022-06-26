@@ -3,7 +3,6 @@ import numpy as np
 from numpy import cov
 from numpy import trace
 from numpy import iscomplexobj
-from numpy import asarray
 from scipy.linalg import sqrtm
 import os
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3' 
