@@ -18,12 +18,7 @@ def PielouMeaure(frequencies, num_classes):
             measure = measure+percents[i]*log(percents[i])
     return -1*measure/log(num_classes)
 
-with192 = [6, 11, 8, 7, 2, 23, 56, 6, 123, 31]
+toCheck = [5, 9, 8, 8, 2, 39, 52, 8, 118, 26]
 
-print(PielouMeaure(with192, len(with192)))
-print()
-
-with384 = [5, 10, 9, 6, 2, 32, 53, 7, 121, 30]
-
-print(PielouMeaure(with384, len(with384)))
+print(PielouMeaure(toCheck, len(toCheck)))
 print()

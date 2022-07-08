@@ -23,7 +23,7 @@ from numpy import asarray
   
 
 def loadModel():
-    model = tf.keras.models.load_model(os.path.abspath(os.path.join(os.getcwd(), os.pardir)) +'/Models/mnist.h5')
+    model = tf.keras.models.load_model(os.path.abspath(os.path.join(os.getcwd(), os.pardir)) +'/Models/mnist_1.h5')
     return model
 
 def getImages():
@@ -32,11 +32,12 @@ def getImages():
     count = 0
     im1 = []
     im2 = []
-    for path in os.listdir("/home/tooba/Documents/DNNVerification/AttackMNIST/Gurobi/AdversarialImages2"):
-        originalImages.append('OriginalImages2/'+str(path))
-        adversarialImages.append('AdversarialImages2/'+str(path))
+    folderCount = 2
+    for path in os.listdir("/home/tooba/Documents/DNNVerification/AttackMNIST/Gurobi/AdversarialImages"+str(folderCount)):
+        originalImages.append('OriginalImages'+str(folderCount)+'/'+str(path))
+        adversarialImages.append('AdversarialImages'+str(folderCount)+'/'+str(path))
         count = count+1
-    
+    # count = 10
     for i in range(count):
         img = Image.open(originalImages[i])
         img = img.resize((28, 28))

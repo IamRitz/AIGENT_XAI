@@ -20,6 +20,7 @@ Setting verbosity of tensorflow to minimum.
 from findModificationsLayerK import find as find
 from modificationDivided import find as find2
 from gurobipy import GRB
+from scipy import stats
 """
 What this file does?
 Find modification in intermediate layers and converts that modification into an adversarial input.
@@ -107,6 +108,7 @@ def updateModel(sat_in):
     """
     o1 = extractNetwork()
     phases = get_neuron_values_actual(tempModel, sat_in, num_layers)
+    neuron_values_1 = phases[layer_to_change]
     while layer_to_change>0:
         extractedNetwork = o1.extractModel(originalModel, layer_to_change+1)
         layer_to_change = int(layer_to_change/2)
@@ -202,7 +204,7 @@ def generateAdversarial(sat_in):
     change = GurobiAttack(sat_in, extractedModel, neuron_values_1, k)
     
     if len(change)>0:
-        for j in range(8):
+        for j in range(18):
             ad_inp2 = []
 
             for i in range(len(change)):
@@ -266,6 +268,7 @@ def attack():
     print("Average L-2 norm:", l2/adversarial_count)
     print("Mean k value:",np.mean(ks))
     print("Median k value:",np.median(ks))
+    print("Mode k value:",stats.mode(ks))
 
 t1 = time()
 attack()

@@ -168,7 +168,7 @@ def find(epsilon, model, inp, expected_outputs, mode, layer_to_change, phaseGive
     
     m.optimize()
     summation = 0
-
+    c = 0
     neg = 0
     for i in range(len(all_epsilons)):
         # print(np.shape(all_epsilons[i]))

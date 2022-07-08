@@ -48,7 +48,7 @@ def getImages():
         #img = img.resize((28, 28))
         numpydata = asarray(img)
         im2.append(numpydata)
-
+    print(im1)
     im1 = np.array(im1)
     im2 = np.array(im2)
 

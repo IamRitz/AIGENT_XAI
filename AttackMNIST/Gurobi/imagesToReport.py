@@ -47,7 +47,7 @@ def attack():
         sat_in = inputs[i]
         # print()
         t1 = time()
-        success, original, adversarial, true_label, adversarial_label, L2_norm, linf = generateAdversarial(sat_in)
+        success, original, adversarial, true_label, adversarial_label, L2_norm, linf, k = generateAdversarial(sat_in)
         # print(success)
         if success==1:
             L2_norm = np.linalg.norm(np.array(original)-np.array(adversarial))
