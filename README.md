@@ -20,9 +20,11 @@ This repository contains implementations for the paper submitted to AAAI'23.
 
 
 <ol>
-  <li><h3>python3 attack.py:</h3> Attacks MNIST images and calculate Pielou measure: 
-      </br>This will perform attack on 500 images from the MNIST dataset and calculate the output impartiality score and the average number of pixels modified.</li>
-  <li>
+  <li><h5>python3 attack.py:</h5> Attacks original images and calculate Pielou measure: 
+      </br>This will perform attack on 500 images from the original dataset and calculate the output impartiality score and the average number of pixels modified. Pielou Measure should be closer to 1.</li>
+  <li><h5>python3 fid.py:</h5> Calculates FID(naturalness score) for the adversarial images generated. FID should be closer to 0.</li>
+  <li><h5>python3 calculateNorms.py:</h5> Calculates average L2 and L-inf norms for the adversarial images generated.</li>
+  <li><h5>python3 generateImages.py:</h5> Generates adversarial Images and saves them to specified folder.</li>
 </ol>
 <h3>Supervisors: Subodh Vishnu Sharma and Kumar Madhukar, IIT Delhi.</h3>
 
