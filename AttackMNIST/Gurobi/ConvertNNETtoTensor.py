@@ -20,14 +20,9 @@ from keras.layers import Dense
 """
 This file converts a neural network saved in nnet format to a tensorflow model.
 """
+
 class ConvertNNETtoTensorFlow:
     def read_nnet(self, file_name):
-            """Read the nnet file, load all the values and assign the class members
-            Args:
-                filename (str): path to the .nnet file
-                
-            :meta private:
-            """
             with open(file_name) as f:
                 line = f.readline()
                 cnt = 1
@@ -82,8 +77,6 @@ class ConvertNNETtoTensorFlow:
     def constructModel(self, fileName):
         w, biases = self.read_nnet(fileName)
         model = Sequential()
-        # print("\nRetreiving model...")
-        
         i = 0
         input_shape = np.shape(w[i])[1]
         num_nodes = np.shape(w[i])[0]
@@ -108,32 +101,4 @@ class ConvertNNETtoTensorFlow:
 
     def predict(self, model, inputToModel, actual_output):
         predicted_output = model.predict(np.array([inputToModel]))
-        # print("For Input: ", inputToModel)
-        # print("Actual output is: ", actual_output)
-        # print("Predicted Output is: ", predicted_output)
-        # print()
         return predicted_output
-
-    def convert(self, file):
-        # file = '../Models/testdp1_2_2op.nnet'
-        model = self.constructModel(fileName=file)
-
-        # inp = [0.6399288845, 0.0, 0.0, 0.475, -0.475]
-        # output_1 = [-0.0203966, -0.01847511, -0.01822628, -0.01796024, -0.01798192]
-        # output_2 = [-0.01942023, -0.01750685, -0.01795192, -0.01650293, -0.01686228]
-        # output_3 = [ 0.02039307, 0.01997121, -0.02107569, 0.02101956, -0.0119698 ]
-
-        inp = [-1, -1, -1, -1]
-        out = [1, -1]
-        
-        predicted_output = self.predict(model, inp, out)
-        return inp, out, model
-
-        
-
-# obj = ConvertNNETtoTensorFlow()
-# inp, out, model = obj.convert()
-# weights = model.get_weights()
-# print(len(weights))
-# for w in range(len(weights)):
-#     print(weights[w])

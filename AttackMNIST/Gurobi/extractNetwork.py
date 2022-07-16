@@ -18,14 +18,13 @@ from keras.models import Sequential
 from keras.layers import Dense
 
 """
-This file converts a neural network saved in nnet format to a tensorflow model.
+This file converts extracts a subnetwork from the original network.
+The extracted network contains layers from layer 0 to layer_count.
 """
+
 class extractNetwork:
     def extractModel(self, model, layer_count):
-        # print(model.summary())
-        # print("Extracting till layer: ", layer_count)
         weights = model.get_weights()
-        # print(len(weights))
         modifiedModel = Sequential()
         i = 0
         
@@ -50,12 +49,8 @@ class extractNetwork:
             weights_to_set.append(np.array(weights[i]))
             weights_to_set.append(np.array(weights[i+1]))
         
-        # print((modifiedModel.get_weights()))
-        # print(modifiedModel.summary())
-        # print(len(weights_to_set))
         modifiedModel.set_weights(weights_to_set)
         
-        # print("Model retreived.")
         return modifiedModel
 
     def printActivations(self, model):

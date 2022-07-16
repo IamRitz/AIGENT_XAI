@@ -8,30 +8,15 @@ Finds minimal modification in the k-th layer of the divided network.
 What is the difference?
 In findModuficationsLayerK, the objective function was concerned only 
 with maximizing the value of attack label and minimizing the value of true label.
-But, in modificationDivided, the objective function is to retain the values found in previos modifications.
+But, in modificationDivided, the objective function is to retain the values found in previous modifications.
 """
-
-def getInputs():
-    inp = [0.6399288845, 0.0, 0.0, 0.475, -0.475]
-    return inp
-
-def getOutputs():
-    output_1 = [-0.0203966, -0.01847511, -0.01822628, -0.01796024, -0.01798192]
-    output_2 = [-0.01942023, -0.01750685, -0.01795192, -0.01650293, -0.01686228]
-    output_3 = [ 0.02039307, 0.01997121, -0.02107569, 0.02101956, -0.0119698 ]
-    return output_3
 
 def get_neuron_values_actual(loaded_model, input, num_layers):
         neurons = []
         l = 0
         for layer in loaded_model.layers:
-            # if l==0:
-            #     l = l + 1
-            #     continue
-            # # print(l)
             w = layer.get_weights()[0]
             b = layer.get_weights()[1]
-            # print(w)
             result = np.matmul(input,w)+b
             
             if l == num_layers:
@@ -41,8 +26,6 @@ def get_neuron_values_actual(loaded_model, input, num_layers):
             input = [max(0, r) for r in result]
             neurons.append(input)
             l = l + 1
-        # print(len(neurons))
-        # print(neurons[len(neurons)-1])
         return neurons
 
 def get_neuron_values(loaded_model, input, num_layers, values, gurobi_model, epsilon_max, mode, layer_to_change):
@@ -51,42 +34,31 @@ def get_neuron_values(loaded_model, input, num_layers, values, gurobi_model, eps
         l = 0
         epsilons = []
         last_layer = num_layers-1
-        first_layer = 0
-        # print("Number of layers: ",num_layers)
-        # layer_to_change = 1
         weights = loaded_model.get_weights()
-        # print("Number of weights: ",len(weights))
         for i in range(0,len(weights),2):
-            # print(i,num_layers)
             w = weights[i]
             b = weights[i+1]
             shape0 = w.shape[0]
             shape1 = w.shape[1]
             epsilon = []
             
-            # print(np.shape(input), np.shape(values[int(i/2)]), np.shape(w))
             if int(i/2) == layer_to_change:
-                # print("Adding modifications to layer:", layer_to_change, np.shape(w))
                 for row in range(shape0):
                     ep = []
                     for col in range(shape1):
-                        # mode =0
                         if mode==1:
                             ep.append(gurobi_model.addVar(lb = -val_max, ub = val_max, vtype=grb.GRB.CONTINUOUS))
                             gurobi_model.addConstr(ep[col]-epsilon_max<=0)
                             gurobi_model.addConstr(ep[col]+epsilon_max>=0)
-                            # gurobi_model.update()
                         else:
                             if col==0 :
                                 ep.append(gurobi_model.addVar(vtype=grb.GRB.CONTINUOUS))
                                 gurobi_model.addConstr(ep[col]-epsilon_max<=0)
                                 gurobi_model.addConstr(ep[col]>=0)
-                                # gurobi_model.update()
                             else:
                                 ep.append(gurobi_model.addVar(vtype=grb.GRB.CONTINUOUS))
                                 gurobi_model.addConstr(ep[col]<=0)
                                 gurobi_model.addConstr(ep[col]+epsilon_max>=0)
-                                # gurobi_model.update()
                     epsilon.append(ep)
             
             else:
@@ -136,17 +108,9 @@ def find(epsilon, model, inp, expected_outputs, mode, layer_to_change, phaseGive
     if phaseGiven==1:
         neurons = phases
 
-    # for i in range(num_inputs):
-    #     input_vars.append(m.addVar(inp[i], inp[i], vtype=grb.GRB.CONTINUOUS))
-
-    t1 = time()
     m.update()
     result, all_epsilons = get_neuron_values(model, inp, num_layers, neurons, m, epsilon_max, mode, layer_to_change)
-    # print(result)
     m.update()
-    t2 = time()
-    # diff = 0.0000001
-    # print(len(result))
     z, p = 0, 0
     tr = 2
     for i in range(len(result)):

@@ -20,10 +20,19 @@ Setting verbosity of tensorflow to minimum.
 """
 from PIL import Image
 from numpy import asarray
-  
+
+"""
+This file calculated FID for the two sets of images given to it. 
+One set contains original images and another set contains adversarial images.
+Two kinds of experiments were performed. 
+The first experiment generates adversarial images while preserving their quality as much as possible. 
+The second experiment aimed at generating as many adversarial images as possible by compromising on the quality. 
+FID for first experiment can be calculated by changing folderSuffix to "_restricted".
+FID for second experiment can be calculated by changing folderSuffix to "_max".
+"""
 
 def loadModel():
-    model = tf.keras.models.load_model(os.path.abspath(os.path.join(os.getcwd(), os.pardir)) +'/Models/mnist_1.h5')
+    model = tf.keras.models.load_model('../Models/mnist_1.h5')
     return model
 
 def getImages():
@@ -32,12 +41,14 @@ def getImages():
     count = 0
     im1 = []
     im2 = []
-    folderCount = 2
-    for path in os.listdir("/home/tooba/Documents/DNNVerification/AttackMNIST/Gurobi/AdversarialImages"+str(folderCount)):
-        originalImages.append('OriginalImages'+str(folderCount)+'/'+str(path))
-        adversarialImages.append('AdversarialImages'+str(folderCount)+'/'+str(path))
+    #Change below to calculate FID for different experiments.
+    folderSuffix = "_restricted"
+    
+    for path in os.listdir("Images/AdversarialImages"+str(folderSuffix)):
+        originalImages.append('Images/OriginalImages'+str(folderSuffix)+'/'+str(path))
+        adversarialImages.append('Images/AdversarialImages'+str(folderSuffix)+'/'+str(path))
         count = count+1
-    # count = 10
+    
     for i in range(count):
         img = Image.open(originalImages[i])
         img = img.resize((28, 28))
