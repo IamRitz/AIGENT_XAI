@@ -17,8 +17,7 @@ Make sure the python version is python 3.7 and above. If the python version is b
     sudo update-alternatives  --set python3 /usr/bin/python3.8
 
 This repository contains implementations for the paper submitted to AAAI'23. 
-
-
+<h4>AttackMNIST and AttackCIFAR have similar folder structures. To perform attack on the datasets and calculate various norms, run the following commands:</h4>
 <ol>
   <li><h5>python3 attack.py:</h5> Attacks original images and calculate Pielou measure: 
       </br>This will perform attack on 500 images from the original dataset and calculate the output impartiality score and the average number of pixels modified. Pielou Measure should be closer to 1.</li>
