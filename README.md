@@ -20,10 +20,10 @@ This repository contains implementations for the paper submitted to AAAI'23.
 
 
 <ol>
-  <li>To attack MNIST images and calculate Pielou measure: python3 attack.py 
-      This will perform attack on 500 images from the MNIST dataset and calculate the output impartiality score and the average number of pixels modified.
+  <li><h3>python3 attack.py:</h3> Attacks MNIST images and calculate Pielou measure: 
+      </br>This will perform attack on 500 images from the MNIST dataset and calculate the output impartiality score and the average number of pixels modified.</li>
   <li>
-
+</ol>
 <h3>Supervisors: Subodh Vishnu Sharma and Kumar Madhukar, IIT Delhi.</h3>
 
 Link for datasets used and adversarial dataset generated: [Datasets.](https://drive.google.com/drive/folders/1ZUmj_j5fvPiEDmmdNx2QT6gpzIgGubt8?usp=sharing)
