@@ -1,0 +1,1115 @@
+Number of inputs in consideration:  50
+###########################################################################################
+Launching attack on input: 0
+True label is: 0
+
+Attack label is: 5
+0.00018303681 0.00011638299
+Prediction:  4
+Number of changes :  2500
+Prediction:  4
+Number of changes :  2458
+Prediction:  9
+Prediction:  9
+Launching attack with Gurobi.
+Number of changes: 501
+L2-norm is:  93.94165382651016 L-inf norm is:  10.0 Total change is:  929.3658122754404
+Attack was successful. Label changed from  0  to  2
+This was: 100 pixel attack.
+Time taken in this iteration: 29.0946307182312 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 1
+True label is: 0
+
+Attack label is: 7
+0.00018303681 0.00011638299
+Prediction:  4
+Number of changes :  2500
+Prediction:  4
+Number of changes :  2458
+Prediction:  8
+Prediction:  8
+Launching attack with Gurobi.
+Number of changes: 501
+Adversarial example not found.
+Changing k to: 300
+Launching attack with Gurobi.
+Number of changes: 501
+Adversarial example not found.
+Changing k to: 900
+Launching attack with Gurobi.
+Number of changes: 901
+L2-norm is:  284.17939289571416 L-inf norm is:  10.0 Total change is:  8507.895149826278
+Attack was successful. Label changed from  0  to  6
+This was: 900 pixel attack.
+Time taken in this iteration: 52.644763231277466 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 2
+True label is: 5
+
+Attack label is: 0
+0.00018303681 0.00011638299
+Prediction:  0
+Number of changes :  2500
+Prediction:  0
+Number of changes :  2458
+Prediction:  9
+Prediction:  9
+Launching attack with Gurobi.
+Number of changes: 501
+L2-norm is:  94.63189960184259 L-inf norm is:  10.0 Total change is:  942.2886503148154
+Attack was successful. Label changed from  5  to  2
+This was: 100 pixel attack.
+Time taken in this iteration: 28.542680501937866 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 3
+True label is: 0
+
+Attack label is: 6
+0.00018303681 0.00011638299
+Prediction:  4
+Number of changes :  2500
+Prediction:  1
+Number of changes :  2458
+Prediction:  9
+Prediction:  9
+Launching attack with Gurobi.
+Number of changes: 501
+L2-norm is:  94.92483709937397 L-inf norm is:  10.0 Total change is:  948.0062286952256
+Attack was successful. Label changed from  0  to  2
+This was: 100 pixel attack.
+Time taken in this iteration: 28.4830584526062 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 4
+True label is: 2
+
+Attack label is: 7
+0.00018303681 0.00011638299
+Prediction:  3
+Number of changes :  2500
+Prediction:  1
+Number of changes :  2458
+Prediction:  8
+Prediction:  8
+Launching attack with Gurobi.
+Number of changes: 501
+Adversarial example not found.
+Changing k to: 300
+Launching attack with Gurobi.
+Number of changes: 501
+Adversarial example not found.
+Changing k to: 900
+Launching attack with Gurobi.
+Number of changes: 901
+L2-norm is:  284.0846813284164 L-inf norm is:  10.0 Total change is:  8503.402418420263
+Attack was successful. Label changed from  2  to  6
+This was: 900 pixel attack.
+Time taken in this iteration: 52.73859763145447 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 5
+True label is: 0
+
+Attack label is: 3
+0.00018303681 0.00011638299
+Prediction:  4
+Number of changes :  2500
+Prediction:  1
+Number of changes :  2458
+Prediction:  9
+Prediction:  9
+Launching attack with Gurobi.
+Number of changes: 501
+Adversarial example not found.
+Changing k to: 300
+Launching attack with Gurobi.
+Number of changes: 501
+L2-norm is:  163.57071255107476 L-inf norm is:  10.0 Total change is:  2819.9999999999945
+Attack was successful. Label changed from  0  to  9
+This was: 300 pixel attack.
+Time taken in this iteration: 40.773216247558594 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 6
+True label is: 5
+
+Attack label is: 9
+0.00018303681 0.00011638299
+Prediction:  5
+Number of changes :  2500
+Prediction:  5
+Number of changes :  2458
+Prediction:  8
+Prediction:  8
+Launching attack with Gurobi.
+Number of changes: 501
+L2-norm is:  94.75663562044105 L-inf norm is:  10.0 Total change is:  942.1692484298266
+Attack was successful. Label changed from  5  to  2
+This was: 100 pixel attack.
+Time taken in this iteration: 28.21823024749756 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 7
+True label is: 0
+
+Attack label is: 6
+0.00018303681 0.00011638299
+Prediction:  4
+Number of changes :  2500
+Prediction:  1
+Number of changes :  2458
+Prediction:  9
+Prediction:  9
+Launching attack with Gurobi.
+Number of changes: 501
+L2-norm is:  94.84373323854514 L-inf norm is:  10.0 Total change is:  946.8725263711588
+Attack was successful. Label changed from  0  to  2
+This was: 100 pixel attack.
+Time taken in this iteration: 28.06318163871765 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 8
+True label is: 0
+
+Attack label is: 3
+0.00018303681 0.00011638299
+Prediction:  4
+Number of changes :  2500
+Prediction:  1
+Number of changes :  2458
+Prediction:  8
+Prediction:  8
+Launching attack with Gurobi.
+Number of changes: 501
+Adversarial example not found.
+Changing k to: 300
+Launching attack with Gurobi.
+Number of changes: 501
+L2-norm is:  164.16782655474282 L-inf norm is:  10.0 Total change is:  2829.785738462131
+Attack was successful. Label changed from  0  to  6
+This was: 300 pixel attack.
+Time taken in this iteration: 42.10393476486206 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 9
+True label is: 0
+
+Attack label is: 6
+0.00018303681 0.00011638299
+Prediction:  4
+Number of changes :  2500
+Prediction:  4
+Number of changes :  2458
+Prediction:  9
+Prediction:  9
+Launching attack with Gurobi.
+Number of changes: 501
+L2-norm is:  94.04842862927622 L-inf norm is:  10.0 Total change is:  935.101080741714
+Attack was successful. Label changed from  0  to  2
+This was: 100 pixel attack.
+Time taken in this iteration: 27.93276619911194 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 10
+True label is: 0
+
+Attack label is: 6
+0.00018303681 0.00011638299
+Prediction:  4
+Number of changes :  2500
+Prediction:  1
+Number of changes :  2458
+Prediction:  9
+Prediction:  9
+Launching attack with Gurobi.
+Number of changes: 501
+Adversarial example not found.
+Changing k to: 300
+Launching attack with Gurobi.
+Number of changes: 501
+L2-norm is:  163.65182477457358 L-inf norm is:  10.0 Total change is:  2826.3604275158286
+Attack was successful. Label changed from  0  to  2
+This was: 300 pixel attack.
+Time taken in this iteration: 40.316911697387695 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 11
+True label is: 0
+
+Attack label is: 1
+0.00018303681 0.00011638299
+Prediction:  1
+Number of changes :  2500
+Prediction:  1
+Number of changes :  2458
+Prediction:  9
+Prediction:  9
+Launching attack with Gurobi.
+Number of changes: 501
+L2-norm is:  94.22047084506984 L-inf norm is:  10.0 Total change is:  939.2496207510796
+Attack was successful. Label changed from  0  to  2
+This was: 100 pixel attack.
+Time taken in this iteration: 27.833831787109375 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 12
+True label is: 5
+
+Attack label is: 2
+0.00018303681 0.00011638299
+Prediction:  0
+Number of changes :  2500
+Prediction:  4
+Number of changes :  2458
+Prediction:  8
+Prediction:  8
+Launching attack with Gurobi.
+Number of changes: 501
+Adversarial example not found.
+Changing k to: 300
+Launching attack with Gurobi.
+Number of changes: 501
+Adversarial example not found.
+Changing k to: 900
+Launching attack with Gurobi.
+Number of changes: 901
+L2-norm is:  284.1431354236215 L-inf norm is:  10.0 Total change is:  8506.893468777938
+Attack was successful. Label changed from  5  to  6
+This was: 900 pixel attack.
+Time taken in this iteration: 51.89130401611328 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 13
+True label is: 0
+
+Attack label is: 6
+0.00018303681 0.00011638299
+Prediction:  3
+Number of changes :  2500
+Prediction:  4
+Number of changes :  2458
+Prediction:  9
+Prediction:  9
+Launching attack with Gurobi.
+Number of changes: 501
+Adversarial example not found.
+Changing k to: 300
+Launching attack with Gurobi.
+Number of changes: 501
+L2-norm is:  163.83255088754544 L-inf norm is:  10.0 Total change is:  2829.2313725490185
+Attack was successful. Label changed from  0  to  2
+This was: 300 pixel attack.
+Time taken in this iteration: 39.63654804229736 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 14
+True label is: 8
+
+Attack label is: 5
+0.00018303681 0.00011638299
+Prediction:  4
+Number of changes :  2500
+Prediction:  4
+Number of changes :  2458
+Prediction:  8
+Prediction:  8
+Launching attack with Gurobi.
+Number of changes: 501
+Adversarial example not found.
+Changing k to: 300
+Launching attack with Gurobi.
+Number of changes: 501
+L2-norm is:  165.03088523679645 L-inf norm is:  10.0 Total change is:  2852.1597513387046
+Attack was successful. Label changed from  8  to  6
+This was: 300 pixel attack.
+Time taken in this iteration: 40.483839988708496 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 15
+True label is: 0
+
+Attack label is: 6
+0.00018303681 0.00011638299
+Prediction:  4
+Number of changes :  2500
+Prediction:  1
+Number of changes :  2458
+Prediction:  9
+Prediction:  9
+Launching attack with Gurobi.
+Number of changes: 501
+L2-norm is:  94.72716240348963 L-inf norm is:  10.0 Total change is:  945.8547331643417
+Attack was successful. Label changed from  0  to  9
+This was: 100 pixel attack.
+Time taken in this iteration: 28.032124757766724 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 16
+True label is: 0
+
+Attack label is: 6
+0.00018303681 0.00011638299
+Prediction:  4
+Number of changes :  2500
+Prediction:  1
+Number of changes :  2458
+Prediction:  9
+Prediction:  9
+Launching attack with Gurobi.
+Number of changes: 501
+L2-norm is:  94.64222906282212 L-inf norm is:  10.0 Total change is:  942.1493242710061
+Attack was successful. Label changed from  0  to  2
+This was: 100 pixel attack.
+Time taken in this iteration: 27.64971661567688 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 17
+True label is: 7
+
+Attack label is: 6
+0.00018303681 0.00011638299
+Prediction:  6
+Number of changes :  2500
+Prediction:  0
+Number of changes :  2458
+Prediction:  8
+Prediction:  8
+Launching attack with Gurobi.
+Number of changes: 501
+Adversarial example not found.
+Changing k to: 300
+Launching attack with Gurobi.
+Number of changes: 501
+L2-norm is:  165.03265682776706 L-inf norm is:  10.0 Total change is:  2849.093629352589
+Attack was successful. Label changed from  7  to  6
+This was: 300 pixel attack.
+Time taken in this iteration: 39.24289917945862 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 18
+True label is: 5
+
+Attack label is: 0
+0.00018303681 0.00011638299
+Prediction:  0
+Number of changes :  2500
+Prediction:  4
+Number of changes :  2458
+Prediction:  9
+Prediction:  9
+Launching attack with Gurobi.
+Number of changes: 501
+Adversarial example not found.
+Changing k to: 300
+Launching attack with Gurobi.
+Number of changes: 501
+L2-norm is:  163.50008042444648 L-inf norm is:  10.0 Total change is:  2818.2850038867164
+Attack was successful. Label changed from  5  to  2
+This was: 300 pixel attack.
+Time taken in this iteration: 39.52840304374695 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 19
+True label is: 7
+
+Attack label is: 5
+0.00018303681 0.00011638299
+Prediction:  6
+Number of changes :  2500
+Prediction:  4
+Number of changes :  2458
+Prediction:  8
+Prediction:  8
+Launching attack with Gurobi.
+Number of changes: 501
+Adversarial example not found.
+Changing k to: 300
+Launching attack with Gurobi.
+Number of changes: 501
+Adversarial example not found.
+Changing k to: 900
+Launching attack with Gurobi.
+Number of changes: 901
+L2-norm is:  284.17825680778543 L-inf norm is:  10.0 Total change is:  8505.334204577768
+Attack was successful. Label changed from  7  to  6
+This was: 900 pixel attack.
+Time taken in this iteration: 51.621763706207275 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 20
+True label is: 1
+
+Attack label is: 0
+0.00018303681 0.00011638299
+Prediction:  0
+Number of changes :  2500
+Prediction:  4
+Number of changes :  2458
+Prediction:  9
+Prediction:  9
+Launching attack with Gurobi.
+Number of changes: 501
+L2-norm is:  94.84863772782415 L-inf norm is:  10.0 Total change is:  946.1568627450952
+Attack was successful. Label changed from  1  to  2
+This was: 100 pixel attack.
+Time taken in this iteration: 27.7209255695343 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 21
+True label is: 5
+
+Attack label is: 4
+0.00018303681 0.00011638299
+Prediction:  0
+Number of changes :  2500
+Prediction:  6
+Number of changes :  2458
+Prediction:  9
+Prediction:  9
+Launching attack with Gurobi.
+Number of changes: 501
+Adversarial example not found.
+Changing k to: 300
+Launching attack with Gurobi.
+Number of changes: 501
+L2-norm is:  164.19154825060204 L-inf norm is:  10.0 Total change is:  2839.009116135665
+Attack was successful. Label changed from  5  to  9
+This was: 300 pixel attack.
+Time taken in this iteration: 41.46308374404907 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 22
+True label is: 9
+
+Attack label is: 3
+0.00018303681 0.00011638299
+Prediction:  0
+Number of changes :  2500
+Prediction:  4
+Number of changes :  2458
+Prediction:  8
+Prediction:  8
+Launching attack with Gurobi.
+Number of changes: 501
+Adversarial example not found.
+Changing k to: 300
+Launching attack with Gurobi.
+Number of changes: 501
+Adversarial example not found.
+Changing k to: 900
+Launching attack with Gurobi.
+Number of changes: 901
+L2-norm is:  283.99652714433216 L-inf norm is:  10.0 Total change is:  8499.2528210716
+Attack was successful. Label changed from  9  to  6
+This was: 900 pixel attack.
+Time taken in this iteration: 52.50716853141785 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 23
+True label is: 0
+
+Attack label is: 6
+0.00018303681 0.00011638299
+Prediction:  6
+Number of changes :  2500
+Prediction:  0
+Number of changes :  2458
+Prediction:  9
+Prediction:  9
+Launching attack with Gurobi.
+Number of changes: 501
+L2-norm is:  94.77323520322636 L-inf norm is:  10.0 Total change is:  946.4940138466642
+Attack was successful. Label changed from  0  to  9
+This was: 100 pixel attack.
+Time taken in this iteration: 28.125365495681763 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 24
+True label is: 0
+
+Attack label is: 3
+0.00018303681 0.00011638299
+Prediction:  6
+Number of changes :  2500
+Prediction:  4
+Number of changes :  2458
+Prediction:  8
+Prediction:  8
+Launching attack with Gurobi.
+Number of changes: 501
+Adversarial example not found.
+Changing k to: 300
+Launching attack with Gurobi.
+Number of changes: 501
+L2-norm is:  163.52819737497498 L-inf norm is:  10.0 Total change is:  2822.0958199991805
+Attack was successful. Label changed from  0  to  6
+This was: 300 pixel attack.
+Time taken in this iteration: 41.745521783828735 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 25
+True label is: 5
+
+Attack label is: 7
+0.00018303681 0.00011638299
+Prediction:  0
+Number of changes :  2500
+Prediction:  5
+Number of changes :  2458
+Prediction:  8
+Prediction:  8
+Launching attack with Gurobi.
+Number of changes: 501
+L2-norm is:  94.78442161541187 L-inf norm is:  10.0 Total change is:  945.5564269899238
+Attack was successful. Label changed from  5  to  9
+This was: 100 pixel attack.
+Time taken in this iteration: 27.74963068962097 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 26
+True label is: 0
+
+Attack label is: 6
+0.00018303681 0.00011638299
+Prediction:  6
+Number of changes :  2500
+Prediction:  1
+Number of changes :  2458
+Prediction:  9
+Prediction:  9
+Launching attack with Gurobi.
+Number of changes: 501
+L2-norm is:  94.4949256626378 L-inf norm is:  10.0 Total change is:  941.0136069499184
+Attack was successful. Label changed from  0  to  2
+This was: 100 pixel attack.
+Time taken in this iteration: 28.21593952178955 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 27
+True label is: 7
+
+Attack label is: 2
+0.00018303681 0.00011638299
+Prediction:  8
+Number of changes :  2500
+Prediction:  1
+Number of changes :  2458
+Prediction:  8
+Prediction:  8
+Launching attack with Gurobi.
+Number of changes: 501
+Adversarial example not found.
+Changing k to: 300
+Launching attack with Gurobi.
+Number of changes: 501
+Adversarial example not found.
+Changing k to: 900
+Launching attack with Gurobi.
+Number of changes: 901
+L2-norm is:  284.26083415891173 L-inf norm is:  10.0 Total change is:  8510.64932976746
+Attack was successful. Label changed from  7  to  6
+This was: 900 pixel attack.
+Time taken in this iteration: 54.2949435710907 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 28
+True label is: 0
+
+Attack label is: 6
+0.00018303681 0.00011638299
+Prediction:  9
+Number of changes :  2500
+Prediction:  4
+Number of changes :  2458
+Prediction:  9
+Prediction:  9
+Launching attack with Gurobi.
+Number of changes: 501
+L2-norm is:  94.37983369152538 L-inf norm is:  10.0 Total change is:  940.4558621355538
+Attack was successful. Label changed from  0  to  2
+This was: 100 pixel attack.
+Time taken in this iteration: 28.244654893875122 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 29
+True label is: 0
+
+Attack label is: 6
+0.00018303681 0.00011638299
+Prediction:  3
+Number of changes :  2500
+Prediction:  1
+Number of changes :  2458
+Prediction:  8
+Prediction:  8
+Launching attack with Gurobi.
+Number of changes: 501
+Adversarial example not found.
+Changing k to: 300
+Launching attack with Gurobi.
+Number of changes: 501
+L2-norm is:  164.84236170091052 L-inf norm is:  10.0 Total change is:  2847.9322045457407
+Attack was successful. Label changed from  0  to  8
+This was: 300 pixel attack.
+Time taken in this iteration: 40.721317291259766 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 30
+True label is: 0
+
+Attack label is: 1
+0.00018303681 0.00011638299
+Prediction:  4
+Number of changes :  2500
+Prediction:  1
+Number of changes :  2458
+Prediction:  8
+Prediction:  8
+Launching attack with Gurobi.
+Number of changes: 501
+Adversarial example not found.
+Changing k to: 300
+Launching attack with Gurobi.
+Number of changes: 501
+L2-norm is:  164.34592955093572 L-inf norm is:  10.0 Total change is:  2838.0101782377133
+Attack was successful. Label changed from  0  to  6
+This was: 300 pixel attack.
+Time taken in this iteration: 40.34581398963928 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 31
+True label is: 5
+
+Attack label is: 2
+0.00018303681 0.00011638299
+Prediction:  0
+Number of changes :  2500
+Prediction:  4
+Number of changes :  2458
+Prediction:  8
+Prediction:  8
+Launching attack with Gurobi.
+Number of changes: 501
+Adversarial example not found.
+Changing k to: 300
+Launching attack with Gurobi.
+Number of changes: 501
+L2-norm is:  163.8818927886345 L-inf norm is:  10.0 Total change is:  2829.572880679913
+Attack was successful. Label changed from  5  to  6
+This was: 300 pixel attack.
+Time taken in this iteration: 40.24781346321106 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 32
+True label is: 0
+
+Attack label is: 7
+0.00018303681 0.00011638299
+Prediction:  4
+Number of changes :  2500
+Prediction:  1
+Number of changes :  2458
+Prediction:  8
+Prediction:  8
+Launching attack with Gurobi.
+Number of changes: 501
+Adversarial example not found.
+Changing k to: 300
+Launching attack with Gurobi.
+Number of changes: 501
+L2-norm is:  163.47095642164342 L-inf norm is:  10.0 Total change is:  2820.5162607359894
+Attack was successful. Label changed from  0  to  6
+This was: 300 pixel attack.
+Time taken in this iteration: 41.53066444396973 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 33
+True label is: 0
+
+Attack label is: 7
+0.00018303681 0.00011638299
+Prediction:  4
+Number of changes :  2500
+Prediction:  4
+Number of changes :  2458
+Prediction:  8
+Prediction:  8
+Launching attack with Gurobi.
+Number of changes: 501
+Adversarial example not found.
+Changing k to: 300
+Launching attack with Gurobi.
+Number of changes: 501
+L2-norm is:  165.20025762288668 L-inf norm is:  10.0 Total change is:  2848.8591154897313
+Attack was successful. Label changed from  0  to  6
+This was: 300 pixel attack.
+Time taken in this iteration: 40.29533052444458 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 34
+True label is: 0
+
+Attack label is: 3
+0.00018303681 0.00011638299
+Prediction:  4
+Number of changes :  2500
+Prediction:  1
+Number of changes :  2458
+Prediction:  9
+Prediction:  9
+Launching attack with Gurobi.
+Number of changes: 501
+Adversarial example not found.
+Changing k to: 300
+Launching attack with Gurobi.
+Number of changes: 501
+L2-norm is:  163.37192086162383 L-inf norm is:  10.0 Total change is:  2817.154547445146
+Attack was successful. Label changed from  0  to  9
+This was: 300 pixel attack.
+Time taken in this iteration: 40.1558620929718 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 35
+True label is: 2
+
+Attack label is: 7
+0.00018303681 0.00011638299
+Prediction:  3
+Number of changes :  2500
+Prediction:  1
+Number of changes :  2458
+Prediction:  8
+Prediction:  8
+Launching attack with Gurobi.
+Number of changes: 501
+Adversarial example not found.
+Changing k to: 300
+Launching attack with Gurobi.
+Number of changes: 501
+Adversarial example not found.
+Changing k to: 900
+Launching attack with Gurobi.
+Number of changes: 901
+L2-norm is:  284.19597280770876 L-inf norm is:  10.0 Total change is:  8509.01322331067
+Attack was successful. Label changed from  2  to  6
+This was: 900 pixel attack.
+Time taken in this iteration: 52.261401414871216 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 36
+True label is: 8
+
+Attack label is: 5
+0.00018303681 0.00011638299
+Prediction:  4
+Number of changes :  2500
+Prediction:  4
+Number of changes :  2458
+Prediction:  9
+Prediction:  9
+Launching attack with Gurobi.
+Number of changes: 501
+L2-norm is:  94.65476469187622 L-inf norm is:  10.0 Total change is:  939.9999999999989
+Attack was successful. Label changed from  8  to  9
+This was: 100 pixel attack.
+Time taken in this iteration: 27.88667607307434 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 37
+True label is: 8
+
+Attack label is: 9
+0.00018303681 0.00011638299
+Prediction:  3
+Number of changes :  2500
+Prediction:  4
+Number of changes :  2458
+Prediction:  9
+Prediction:  9
+Launching attack with Gurobi.
+Number of changes: 501
+L2-norm is:  95.0477011471153 L-inf norm is:  10.0 Total change is:  948.6823529411795
+Attack was successful. Label changed from  8  to  9
+This was: 100 pixel attack.
+Time taken in this iteration: 27.849669218063354 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 38
+True label is: 9
+
+Attack label is: 7
+0.00018303681 0.00011638299
+Prediction:  0
+Number of changes :  2500
+Prediction:  3
+Number of changes :  2458
+Prediction:  8
+Prediction:  8
+Launching attack with Gurobi.
+Number of changes: 501
+Adversarial example not found.
+Changing k to: 300
+Launching attack with Gurobi.
+Number of changes: 501
+Adversarial example not found.
+Changing k to: 900
+Launching attack with Gurobi.
+Number of changes: 901
+L2-norm is:  285.47681508109156 L-inf norm is:  10.0 Total change is:  8548.703751152507
+Attack was successful. Label changed from  9  to  6
+This was: 900 pixel attack.
+Time taken in this iteration: 52.64067888259888 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 39
+True label is: 8
+
+Attack label is: 5
+0.00018303681 0.00011638299
+Prediction:  4
+Number of changes :  2500
+Prediction:  4
+Number of changes :  2458
+Prediction:  9
+Prediction:  9
+Launching attack with Gurobi.
+Number of changes: 501
+L2-norm is:  93.38540645974706 L-inf norm is:  10.0 Total change is:  924.7092256365495
+Attack was successful. Label changed from  8  to  2
+This was: 100 pixel attack.
+Time taken in this iteration: 27.87274718284607 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 40
+True label is: 0
+
+Attack label is: 6
+0.00018303681 0.00011638299
+Prediction:  6
+Number of changes :  2500
+Prediction:  1
+Number of changes :  2458
+Prediction:  8
+Prediction:  8
+Launching attack with Gurobi.
+Number of changes: 501
+Adversarial example not found.
+Changing k to: 300
+Launching attack with Gurobi.
+Number of changes: 501
+L2-norm is:  163.54527567188984 L-inf norm is:  10.0 Total change is:  2819.999999999998
+Attack was successful. Label changed from  0  to  6
+This was: 300 pixel attack.
+Time taken in this iteration: 41.11320233345032 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 41
+True label is: 0
+
+Attack label is: 6
+0.00018303681 0.00011638299
+Prediction:  4
+Number of changes :  2500
+Prediction:  1
+Number of changes :  2458
+Prediction:  8
+Prediction:  8
+Launching attack with Gurobi.
+Number of changes: 501
+L2-norm is:  94.68913250776093 L-inf norm is:  10.0 Total change is:  938.2173189305718
+Attack was successful. Label changed from  0  to  6
+This was: 100 pixel attack.
+Time taken in this iteration: 27.84430241584778 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 42
+True label is: 2
+
+Attack label is: 7
+0.00018303681 0.00011638299
+Prediction:  3
+Number of changes :  2500
+Prediction:  1
+Number of changes :  2458
+Prediction:  8
+Prediction:  8
+Launching attack with Gurobi.
+Number of changes: 501
+Adversarial example not found.
+Changing k to: 300
+Launching attack with Gurobi.
+Number of changes: 501
+Adversarial example not found.
+Changing k to: 900
+Launching attack with Gurobi.
+Number of changes: 901
+L2-norm is:  284.2151609627195 L-inf norm is:  10.0 Total change is:  8511.604172484473
+Attack was successful. Label changed from  2  to  6
+This was: 900 pixel attack.
+Time taken in this iteration: 53.7138307094574 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 43
+True label is: 8
+
+Attack label is: 2
+0.00018303681 0.00011638299
+Prediction:  0
+Number of changes :  2500
+Prediction:  4
+Number of changes :  2458
+Prediction:  8
+Prediction:  8
+Launching attack with Gurobi.
+Number of changes: 501
+Adversarial example not found.
+Changing k to: 300
+Launching attack with Gurobi.
+Number of changes: 501
+L2-norm is:  164.3535617623442 L-inf norm is:  10.0 Total change is:  2842.603921568626
+Attack was successful. Label changed from  8  to  6
+This was: 300 pixel attack.
+Time taken in this iteration: 41.880934953689575 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 44
+True label is: 0
+
+Attack label is: 8
+0.00018303681 0.00011638299
+Prediction:  4
+Number of changes :  2500
+Prediction:  1
+Number of changes :  2458
+Prediction:  9
+Prediction:  9
+Launching attack with Gurobi.
+Number of changes: 501
+L2-norm is:  94.33698786925675 L-inf norm is:  10.0 Total change is:  941.017677249182
+Attack was successful. Label changed from  0  to  2
+This was: 100 pixel attack.
+Time taken in this iteration: 29.05023169517517 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 45
+True label is: 0
+
+Attack label is: 6
+0.00018303681 0.00011638299
+Prediction:  4
+Number of changes :  2500
+Prediction:  1
+Number of changes :  2458
+Prediction:  9
+Prediction:  9
+Launching attack with Gurobi.
+Number of changes: 501
+Adversarial example not found.
+Changing k to: 300
+Launching attack with Gurobi.
+Number of changes: 501
+L2-norm is:  163.7387159856346 L-inf norm is:  10.0 Total change is:  2827.7739434814803
+Attack was successful. Label changed from  0  to  2
+This was: 300 pixel attack.
+Time taken in this iteration: 40.581337690353394 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 46
+True label is: 0
+
+Attack label is: 6
+0.00018303681 0.00011638299
+Prediction:  6
+Number of changes :  2500
+Prediction:  1
+Number of changes :  2458
+Prediction:  9
+Prediction:  9
+Launching attack with Gurobi.
+Number of changes: 501
+L2-norm is:  95.67185525553897 L-inf norm is:  10.0 Total change is:  950.684566526771
+Attack was successful. Label changed from  0  to  2
+This was: 100 pixel attack.
+Time taken in this iteration: 27.71402144432068 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 47
+True label is: 5
+
+Attack label is: 7
+0.00018303681 0.00011638299
+Prediction:  6
+Number of changes :  2500
+Prediction:  6
+Number of changes :  2458
+Prediction:  8
+Prediction:  8
+Launching attack with Gurobi.
+Number of changes: 501
+Adversarial example not found.
+Changing k to: 300
+Launching attack with Gurobi.
+Number of changes: 501
+Adversarial example not found.
+Changing k to: 900
+Launching attack with Gurobi.
+Number of changes: 901
+L2-norm is:  284.1448788766992 L-inf norm is:  10.0 Total change is:  8503.782648583758
+Attack was successful. Label changed from  5  to  6
+This was: 900 pixel attack.
+Time taken in this iteration: 51.9047327041626 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 48
+True label is: 8
+
+Attack label is: 1
+0.00018303681 0.00011638299
+Prediction:  1
+Number of changes :  2500
+Prediction:  1
+Number of changes :  2458
+Prediction:  4
+Prediction:  4
+Launching attack with Gurobi.
+Number of changes: 501
+Adversarial example not found.
+Changing k to: 300
+Launching attack with Gurobi.
+Number of changes: 501
+L2-norm is:  163.54843317871342 L-inf norm is:  10.0 Total change is:  2820.0
+Attack was successful. Label changed from  8  to  7
+This was: 300 pixel attack.
+Time taken in this iteration: 40.038451194763184 seconds.
+###########################################################################################
+###########################################################################################
+Launching attack on input: 49
+True label is: 0
+
+Attack label is: 6
+0.00018303681 0.00011638299
+Prediction:  4
+Number of changes :  2500
+Prediction:  1
+Number of changes :  2458
+Prediction:  9
+Prediction:  9
+Launching attack with Gurobi.
+Number of changes: 501
+L2-norm is:  94.79430325683705 L-inf norm is:  10.0 Total change is:  946.6415730018078
+Attack was successful. Label changed from  0  to  9
+This was: 100 pixel attack.
+Time taken in this iteration: 28.22882580757141 seconds.
+###########################################################################################
+Attack was successful on: 50  images.
+[27, 1, 3, 0, 0, 8, 0, 3, 6, 2]
+[0, 0, 18, 0, 0, 0, 21, 1, 1, 9]
+Average L-inf norm: 10.0
+Average L-2 norm: 158.9255899866174
+Mean k value: 336.0
+Median k value: 300.0
+TIME TAKEN IN GENERATION OF ABOVE EXAMPLES:  1903.3506243228912 seconds.
