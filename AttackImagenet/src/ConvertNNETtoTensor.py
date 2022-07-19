@@ -20,6 +20,7 @@ from keras.layers import Dense
 """
 This file converts a neural network saved in nnet format to a tensorflow model.
 """
+
 class ConvertNNETtoTensorFlow:
     def read_nnet(self, file_name):
             """Read the nnet file, load all the values and assign the class members

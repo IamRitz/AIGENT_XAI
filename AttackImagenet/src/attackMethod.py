@@ -23,24 +23,28 @@ from ConvertNNETtoTensor import ConvertNNETtoTensorFlow
 from modificationDivided import find as find2
 # from labelNeurons import labelNeurons
 from gurobipy import GRB
-import random
+from scipy import stats
+from PielouMesaure import PielouMeaure
+
 """
 What this file does?
 Find modification in intermediate layers and converts that modification into an adversarial input.
+This file implements our algorithm as described in the paper.
 """
+
 counter=0
 
 def loadModel():
-    model = tf.keras.models.load_model('Models/imagenette_3.h5')
+    model = tf.keras.models.load_model('../Models/imagenette_3.h5')
     return model
 
 def getData():
     inputs = []
     outputs = []
-    f1 = open('Data/input.csv', 'r')
+    f1 = open('../data/input.csv', 'r')
     f1_reader = reader(f1)
     stopAt = 500
-    f2 = open('Data/output.csv', 'r')
+    f2 = open('../data/output.csv', 'r')
     f2_reader = reader(f2)
     i=0
     for row in f1_reader:
@@ -95,7 +99,6 @@ def predict(epsilon, layer_to_change, sat_in):
     model.compile(optimizer=tf.optimizers.Adam(),loss='MeanSquaredError',metrics=['accuracy'])
 
     prediction = model.predict([sat_in])
-    # print("Prediction: ",np.argmax(prediction[0]))
     return model
 
 def updateModel(sat_in):
@@ -113,7 +116,6 @@ def updateModel(sat_in):
     o1 = extractNetwork()
     phases = get_neuron_values_actual(tempModel, sat_in, num_layers)
     neuron_values_1 = phases[layer_to_change]
-    # print(sat_in[-10:])
     while layer_to_change>0:
         extractedNetwork = o1.extractModel(originalModel, layer_to_change+1)
         layer_to_change = int(layer_to_change/2)
@@ -122,11 +124,9 @@ def updateModel(sat_in):
         tempModel = predict(epsilon, layer_to_change, sat_in)
         phases = get_neuron_values_actual(tempModel, sat_in, num_layers)
         neuron_values_1 = phases[layer_to_change]
-        # print(sat_in[-10:])
     return extractedNetwork, neuron_values_1,  epsilon 
 
 def FindCutoff(inputs, k):
-    # k=500
     w = []
     w = inputs.copy()
     w.sort()
@@ -135,7 +135,6 @@ def FindCutoff(inputs, k):
     index = 500
     index = index if index>k else k
     heuristic = w[len(w)-index]
-    
     return heuristic, index
 
 def GurobiAttack(inputs, model, outputs, k):
@@ -147,12 +146,11 @@ def GurobiAttack(inputs, model, outputs, k):
     m = gp.Model("Model", env=env)
     x = []
     input_vars = []
-    # max_change = m.addVar(lb = 0, ub = tolerance, vtype=GRB.CONTINUOUS, name="max_change")
     cutOff, limit = FindCutoff(inputs, k)
     changes = []
     v = 0
     for i in range(len(inputs)):
-        if inputs[i]>cutOff and inputs[i]!=0 :
+        if inputs[i]>=cutOff and v<=limit:
             v += 1
             changes.append(m.addVar(lb=-tolerance, ub=tolerance, vtype=GRB.CONTINUOUS))
             x.append(m.addVar(vtype=GRB.BINARY))
@@ -194,20 +192,12 @@ def GurobiAttack(inputs, model, outputs, k):
         modifications.append(float(changes[i].X))
     return modifications
 
-def findMetric(sat_in, ad_inp):
-    lInf, sumDist = 0, 0 
-    for i in range(len(sat_in)):
-        sumDist = sumDist + abs(sat_in[i]-ad_inp[i])
-        if abs(sat_in[i]-ad_inp[i])>lInf:
-            lInf = abs(sat_in[i]-ad_inp[i])
-    return lInf, sumDist
-
 def generateAdversarial(sat_in, sat_out):
     try:
         extractedModel, neuron_values_1, epsilon = updateModel(sat_in)
     except:
         print("UNSAT. Could not find a minimal modification by divide and conquer.")
-        return 0, [], [], -1, -1, 0, 0, -1
+        return 0, [], [], -1, -1, -1
 
     tempModel = predict(epsilon, 0, sat_in)
     
@@ -219,52 +209,40 @@ def generateAdversarial(sat_in, sat_out):
     Left over task: Find delta such that input+delta can give the same effect as update model
     We want the outputs of hidden layer 1 to be equal to the values stored in neuron_values_1
     """
-    # print(sat_in[-10:])
     originalModel = loadModel()
     true_output = originalModel.predict([sat_in])
     true_label = np.argmax(true_output)
     k = 100
     change = GurobiAttack(sat_in, extractedModel, neuron_values_1, k)
-    # print(sat_in[-10:])
     if len(change)>=0:
         for j in range(5):
             ad_inp2 = []
             for i in range(len(change)):
                 ad_inp2.append(change[i]+sat_in[i])
-            # print(ad_inp2)
             if len(ad_inp2)==0:
                 k = k*3
                 print("Changing k to:", k)
                 change = GurobiAttack(sat_in, extractedModel, neuron_values_1, k)
                 continue
-            # print(sat_in[-10:])
             ad_output = originalModel.predict([ad_inp2])
-            # print(ad_output)
             predicted_label = np.argmax(ad_output)
-            # print(predicted_label)
             vals = get_neuron_values_actual(originalModel, ad_inp2, num_layers)
             ch = 0
             max_shift = 0
-            # print(sat_in[-10:])
+            
             for i in range(len(vals[0])):
                 ch = ch + abs(vals[0][i]-neuron_values_1[i])
                 if abs(vals[0][i]-neuron_values_1[i])>max_shift:
                     max_shift = abs(vals[0][i]-neuron_values_1[i])
-            linf, sumDist = findMetric(sat_in, ad_inp2)
-            
             if predicted_label!=true_label:
-                # print(sat_in[-10:])
-                L2_norm = np.linalg.norm(np.array(sat_in)-np.array(ad_inp2))
-                print("L2-norm is: ", L2_norm, "L-inf norm is: ", linf, "Total change is: ", sumDist)
-                print("Attack was successful. Label changed from ",sat_out," to ",predicted_label)
+                print("Attack was successful. Label changed from ",true_label," to ",predicted_label)
                 print("This was:", k, "pixel attack.")
-                # print("Original Input:")
-                return 1, sat_in, ad_inp2, true_label, predicted_label, L2_norm, linf, k
+                return 1, sat_in, ad_inp2, true_label, predicted_label, k
             else:
                 k = k*3
                 print("Changing k to:", k)
                 change = GurobiAttack(sat_in, extractedModel, neuron_values_1, k)
-    return 0, [], [], -1, -1, 0, 0, -1
+    return 0, [], [], -1, -1, -1
 
 def attack():
     inputs, outputs, count = getData()
@@ -272,8 +250,6 @@ def attack():
     i=0
     counter_inputs = [0]*10
     counter_outputs = [0]*10
-    l2 = 0
-    linfTotal = 0
     adversarial_count = 0
     model = loadModel()
     ks = []
@@ -288,14 +264,12 @@ def attack():
         print("True label is:", t)
         print()
         t1 = time()
-        success, original, adversarial, true_label, predicted_label, L2_norm, linf, k = generateAdversarial(sat_in, true_output)
+        success, original, adversarial, true_label, predicted_label, k = generateAdversarial(sat_in, true_output)
         # break
         if success==1 and counter_inputs[true_output]<30:
             counter_inputs[true_output] = counter_inputs[true_output] + 1
             counter_outputs[predicted_label] = counter_outputs[predicted_label] + 1
         if success==1:
-            l2 = l2 + L2_norm
-            linfTotal = linfTotal + linf
             adversarial_count = adversarial_count + 1
             ks.append(k)
         t2 = time()
@@ -305,12 +279,8 @@ def attack():
     print("Attack was successful on:", adversarial_count," images.")
     print(counter_inputs)
     print(counter_outputs)
-    print("Average L-inf norm:", linfTotal/adversarial_count)
-    print("Average L-2 norm:", l2/adversarial_count)
     print("Mean k value:",np.mean(ks))
     print("Median k value:",np.median(ks))
-
-t1 = time()
-attack()
-t2 = time()
-print("TIME TAKEN IN GENERATION OF ABOVE EXAMPLES: ", (t2-t1), "seconds.")
+    print("Mode k value:",stats.mode(ks))
+    pm = PielouMeaure(counter_outputs, len(counter_outputs))
+    print("Pielou Measure is:", pm)

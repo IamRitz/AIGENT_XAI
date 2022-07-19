@@ -24,7 +24,7 @@ from numpy import asarray
   
 
 def loadModel():
-    model = tf.keras.models.load_model('Models/imagenette_3.h5')
+    model = tf.keras.models.load_model('../Models/imagenette_3.h5')
     return model
 
 def getImages():
@@ -33,20 +33,20 @@ def getImages():
     count = 0
     im1 = []
     im2 = []
-    for path in os.listdir("AdversarialImages"):
-        originalImages.append('OriginalImages/'+str(path))
-        adversarialImages.append('AdversarialImages/'+str(path))
+    parentDir = "../Images/"
+    folderSuffix = ""
+
+    for path in os.listdir(parentDir+"AdversarialImages"):
+        originalImages.append(parentDir+'OriginalImages'+folderSuffix+'/'+str(path))
+        adversarialImages.append(parentDir+'AdversarialImages'+folderSuffix+'/'+str(path))
         count = count+1
     
     for i in range(count):
         img = Image.open(originalImages[i])
-        #img = img.resize((28, 28))
         numpydata = asarray(img)
-        # print(np.shape(numpydata))
         im1.append(numpydata)
 
         img = Image.open(adversarialImages[i])
-        #img = img.resize((28, 28))
         numpydata = asarray(img)
         im2.append(numpydata)
 

@@ -1,5 +1,10 @@
 from cmath import log
 
+"""
+What this file does?
+This file calculates Output Impartiality for a given array of frequencies.
+"""
+
 def PielouMeaure(frequencies, num_classes):
     sum = 0
     for i in range(num_classes):
@@ -18,6 +23,3 @@ def PielouMeaure(frequencies, num_classes):
     return -1*measure/log(num_classes)
 
 beforeChangingUpdateStatement = [0, 4, 35, 0, 0, 17, 181, 1, 59, 3]
-
-print()
-print(PielouMeaure(beforeChangingUpdateStatement, len(beforeChangingUpdateStatement)))

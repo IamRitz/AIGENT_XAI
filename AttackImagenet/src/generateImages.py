@@ -1,4 +1,4 @@
-from GurobiAttack import *
+from attackMethod import *
 """
 This file displays image whose m*n pixels are given.
 """
@@ -23,6 +23,12 @@ tf.compat.v1.logging.set_verbosity(tf.compat.v1.logging.ERROR)
 Setting verbosity of tensorflow to minimum.
 """
 
+"""
+What this file does? 
+It generates adversarial images using the attack algorithm and functions described in attack.py
+The generated images are saved in an appropriate sub-folder in Images folder.
+"""
+
 def convertToMtarix(array, m, n, channels):
     for i in range(128*128*3):
         array[i] = 255*array[i]
@@ -32,8 +38,6 @@ def convertToMtarix(array, m, n, channels):
 def showing(pixelMatrix, m, n, channels):
     data = np.array(pixelMatrix)
     im = Image.fromarray(data.astype(np.uint8), mode='RGB')
-    # im = im.resize((m, n, channels))
-    # im.show()
     return im
 
 def attack():
@@ -41,14 +45,13 @@ def attack():
     print("Number of inputs in consideration: ",len(inputs))
     i=0
     m, n, channels = 128, 128, 3
+    parentDir = "../Images/"
+    folderSuffix = "_1"
     for i in range(count):
         print("Launching attack on input:", i)
         sat_in = inputs[i]
-        # true_output = 
-        # print()
         t1 = time()
-        success, original, adversarial, true_label, adversarial_label, L2_norm, linf, k = generateAdversarial(sat_in)
-        # print(success)
+        success, original, adversarial, true_label, adversarial_label, k = generateAdversarial(sat_in, outputs[i])
         if success==1:
             L2_norm = np.linalg.norm(np.array(original)-np.array(adversarial))
             print("...........................................................................................")
@@ -60,14 +63,13 @@ def attack():
             """
             Now, here we will generate images for original and adversarial image.
             """
-            # print(np.shape(original))
             mat1 = convertToMtarix(sat_in, m, n, channels)
             image_original = showing(mat1, m, n, channels)
 
             mat2 = convertToMtarix(adversarial, m, n, channels)
             image_adversarial = showing(mat2, m, n, channels)
-            print("Saving to..")
-            image_original.save("OriginalImages/Image_"+str(i)+".jpg")
-            image_adversarial.save("AdversarialImages/Image_"+str(i)+".jpg")
+            print("Saving images..")
+            image_original.save(parentDir+"OriginalImages"+folderSuffix+"/Image_"+str(i)+".jpg")
+            image_adversarial.save(parentDir+"AdversarialImages"+folderSuffix+"/Image_"+str(i)+".jpg")
 
 attack()

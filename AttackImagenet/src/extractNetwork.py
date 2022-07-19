@@ -18,8 +18,10 @@ from keras.models import Sequential
 from keras.layers import Dense
 
 """
-This file converts a neural network saved in nnet format to a tensorflow model.
+This file converts extracts a subnetwork from the original network.
+The extracted network contains layers from layer 0 to layer_count.
 """
+
 class extractNetwork:
     def extractModel(self, model, layer_count):
         # print(model.summary())
