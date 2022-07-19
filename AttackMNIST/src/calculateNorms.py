@@ -36,7 +36,7 @@ def getImages():
     paths = []
     count = 0
     folderSuffix = "_restricted"
-    for path in os.listdir("Images/AdversarialImages"+str(folderSuffix)):
+    for path in os.listdir("../Images/AdversarialImages"+str(folderSuffix)):
         paths.append(str(path))
         # print(path)
         count = count+1
@@ -44,13 +44,13 @@ def getImages():
     l2Total = 0
     linfTotal = 0
     for i in range(count):
-        original = Image.open('Images/OriginalImages'+str(folderSuffix)+'/'+paths[i])
+        original = Image.open('../Images/OriginalImages'+str(folderSuffix)+'/'+paths[i])
         original = original.resize((28, 28))
         original_array = asarray(original).reshape(28*28)
         original_array = original_array/255.0
         # print(original_array)
 
-        adversarial = Image.open('Images/AdversarialImages'+str(folderSuffix)+'/'+paths[i])
+        adversarial = Image.open('../Images/AdversarialImages'+str(folderSuffix)+'/'+paths[i])
         adversarial = adversarial.resize((28, 28))
         adversarial_array = asarray(adversarial).reshape(28*28)
         adversarial_array = adversarial_array/255.0

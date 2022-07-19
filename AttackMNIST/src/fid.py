@@ -44,9 +44,9 @@ def getImages():
     #Change below to calculate FID for different experiments.
     folderSuffix = "_restricted"
     
-    for path in os.listdir("Images/AdversarialImages"+str(folderSuffix)):
-        originalImages.append('Images/OriginalImages'+str(folderSuffix)+'/'+str(path))
-        adversarialImages.append('Images/AdversarialImages'+str(folderSuffix)+'/'+str(path))
+    for path in os.listdir("../Images/AdversarialImages"+str(folderSuffix)):
+        originalImages.append('../Images/OriginalImages'+str(folderSuffix)+'/'+str(path))
+        adversarialImages.append('../Images/AdversarialImages'+str(folderSuffix)+'/'+str(path))
         count = count+1
     
     for i in range(count):

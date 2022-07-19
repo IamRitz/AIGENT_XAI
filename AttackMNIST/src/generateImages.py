@@ -1,4 +1,4 @@
-from AttackMNIST.Gurobi.attack import *
+from attack import *
 """
 This file displays image whose m*n pixels are given.
 """
@@ -75,7 +75,7 @@ def generate():
             mat2 = convertToMtarix(adversarial, m, n)
             image_adversarial = show(mat2, m, n)
 
-            image_original.save("Images/OriginalImages"+folderSuffix+"/Image_"+str(i)+".jpg")
-            image_adversarial.save("Images/AdversarialImages"+folderSuffix+"/Image_"+str(i)+".jpg")
+            image_original.save("../Images/OriginalImages"+folderSuffix+"/Image_"+str(i)+".jpg")
+            image_adversarial.save("../Images/AdversarialImages"+folderSuffix+"/Image_"+str(i)+".jpg")
 
 generate()
