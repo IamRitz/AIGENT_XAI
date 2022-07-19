@@ -4,6 +4,10 @@ from keras.utils import np_utils
 from keras.models import Sequential
 from keras.layers import Dense
 
+"""
+This file contains code to trains a deep neural network on the CIFAR-10 dataset.
+"""
+
 def getData():
     (X_train, y_train), (X_test, y_test) = cifar10.load_data()
 

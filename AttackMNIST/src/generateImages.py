@@ -1,4 +1,4 @@
-from attack import *
+from attackMethod import *
 """
 This file displays image whose m*n pixels are given.
 """
@@ -50,19 +50,16 @@ def generate():
     print("Number of inputs in consideration: ",len(inputs))
     i=15
     m, n = 28, 28
-    folderSuffix = "2"
+    #Change below to generate images for different experiments.
+    folderSuffix = "_max"
     for i in range(count):
         print("Launching attack on input:", i)
         sat_in = inputs[i]
-        # print()
         t1 = time()
         success, original, adversarial, true_label, adversarial_label, k = generateAdversarial(sat_in)
-        # print(success)
         if success==1:
-            L2_norm = np.linalg.norm(np.array(original)-np.array(adversarial))
             print("...........................................................................................")
             print("Attack successful.")
-            print("L2-norm is: ",L2_norm)
             t2 = time()
             print("Time taken in this iteration:", (t2-t1), "seconds.")
             print("...........................................................................................")

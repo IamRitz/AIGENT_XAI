@@ -21,7 +21,15 @@ Setting verbosity of tensorflow to minimum.
 """
 from PIL import Image
 from numpy import asarray
-  
+"""
+This file calculated FID for the two sets of images given to it. 
+One set contains original images and another set contains adversarial images.
+Two kinds of experiments were performed. 
+The first experiment generates adversarial images while preserving their quality as much as possible. 
+The second experiment aimed at generating as many adversarial images as possible by compromising on the quality. 
+FID for first experiment can be calculated by changing folderSuffix to "_restricted".
+FID for second experiment can be calculated by changing folderSuffix to "_max".
+""" 
 
 def loadModel():
     model = tf.keras.models.load_model(os.path.abspath(os.path.join(os.getcwd(), os.pardir)) +'/Models/cifar.h5')
@@ -33,22 +41,20 @@ def getImages():
     count = 0
     im1 = []
     im2 = []
-    for path in os.listdir("/home/tooba/Documents/DNNVerification/AttackCIFAR/Gurobi/AdversarialImages"):
-        originalImages.append('OriginalImages/'+str(path))
-        adversarialImages.append('AdversarialImages/'+str(path))
+    folderSuffix = ""
+    for path in os.listdir("../Images/AdversarialImages"+folderSuffix):
+        originalImages.append('../Images/OriginalImages'+folderSuffix+'/'+str(path))
+        adversarialImages.append('../Images/AdversarialImages'+folderSuffix+'/'+str(path))
         count = count+1
     
     for i in range(count):
         img = Image.open(originalImages[i])
-        #img = img.resize((28, 28))
         numpydata = asarray(img)
         im1.append(numpydata)
 
         img = Image.open(adversarialImages[i])
-        #img = img.resize((28, 28))
         numpydata = asarray(img)
         im2.append(numpydata)
-    print(im1)
     im1 = np.array(im1)
     im2 = np.array(im2)
 
