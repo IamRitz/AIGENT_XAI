@@ -2,6 +2,7 @@
 <ol>
   <li>tensorflow==2.8.0</li>
   <li>gurobipy</li>
+  Our tool requires a licensed version of Gurobi. Please follow the instructions on: https://www.gurobi.com/free-trial/ to install a licensed version using an academic license or a professional license.
   <li>keras==2.9.0</li>
   <li>scipy</li>
   <li>pillow</li>
