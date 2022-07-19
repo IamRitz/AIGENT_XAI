@@ -22,20 +22,15 @@ Setting verbosity of tensorflow to minimum.
 from PIL import Image
 from numpy import asarray
 """
-This file calculated FID for the two sets of images given to it. 
-One set contains original images and another set contains adversarial images.
-Two kinds of experiments were performed. 
-The first experiment generates adversarial images while preserving their quality as much as possible. 
-The second experiment aimed at generating as many adversarial images as possible by compromising on the quality. 
-FID for first experiment can be calculated by changing folderSuffix to "_restricted".
-FID for second experiment can be calculated by changing folderSuffix to "_max".
+This file calculated FID for the images in folder Images/OriginalImages_{suffix}
+To calculate FID for different sets of folders, change the suffix accordingly.
 """ 
 
 def loadModel():
     model = tf.keras.models.load_model(os.path.abspath(os.path.join(os.getcwd(), os.pardir)) +'/Models/cifar.h5')
     return model
 
-def getImages():
+def getImages(folderSuffix):
     originalImages = []
     adversarialImages = []
     count = 0

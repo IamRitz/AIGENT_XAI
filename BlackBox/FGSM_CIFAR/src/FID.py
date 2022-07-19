@@ -22,6 +22,10 @@ Setting verbosity of tensorflow to minimum.
 from PIL import Image
 from numpy import asarray
   
+"""
+This file calculated FID for the images in folder Images/OriginalImages_{suffix}
+To calculate FID for different sets of folders, change the suffix accordingly.
+"""
 
 def getImages(folderSuffix):
     originalImages = []

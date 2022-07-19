@@ -9,6 +9,11 @@ import tensorflow as tf
 from PIL import Image
 import numpy as np
 
+"""
+This file generates the adversarial images for CIFAR-10 dataset 
+using the FGSM(Fast Gradient Sign Method) attack.
+"""
+
 def getModel():
     print("[INFO] loading CIFAR dataset...")
     (trainX, trainY), (testX, testY) = cifar10.load_data()

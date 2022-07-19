@@ -10,6 +10,10 @@ from PIL import Image
 import numpy as np
 import random
 
+"""
+This file generates the adversarial images for CIFAR-10 dataset 
+using the Blackbox attack described in: https://arxiv.org/pdf/2001.11137.pdf
+"""
 
 def getModel():
     print("[INFO] loading CIFAR dataset...")
@@ -57,7 +61,7 @@ def show(pixelMatrix, w, h, channels):
     # im.show()
     return im
 
-def generateAdversarial(model, testX, testY, folderCount):
+def generateAdversarial(model, testX, testY, folderSuffix):
     countOriginal = [0]*10
     countAdversary = [0]*10
     avConf = 0
@@ -66,7 +70,7 @@ def generateAdversarial(model, testX, testY, folderCount):
     avCount = 0
     success = 0
     parentDir = "../Images/"
-    folderSuffix = ""
+    # folderSuffix = ""
     
     for i in range(500):
         image = testX[i]

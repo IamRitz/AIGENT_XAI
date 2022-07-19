@@ -1,5 +1,9 @@
 from cmath import log
 
+"""
+This file calculates Output Impartiality for a given array of frequencies.
+"""
+
 def PielouMeaure(frequencies, num_classes):
     sum = 0
     for i in range(num_classes):
@@ -9,7 +13,6 @@ def PielouMeaure(frequencies, num_classes):
     for i in range(num_classes):
         percents.append(float(frequencies[i])/sum)
 
-    # print(percents)
     measure = 0
     for i in range(num_classes):
         if percents[i]==0:
