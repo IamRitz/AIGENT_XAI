@@ -6,7 +6,7 @@
   <li>keras==2.9.0</li>
   <li>scipy</li>
   <li>pillow</li>
-  <li>six</li>
+  <li>opencv</li>
 </ol>
 
 These packages can also be installed using the requirements.txt file.
