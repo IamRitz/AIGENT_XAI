@@ -26,6 +26,9 @@ This repository contains implementations for the paper submitted to AAAI'23.
   <li><h5>python3 calculateNorms.py:</h5> Calculates average L2 and L-inf norms for the adversarial images generated.</li>
   <li><h5>python3 generateImages.py:</h5> Generates adversarial Images and saves them to specified folder.</li>
 </ol>
+In case of protobuf errors, update the existing version:
+    pip3 install --upgrade protobuf==3.20.0
+
 <h3>Supervisors: Subodh Vishnu Sharma and Kumar Madhukar, IIT Delhi.</h3>
 
 Link for complete datasets used and adversarial dataset generated: [Datasets.](https://drive.google.com/drive/folders/1ZUmj_j5fvPiEDmmdNx2QT6gpzIgGubt8?usp=sharing)
