@@ -1,3 +1,5 @@
+This repository contains implementations for the paper submitted to AAAI'23. 
+
 <h3>Install the following packages:</h3>
 <ol>
   <li>tensorflow==2.8.0</li>
@@ -8,8 +10,8 @@
   <li>pillow</li>
   <li>opencv</li>
 </ol>
+You can also clone the repository and run ./requirements.sh to install all the required packages.
 
-These packages can also be installed using the requirements.txt file.
 Make sure the python version is python 3.7 and above. If the python version is below 3.7, use the following to install and change the version:
 
     sudo apt install python3.8
@@ -17,7 +19,6 @@ Make sure the python version is python 3.7 and above. If the python version is b
     sudo update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.6 1
     sudo update-alternatives  --set python3 /usr/bin/python3.8
 
-This repository contains implementations for the paper submitted to AAAI'23. 
 <h4>AttackMNIST and AttackCIFAR have similar folder structures. To launch attack on the datasets and calculate various norms, run the following commands:</h4>
 <ol>
   <li><h5>python3 launchAttack.py:</h5> Attacks original images and calculate Pielou measure: 
