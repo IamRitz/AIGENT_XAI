@@ -26,12 +26,13 @@ This repository contains implementations for the paper submitted to AAAI'23.
   <li><h5>python3 calculateNorms.py:</h5> Calculates average L2 and L-inf norms for the adversarial images generated.</li>
   <li><h5>python3 generateImages.py:</h5> Generates adversarial Images and saves them to specified folder.</li>
 </ol>
+
+<h4>To launch any black box attack, go to the desired attack folder and run the generateAdversary.py within the src folder of the respective directory. Example:</h4>
+<ol>
+  <li><h5>cd BlackBox/BlackBox_CIFAR/src</h5>
+  <li><h5>python3 generateAdversary.py:</h5> Attacks original images and calculates Pielou measure, L2 norm, L-inf norm and FID. It also saves the generated adversarial images.</li>
+</ol>
 In case of protobuf errors, update the existing version:
     
     pip3 install --upgrade protobuf==3.20.0
 
-<h3>Supervisors: Subodh Vishnu Sharma and Kumar Madhukar, IIT Delhi.</h3>
-
-Link for complete datasets used and adversarial dataset generated: [Datasets.](https://drive.google.com/drive/folders/1ZUmj_j5fvPiEDmmdNx2QT6gpzIgGubt8?usp=sharing)
-
-<!-- Comparitive analysis of different attacks can be found at: [Comparitive analysis.](https://docs.google.com/spreadsheets/d/1sjgXiB_wOy-A0DOaev2TLBRVxU05cY_G9p3KHFTPoRo/edit#gid=0) -->
