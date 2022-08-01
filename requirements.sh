@@ -7,3 +7,4 @@ pip3 install keras==2.9.0
 pip3 install scipy
 pip3 install pillow
 pip3 install opencv-python
+pip3 install matplotlib

@@ -9,6 +9,7 @@ This repository contains implementations for the paper submitted to AAAI'23.
   <li>scipy</li>
   <li>pillow</li>
   <li>opencv</li>
+  <li>matplotlib</li>
 </ol>
 You can also clone the repository and run ./requirements.sh to install all the required packages.
 
