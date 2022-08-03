@@ -22,7 +22,7 @@ from findModificationsLayerK import find as find
 from modificationDivided import find as find2
 from gurobipy import GRB
 from scipy import stats
-from memory_profiler import profile
+# from memory_profiler import profile
 """
 What this file does?
 Find modification in intermediate layers and converts that modification into an adversarial input.
@@ -224,7 +224,7 @@ def generateAdversarial(sat_in):
                 change = GurobiAttack(sat_in, extractedModel, neuron_values_1, k)
     return 0, [], [], -1, -1, -1
 
-@profile
+# @profile
 def generate():
     inputs, outputs, count = getData()
     print("Number of inputs in consideration: ",len(inputs))
