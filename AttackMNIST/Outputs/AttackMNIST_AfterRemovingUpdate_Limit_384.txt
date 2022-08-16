@@ -5265,8 +5265,6 @@ Time taken in this iteration: 2.00490403175354 seconds.
 Attack was successful on: 434  images.
 [30, 30, 30, 30, 30, 30, 5, 30, 30, 30]
 [5, 10, 9, 6, 2, 32, 53, 7, 121, 30]
-Average L-inf norm: 1.0000000000000038
-Average L-2 norm: 6.40086687745363
 Mean k value: 59.66129032258065
 Median k value: 24.0
 TIME TAKEN IN GENERATION OF ABOVE EXAMPLES:  888.2114686965942 seconds.

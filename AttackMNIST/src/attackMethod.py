@@ -252,11 +252,11 @@ def generate():
         print("###########################################################################################")    
     
     print("Attack was successful on:", adversarial_count," images.")
-    print(counter_inputs)
-    print(counter_outputs)
-    print("Mean k value:",np.mean(ks))
-    print("Median k value:",np.median(ks))
-    print("Mode k value:",stats.mode(ks))
+    # print(counter_inputs)
+    # print(counter_outputs)
+    print("Number of pixels modified(Mean):",np.mean(ks))
+    print("Number of pixels modified(Median):",np.median(ks))
+    print("Number of pixels modified(Mode):",stats.mode(ks))
     pm = PielouMeaure(counter_outputs, len(counter_outputs))
     print("Pielou Measure is:", pm)
 
