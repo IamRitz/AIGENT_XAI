@@ -41,7 +41,7 @@ def getData():
     outputs = []
     f1 = open('../data/inputs.csv', 'r')
     f1_reader = reader(f1)
-    stopAt = 10
+    stopAt = 500
     f2 = open('../data/outputs.csv', 'r')
     f2_reader = reader(f2)
     i=0

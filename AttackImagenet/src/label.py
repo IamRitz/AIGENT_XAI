@@ -33,12 +33,12 @@ def labelling(model,true_output, threshold):
             count_dec = 0
             count_split = 0
             for n in range(len(curent_layer_edgeWeights[0])):
-                if label_previous_layer[n]==1 and abs(node[n])<=threshold:
+                if label_previous_layer[n]==1 and abs(node[n])>=threshold:
                     count_inc = count_inc+1
-                if label_previous_layer[n]==0 and abs(node[n])<=threshold:
+                if label_previous_layer[n]==-1 and abs(node[n])>=threshold:
                     count_dec = count_dec+1
-                elif label_previous_layer[n]==2 and abs(node[n])<=threshold:
-                        ount_split = count_split+1
+                elif label_previous_layer[n]==0 and abs(node[n])>=threshold:
+                    count_split = count_split+1
             if count_inc!=0 and count_dec==0 and count_split==0:
                 i = i+1
                 current_layer_labels.append(1)
