@@ -44,7 +44,7 @@ def FindCutoff(w):
     negative_heuristic = negative_vals[negative_index]
     return positive_heuristic, negative_heuristic
 
-def get_neuron_values(loaded_model, input, num_layers, values, gurobi_model, epsilon_max, mode, layer_to_change):
+def get_neuron_values(loaded_model, input, num_layers, values, gurobi_model, epsilon_max, mode, layer_to_change, labels):
         neurons = []
         val_max = 1000
         l = 0
@@ -64,10 +64,21 @@ def get_neuron_values(loaded_model, input, num_layers, values, gurobi_model, eps
                     ep = []
                     for col in range(shape1):
                         if w[row][col]>=cutOffP or w[row][col]<=cutOffN:
-                            v= v+1
-                            ep.append(gurobi_model.addVar(lb=-val_max, ub = val_max, vtype=grb.GRB.CONTINUOUS))
-                            gurobi_model.addConstr(ep[col]-epsilon_max<=0)
-                            gurobi_model.addConstr(ep[col]+epsilon_max>=0)
+                            if labels[int(i/2)][col]==1:
+                                v= v+1
+                                ep.append(gurobi_model.addVar(lb=-val_max, ub = val_max, vtype=grb.GRB.CONTINUOUS))
+                                gurobi_model.addConstr(ep[col]-epsilon_max<=0)
+                                gurobi_model.addConstr(ep[col]>=0)
+                            elif labels[int(i/2)][col]==-1:
+                                v= v+1
+                                ep.append(gurobi_model.addVar(lb=-val_max, ub = val_max, vtype=grb.GRB.CONTINUOUS))
+                                gurobi_model.addConstr(ep[col]<=0)
+                                gurobi_model.addConstr(ep[col]+epsilon_max>=0)
+                            else:
+                                v= v+1
+                                ep.append(gurobi_model.addVar(lb=-val_max, ub = val_max, vtype=grb.GRB.CONTINUOUS))
+                                gurobi_model.addConstr(ep[col]-epsilon_max<=0)
+                                gurobi_model.addConstr(ep[col]+epsilon_max>=0)
                             
                         else:
                             ep.append(0)
@@ -104,7 +115,7 @@ def get_neuron_values(loaded_model, input, num_layers, values, gurobi_model, eps
             l = l + 1
         return neurons[len(neurons)-1], epsilons
 
-def find(epsilon, model, inp, expected_label, num_inputs, num_outputs, mode, layer_to_change):
+def find(epsilon, model, inp, expected_label, num_inputs, num_outputs, mode, layer_to_change, labels):
     epsilon = 100
     num_layers = len(model.layers)
     env = gp.Env(empty=True)
@@ -118,7 +129,7 @@ def find(epsilon, model, inp, expected_label, num_inputs, num_outputs, mode, lay
     neurons = get_neuron_values_actual(model, inp, num_layers)
 
     m.update()
-    result, all_epsilons = get_neuron_values(model, inp, num_layers, neurons, m, epsilon_max, mode, layer_to_change)
+    result, all_epsilons = get_neuron_values(model, inp, num_layers, neurons, m, epsilon_max, mode, layer_to_change, labels)
     m.update()
     resultVar = m.addVar(lb = -100, ub = 100, vtype=GRB.CONTINUOUS, name="resultVar")
     m.addConstr(resultVar-result[expected_label]==0)

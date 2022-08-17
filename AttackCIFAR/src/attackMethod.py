@@ -22,7 +22,7 @@ from modificationDivided import find as find2
 from gurobipy import GRB
 from scipy import stats
 from PielouMesaure import PielouMeaure
-
+from label import labelling
 """
 What this file does?
 Find modification in intermediate layers and converts that modification into an adversarial input.
@@ -75,7 +75,7 @@ def get_neuron_values_actual(loaded_model, input, num_layers):
             l = l + 1
         return neurons
 
-def getEpsilons(layer_to_change, inp):
+def getEpsilons(layer_to_change, inp,labels):
     model = loadModel()
     num_inputs = len(inp)
     sample_output = model.predict(np.array([inp]))[0]
@@ -83,7 +83,7 @@ def getEpsilons(layer_to_change, inp):
     num_outputs = len(sample_output)
     expected_label = sample_output.argsort()[-2]
     print("Attack label is:", expected_label)
-    all_epsilons = find(10, model, inp, true_label, num_inputs, num_outputs, 1, layer_to_change)
+    all_epsilons = find(10, model, inp, true_label, num_inputs, num_outputs, 1, layer_to_change, labels)
     
     return all_epsilons, inp
 
@@ -105,7 +105,10 @@ def updateModel(sat_in):
     num_layers = int(len(model.get_weights())/2)
     layer_to_change = int(num_layers/2)
     originalModel = model
-    epsilon, inp = getEpsilons(layer_to_change, sat_in)
+    sample_output = model.predict(np.array([sat_in]))[0]
+    true_output = np.argmax(sample_output)
+    labels = labelling(originalModel, true_output, 0.05)
+    epsilon, inp = getEpsilons(layer_to_change, sat_in, labels)
     
     tempModel = predict(epsilon, layer_to_change, sat_in)
     """
@@ -119,7 +122,7 @@ def updateModel(sat_in):
     while layer_to_change>0:
         extractedNetwork = o1.extractModel(originalModel, layer_to_change+1)
         layer_to_change = int(layer_to_change/2)
-        epsilon = find2(100, extractedNetwork, inp, neuron_values_1, 1, layer_to_change, 0, phases)
+        epsilon = find2(100, extractedNetwork, inp, neuron_values_1, 1, layer_to_change, 0, phases, labels)
 
         tempModel = predict(epsilon, layer_to_change, sat_in)
         phases = get_neuron_values_actual(tempModel, sat_in, num_layers)
