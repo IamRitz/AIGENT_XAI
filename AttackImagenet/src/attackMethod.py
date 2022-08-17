@@ -100,6 +100,7 @@ def predict(epsilon, layer_to_change, sat_in):
     model.compile(optimizer=tf.optimizers.Adam(),loss='MeanSquaredError',metrics=['accuracy'])
 
     prediction = model.predict([sat_in])
+    print("Prediction: ",np.argmax(prediction[0]))
     return model
 
 def updateModel(sat_in):
@@ -109,7 +110,7 @@ def updateModel(sat_in):
     originalModel = model
     sample_output = model.predict(np.array([sat_in]))[0]
     true_output = np.argmax(sample_output)
-    labels = labelling(originalModel, true_output, 0.05)
+    labels = labelling(originalModel, true_output, 0.005)
     epsilon, inp = getEpsilons(layer_to_change, sat_in, labels)
     
     tempModel = predict(epsilon, layer_to_change, sat_in)
@@ -259,7 +260,7 @@ def attack():
     model = loadModel()
     ks = []
     initial = 0
-    final = initial+500
+    final = initial+400
     for i in range(initial, final, 1):
         print("###########################################################################################")
         print("Launching attack on input:", i)

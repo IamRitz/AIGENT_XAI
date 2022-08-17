@@ -70,7 +70,7 @@ def get_neuron_values(loaded_model, input, num_layers, values, gurobi_model, eps
                 for row in range(shape0):
                     ep = []
                     for col in range(shape1):
-                        if w[row][col]>=cutOffP or (w[row][col]>=-cutOffN and w[row][col]<0):
+                        if w[row][col]>=cutOffP or (w[row][col]>=-cutOffN and w[row][col]<0) and v<1024:
                             v= v+1
                             ep.append(gurobi_model.addVar(lb=-val_max, ub = val_max, vtype=grb.GRB.CONTINUOUS))
                             gurobi_model.addConstr(ep[col]-epsilon_max<=0)
