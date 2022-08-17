@@ -1,5 +1,6 @@
 from csv import reader
 from time import time
+from label import labelling
 from PielouMesaure import PielouMeaure
 from extractNetwork import extractNetwork
 import numpy as np
@@ -40,7 +41,7 @@ def getData():
     outputs = []
     f1 = open('../data/inputs.csv', 'r')
     f1_reader = reader(f1)
-    stopAt = 500
+    stopAt = 10
     f2 = open('../data/outputs.csv', 'r')
     f2_reader = reader(f2)
     i=0
@@ -75,14 +76,14 @@ def get_neuron_values_actual(loaded_model, input, num_layers):
             l = l + 1
         return neurons
 
-def getEpsilons(layer_to_change, inp):
+def getEpsilons(layer_to_change, inp, labels):
     model = loadModel()
     num_inputs = len(inp)
     sample_output = model.predict(np.array([inp]))[0]
     true_label = np.argmax(sample_output)
     num_outputs = len(sample_output)
     expected_label = sample_output.argsort()[-2]
-    all_epsilons = find(10, model, inp, expected_label, num_inputs, num_outputs, 1, layer_to_change)
+    all_epsilons = find(10, model, inp, expected_label, num_inputs, num_outputs, 1, layer_to_change, labels)
     
     return all_epsilons, inp
 
@@ -104,7 +105,10 @@ def updateModel(sat_in):
     num_layers = int(len(model.get_weights())/2)
     layer_to_change = int(num_layers/2)
     originalModel = model
-    epsilon, inp = getEpsilons(layer_to_change, sat_in)
+    sample_output = model.predict(np.array([sat_in]))[0]
+    true_output = np.argmax(sample_output)
+    labels = labelling(originalModel, true_output, 0.05)
+    epsilon, inp = getEpsilons(layer_to_change, sat_in, labels)
     tempModel = predict(epsilon, layer_to_change, sat_in)
     """
     Now we have modifications in the middle layer of the netwrok.
@@ -116,7 +120,7 @@ def updateModel(sat_in):
     while layer_to_change>0:
         extractedNetwork = o1.extractModel(originalModel, layer_to_change+1)
         layer_to_change = int(layer_to_change/2)
-        epsilon = find2(10, extractedNetwork, inp, neuron_values_1, 1, layer_to_change, 0, phases)
+        epsilon = find2(10, extractedNetwork, inp, neuron_values_1, 1, layer_to_change, 0, phases, labels)
 
         tempModel = predict(epsilon, layer_to_change, sat_in)
         phases = get_neuron_values_actual(tempModel, sat_in, num_layers)
@@ -259,4 +263,5 @@ def generate():
     print("Number of pixels modified(Mode):",stats.mode(ks))
     pm = PielouMeaure(counter_outputs, len(counter_outputs))
     print("Pielou Measure is:", pm)
+    return count
 

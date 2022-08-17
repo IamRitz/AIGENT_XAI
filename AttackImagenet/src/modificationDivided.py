@@ -50,7 +50,7 @@ def FindCutoff(w, num_layers):
 
     return positive_heuristic, negative_heuristic
     
-def get_neuron_values(loaded_model, input, num_layers, values, gurobi_model, epsilon_max, mode, layer_to_change):
+def get_neuron_values(loaded_model, input, num_layers, values, gurobi_model, epsilon_max, mode, layer_to_change, labels):
         neurons = []
         val_max = 100
         l = 0
@@ -70,9 +70,9 @@ def get_neuron_values(loaded_model, input, num_layers, values, gurobi_model, eps
                 for row in range(shape0):
                     ep = []
                     for col in range(shape1):
-                        if w[row][col]>=cutOffP or (abs(w[row][col])>=cutOffN and w[row][col]<0):
+                        if w[row][col]>=cutOffP or (w[row][col]>=-cutOffN and w[row][col]<0):
                             v= v+1
-                            ep.append(gurobi_model.addVar(lb = -val_max, ub = val_max, vtype=grb.GRB.CONTINUOUS))
+                            ep.append(gurobi_model.addVar(lb=-val_max, ub = val_max, vtype=grb.GRB.CONTINUOUS))
                             gurobi_model.addConstr(ep[col]-epsilon_max<=0)
                             gurobi_model.addConstr(ep[col]+epsilon_max>=0)
                         else:
@@ -109,7 +109,7 @@ def get_neuron_values(loaded_model, input, num_layers, values, gurobi_model, eps
             l = l + 1
         return neurons[len(neurons)-1], epsilons
 
-def find(epsilon, model, inp, expected_outputs, mode, layer_to_change, phaseGiven, phases):
+def find(epsilon, model, inp, expected_outputs, mode, layer_to_change, phaseGiven, phases, labels):
     num_layers = len(model.layers)
     env = grb.Env(empty=True)
     env.setParam('OutputFlag', 0)
@@ -124,7 +124,7 @@ def find(epsilon, model, inp, expected_outputs, mode, layer_to_change, phaseGive
         neurons = phases
 
     m.update()
-    result, all_epsilons = get_neuron_values(model, inp, num_layers, neurons, m, epsilon_max, mode, layer_to_change)
+    result, all_epsilons = get_neuron_values(model, inp, num_layers, neurons, m, epsilon_max, mode, layer_to_change, labels)
     m.update()
     z, p = 0, 0
     tr = 5

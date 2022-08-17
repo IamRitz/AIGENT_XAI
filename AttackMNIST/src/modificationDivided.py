@@ -28,7 +28,7 @@ def get_neuron_values_actual(loaded_model, input, num_layers):
             l = l + 1
         return neurons
 
-def get_neuron_values(loaded_model, input, num_layers, values, gurobi_model, epsilon_max, mode, layer_to_change):
+def get_neuron_values(loaded_model, input, num_layers, values, gurobi_model, epsilon_max, mode, layer_to_change, labels):
         neurons = []
         val_max = 10
         l = 0
@@ -92,7 +92,7 @@ def get_neuron_values(loaded_model, input, num_layers, values, gurobi_model, eps
             l = l + 1
         return neurons[len(neurons)-1], epsilons
 
-def find(epsilon, model, inp, expected_outputs, mode, layer_to_change, phaseGiven, phases):
+def find(epsilon, model, inp, expected_outputs, mode, layer_to_change, phaseGiven, phases, labels):
     num_layers = len(model.layers)
     env = grb.Env(empty=True)
     env.setParam('OutputFlag', 0)
@@ -109,7 +109,7 @@ def find(epsilon, model, inp, expected_outputs, mode, layer_to_change, phaseGive
         neurons = phases
 
     m.update()
-    result, all_epsilons = get_neuron_values(model, inp, num_layers, neurons, m, epsilon_max, mode, layer_to_change)
+    result, all_epsilons = get_neuron_values(model, inp, num_layers, neurons, m, epsilon_max, mode, layer_to_change, labels)
     m.update()
     z, p = 0, 0
     tr = 2

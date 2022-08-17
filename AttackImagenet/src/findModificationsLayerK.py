@@ -117,8 +117,8 @@ def get_neuron_values(loaded_model, input, num_layers, values, gurobi_model, eps
             l = l + 1
         return neurons[len(neurons)-1], epsilons
 
-def find(epsilon, model, inp, expected_label, num_inputs, num_outputs, mode, layer_to_change):
-    labels = labelling(model, expected_label, 0.05)
+def find(epsilon, model, inp, expected_label, num_inputs, num_outputs, mode, layer_to_change, labels):
+    
     epsilon = 100
     num_layers = len(model.layers)
     env = gp.Env(empty=True)
