@@ -253,8 +253,8 @@ def attack():
     adversarial_count = 0
     model = loadModel()
     ks = []
-    initial = 240
-    final = initial+40
+    initial = 0
+    final = initial+1
     for i in range(initial, final, 1):
         print("###########################################################################################")
         print("Launching attack on input:", i)
