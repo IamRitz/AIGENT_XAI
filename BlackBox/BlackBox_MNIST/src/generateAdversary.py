@@ -30,16 +30,16 @@ def generate_image_adversary(image):
   for i in range(len(image_array[0])):
     selector = random.randint(0,100)
     if selector%4==0:
-      val = 30/255
+      val = 10/255
 
     elif selector%4==1:
-      val = -30/255
+      val = -10/255
 
     if selector%4==2:
-      val = 60/255
+      val = 20/255
 
     else:
-      val = -60/255
+      val = -20/255
     image_array[0][i] = image_array[0][i]+val
   image = image_array.reshape(1, 28, 28, 1)
   return image

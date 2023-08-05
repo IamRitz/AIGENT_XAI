@@ -93,3 +93,18 @@ def getValData(w, h):
     res1, res2 = zip(*temp)
     res1, res2 = list(res1), list(res2)
     return np.array(res1), np.array(res2)
+
+def getSingleImage(imageName, label, w, h):
+    X_test = []
+    Y_test = []
+    img = convertImage("../Images/"+imageName, w, h)
+    X_test.append(img)
+    Y_test.append(label)
+
+    temp = list(zip(X_test, Y_test))
+    random.shuffle(temp)
+    res1, res2 = zip(*temp)
+    res1, res2 = list(res1), list(res2)
+    return np.array(res1), np.array(res2)
+
+

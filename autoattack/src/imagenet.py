@@ -229,5 +229,5 @@ if __name__ == '__main__':
     print("####################### PRINTING STATISTICS ##########################")
     print("######################################################################\n")
     print("Average time taken to generate images:", (t2-t1)/len(orig), " seconds.")
-    l2, linf, pixels = calculateNorms(orig, adv, orig_t, adv_t)
+    # l2, linf, pixels = calculateNorms(orig, adv, orig_t, adv_t)
     print()
