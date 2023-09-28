@@ -1,4 +1,4 @@
-This repository contains implementations for the paper submitted to AAAI'23. 
+This repository contains Artifacts for PRDC 2023.
 
 <h3>Install the following packages:</h3>
 <ol>
