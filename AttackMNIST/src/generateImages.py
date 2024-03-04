@@ -51,7 +51,8 @@ def generate():
     i=15
     m, n = 28, 28
     #Change below to generate images for different experiments.
-    folderSuffix = "_max"
+    folderSuffix = "_max_XAI"
+    # folderSuffix = "_restricted_XAI"
     for i in range(count):
         print("Launching attack on input:", i)
         sat_in = inputs[i]

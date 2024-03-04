@@ -42,7 +42,7 @@ def getImages():
     im1 = []
     im2 = []
     #Change below to calculate FID for different experiments.
-    folderSuffix = "_restricted"
+    folderSuffix = "_max_XAI"
     
     for path in os.listdir("../Images/AdversarialImages"+str(folderSuffix)):
         originalImages.append('../Images/OriginalImages'+str(folderSuffix)+'/'+str(path))
