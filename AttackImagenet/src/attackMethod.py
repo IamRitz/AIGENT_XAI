@@ -35,17 +35,21 @@ This file implements our algorithm as described in the paper.
 
 counter=0
 
+MODEL_PATH = '../Models/IMAGENET10/imagenette_1.h5'
+INP_DATA_PATH = '../data/IMAGENET10/input.csv'
+OUT_DATA_PATH = '../data/IMAGENET10/output.csv'
+
 def loadModel():
-    model = tf.keras.models.load_model('../Models/imagenette_3.h5')
+    model = tf.keras.models.load_model(MODEL_PATH)
     return model
 
 def getData():
     inputs = []
     outputs = []
-    f1 = open('../data/input.csv', 'r')
+    f1 = open(INP_DATA_PATH, 'r')
     f1_reader = reader(f1)
     stopAt = 500
-    f2 = open('../data/output.csv', 'r')
+    f2 = open(OUT_DATA_PATH, 'r')
     f2_reader = reader(f2)
     i=0
     for row in f1_reader:

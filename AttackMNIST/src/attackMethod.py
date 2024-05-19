@@ -6,7 +6,7 @@ from label import labelling
 from PielouMesaure import PielouMeaure
 from extractNetwork import extractNetwork
 
-sys.path.append( "./Marabou/" )
+sys.path.append( "/home/ritesh/Desktop/MTP2/Marabou/" )
 sys.path.append( "./XAI/" )
 
 import verif_property
@@ -189,8 +189,42 @@ def remove_after_layer(G, layer_num):
     # Remove isolated nodes if any
     G.remove_nodes_from(list(nx.isolates(G)))
 
-
 def updateModel(sat_in):
+    model = loadModel()
+    num_layers = int(len(model.get_weights())/2)
+    layer_to_change = int(num_layers/2)
+    originalModel = model
+    sample_output = model.predict(np.array([sat_in]))[0]
+    true_output = np.argmax(sample_output)
+    
+    probabilities = tf.nn.softmax(sample_output)
+
+    largest = np.partition(probabilities, -1)[-1]
+    second_largest = np.partition(probabilities, -2)[-2]
+
+    labels = labelling(originalModel, true_output, 0.05)
+    epsilon, inp = getEpsilons(layer_to_change, sat_in, labels)
+    tempModel = predict(epsilon, layer_to_change, sat_in)
+    """
+    Now we have modifications in the middle layer of the netwrok.
+    Next, we will run a loop to divide the network and find modifications in lower half of the network.
+    """
+
+    o1 = extractNetwork()
+    phases = get_neuron_values_actual(tempModel, sat_in, num_layers)
+    neuron_values_1 = phases[layer_to_change]
+    # print("NV: ", neuron_values_1)
+    while layer_to_change>0:
+        extractedNetwork = o1.extractModel(originalModel, layer_to_change+1)
+        layer_to_change = int(layer_to_change/2)
+        epsilon = find2(10, extractedNetwork, inp, neuron_values_1, 1, layer_to_change, 0, phases, labels)
+
+        tempModel = predict(epsilon, layer_to_change, sat_in)
+        phases = get_neuron_values_actual(tempModel, sat_in, num_layers)
+        neuron_values_1 = phases[layer_to_change]
+    return extractedNetwork, neuron_values_1,  epsilon 
+
+def updateModel_XAI(sat_in):
     model = loadModel()
     num_layers = int(len(model.get_weights())/2)
     layer_to_change = int(num_layers/2)
@@ -417,7 +451,59 @@ def GurobiAttack(inputs, model, outputs, k):
         modifications.append(float(changes[i].X))
     return modifications
 
+
 def generateAdversarial(sat_in):
+    try:
+        extractedModel, neuron_values_1, epsilon = updateModel(sat_in)
+    except Exception as e:
+        print(f"Exception: {e}")
+        print("UNSAT. Could not find a minimal modification by divide and conquer.")
+        return 0, [], [], -1, -1, -1
+
+   
+    tempModel = predict(epsilon, 0, sat_in)
+    
+    
+    num_layers = int(len(tempModel.get_weights())/2)
+    phases = get_neuron_values_actual(tempModel, sat_in, num_layers)
+    neuron_values_1 = phases[0]
+    """
+    Now, we have all the epsilons which are to be added to layer 0. 
+    Left over task: Find delta such that input+delta can give the same effect as update model
+    We want the outputs of hidden layer 1 to be equal to the values stored in neuron_values_1
+    """
+    originalModel = loadModel()
+    true_output = originalModel.predict([sat_in])
+    true_label = np.argmax(true_output)
+    k = 3
+    change = GurobiAttack(sat_in, extractedModel, neuron_values_1, k)
+    
+    if len(change)>0:
+        for j in range(18):
+            ad_inp2 = []
+
+            for i in range(len(change)):
+                ad_inp2.append(change[i]+sat_in[i])
+
+            ad_output = originalModel.predict([ad_inp2])
+            predicted_label = np.argmax(ad_output)
+            vals = get_neuron_values_actual(originalModel, ad_inp2, num_layers)
+            ch = 0
+            max_shift = 0
+            for i in range(len(vals[0])):
+                ch = ch + abs(vals[0][i]-neuron_values_1[i])
+                if abs(vals[0][i]-neuron_values_1[i])>max_shift:
+                    max_shift = abs(vals[0][i]-neuron_values_1[i])
+            if predicted_label!=true_label:
+                print("Attack was successful. Label changed from ",true_label," to ",predicted_label)
+                print("This was:", k,"pixel attack.")
+                return 1, sat_in, ad_inp2, true_label, predicted_label,  k
+            else:
+                k = k*2
+                change = GurobiAttack(sat_in, extractedModel, neuron_values_1, k)
+    return 0, [], [], -1, -1, -1
+
+def generateAdversarial_XAI(sat_in):
     try:
         extractedModel, neuron_values_1, epsilon = updateModel(sat_in)
     except Exception as e:
@@ -443,7 +529,7 @@ def generateAdversarial(sat_in):
         num_layers = int(len(tempModel.get_weights())/2)
         # # print("num_layers: ", num_layers)
         # phases = get_neuron_values_actual(tempModel, sat_in, num_layers)
-        print("NV: ", neuron_values_1)
+        # print("NV: ", neuron_values_1)
         # neuron_values_1 = phases[0]
         # print("NV: ", neuron_values_1)
 
