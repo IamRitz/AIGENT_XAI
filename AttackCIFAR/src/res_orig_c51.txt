@@ -1,0 +1,9 @@
+Failed Adversarial Indices:  [376, 388, 409, 762, 1151, 1167, 1297, 1756]
+Attack was successful on: 1992  images.
+[30, 30, 30, 30, 30, 0, 0, 0, 0, 0]
+[12, 32, 33, 48, 25, 0, 0, 0, 0, 0]
+Mean k value: 45.403614457831324
+Median k value: 12.0
+Mode k value: ModeResult(mode=array([12]), count=array([1177]))
+Pielou Measure is: (0.6635978331516285-0j)
+TIME TAKEN IN GENERATION OF ABOVE EXAMPLES:  18991.330754995346 seconds.

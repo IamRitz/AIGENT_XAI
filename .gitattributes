@@ -1,3 +1,4 @@
 AttackCIFAR/data/CIFAR5/input.csv filter=lfs diff=lfs merge=lfs -text
 AttackImagenet/data/IMAGENET5/input.csv filter=lfs diff=lfs merge=lfs -text
 AttackImagenet/data/IMAGENET10/input.csv filter=lfs diff=lfs merge=lfs -text
+*.csv filter=lfs diff=lfs merge=lfs -text
