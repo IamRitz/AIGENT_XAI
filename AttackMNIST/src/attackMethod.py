@@ -49,9 +49,9 @@ This file implements our algorithm as described in the paper.
 
 counter=0
 
-MODEL_PATH = '../Models/FMNIST/fashion_mnist1.h5'
-INP_DATA = '../data/Failed/failedAttack_fmnist1_inputs.csv'
-OUT_DATA = '../data/Failed/failedAttack_fmnist1_outputs.csv'
+MODEL_PATH = '../Models/FMNIST/fashion_mnist2.h5'
+INP_DATA = '../data/Failed/failedAttack_fmnist2_inputs.csv'
+OUT_DATA = '../data/Failed/failedAttack_fmnist2_outputs.csv'
 
 # MODEL_PATH = '../Models/MNIST/mnist_1.h5'
 # INP_DATA = '../data/MNIST/inputs.csv'
@@ -342,21 +342,21 @@ def updateModel_XAI(sat_in):
     # top, medium and bottom
     # each containing 33% of the features
 
-    # curr_layer_size = layer_sizes[layer_to_change+1]
-    # top = int(curr_layer_size/4)
-    # medium = int(curr_layer_size/4)
-    # bottom = int(curr_layer_size/4)
-    # lower_bottom = curr_layer_size - top - medium
-    #
-    # sorted_features = [((layer_to_change+1, sorted_indices[i]), input_layer_values[sorted_indices[i]]) for i in range(curr_layer_size)]
-    #
-    # input_features.append(sorted_features[:top])
-    # input_features.append(sorted_features[top:top+medium])
-    # input_features.append(sorted_features[top+medium:top+medium+lower_bottom])
-    # input_features.append(sorted_features[top+medium+lower_bottom:])
+    curr_layer_size = layer_sizes[layer_to_change+1]
+    top = int(curr_layer_size/4)
+    medium = int(curr_layer_size/4)
+    bottom = int(curr_layer_size/4)
+    lower_bottom = curr_layer_size - top - medium
 
-    for i in range(layer_sizes[layer_to_change+1]):
-        input_features.append(((layer_to_change+1, sorted_indices[i]), input_layer_values[sorted_indices[i]]))
+    sorted_features = [((layer_to_change+1, sorted_indices[i]), input_layer_values[sorted_indices[i]]) for i in range(curr_layer_size)]
+
+    input_features.append(sorted_features[:top])
+    input_features.append(sorted_features[top:top+medium])
+    input_features.append(sorted_features[top+medium:top+medium+lower_bottom])
+    input_features.append(sorted_features[top+medium+lower_bottom:])
+
+    # for i in range(layer_sizes[layer_to_change+1]):
+    #     input_features.append(((layer_to_change+1, sorted_indices[i]), input_layer_values[sorted_indices[i]]))
 
     # input_lower_bound, input_upper_bound = getInputBounds(phases, labels, layer_sizes, layer_to_change, 20)
     input_lower_bound, input_upper_bound = [0]*layer_sizes[layer_to_change+1], [20]*layer_sizes[layer_to_change+1]
@@ -463,22 +463,22 @@ def updateModel_XAI(sat_in):
         # input_features.append(neg)
 
 
-        # curr_layer_size = layer_sizes[layer_to_change+1]
-        # top = int(curr_layer_size/4)
-        # medium = int(curr_layer_size/4)
-        # bottom = int(curr_layer_size/4)
-        # lower_bottom = curr_layer_size - top - medium
-        #
-        # sorted_features = [((layer_to_change+1, sorted_indices[i]), input_layer_values[sorted_indices[i]]) for i in range(curr_layer_size)]
-        #
-        # input_features.append(sorted_features[:top])
-        # input_features.append(sorted_features[top:top+medium])
-        # input_features.append(sorted_features[top+medium:top+medium+lower_bottom])
-        # input_features.append(sorted_features[top+medium+lower_bottom:])
+        curr_layer_size = layer_sizes[layer_to_change+1]
+        top = int(curr_layer_size/4)
+        medium = int(curr_layer_size/4)
+        bottom = int(curr_layer_size/4)
+        lower_bottom = curr_layer_size - top - medium
+
+        sorted_features = [((layer_to_change+1, sorted_indices[i]), input_layer_values[sorted_indices[i]]) for i in range(curr_layer_size)]
+
+        input_features.append(sorted_features[:top])
+        input_features.append(sorted_features[top:top+medium])
+        input_features.append(sorted_features[top+medium:top+medium+lower_bottom])
+        input_features.append(sorted_features[top+medium+lower_bottom:])
 
 
-        for i in range(layer_sizes[layer_to_change+1]):
-            input_features.append(((layer_to_change+1, sorted_indices[i]), input_layer_values[sorted_indices[i]]))
+        # for i in range(layer_sizes[layer_to_change+1]):
+        #     input_features.append(((layer_to_change+1, sorted_indices[i]), input_layer_values[sorted_indices[i]]))
 
         # input_lower_bound, input_upper_bound = getInputBounds(phases, labels, layer_sizes, layer_to_change, 20)
         input_lower_bound, input_upper_bound = [0]*layer_sizes[layer_to_change+1], [20]*layer_sizes[layer_to_change+1]

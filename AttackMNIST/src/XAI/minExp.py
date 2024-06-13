@@ -74,7 +74,7 @@ class XAI:
                         self.singletons.add(tuple(ip_f))
                         self.result_singletons.append(result[1])
                         self.LB = self.LB+1
-
+                        return
                 else:
                     # print("Not Singleton , ip",result[1],ip_f)
                     pass
@@ -134,6 +134,7 @@ class XAI:
                         # pair = [tuple(sublist) if isinstance(sublist, list) else sublist for sublist in pair]
                         self.pairs.add(pair)
                         self.result_pairs.append(result[1])
+                        return
                 else:
                     # print("----------------------------------------Not Pairs----------------------------------------")
                     pass
@@ -153,7 +154,7 @@ class XAI:
 
     def lb_thread_bundle(self, q):
         self.contrastive_singleton_bundle()
-        self.contrastive_pairs_bundle()
+        # self.contrastive_pairs_bundle()
 
         q.put(self.singletons)
         q.put(self.result_singletons)
@@ -418,6 +419,7 @@ class XAI:
         change = float('inf')
         mapping = {}
         while L <= len(self.input_features)-1:
+            break
             # k = 2
             while L <= R:
                 # print("value of k", k)
@@ -525,10 +527,10 @@ class XAI:
         self.G = G
         self.output_values = output_values
 
-        # thread1 = threading.Thread(target=self.lb_thread_bundle, args=(self.contrastive_queue, ))
-        # thread2 = threading.Thread(target=self.ub_thread_bundle, args=(self.free_queue, ))
-        thread1 = threading.Thread(target=self.lb_thread, args=(self.contrastive_queue, ))
-        thread2 = threading.Thread(target=self.ub_thread, args=(self.free_queue, ))
+        thread1 = threading.Thread(target=self.lb_thread_bundle, args=(self.contrastive_queue, ))
+        thread2 = threading.Thread(target=self.ub_thread_bundle, args=(self.free_queue, ))
+        # thread1 = threading.Thread(target=self.lb_thread, args=(self.contrastive_queue, ))
+        # thread2 = threading.Thread(target=self.ub_thread, args=(self.free_queue, ))
         thread1.start()
         thread2.start()
         thread1.join()
@@ -568,18 +570,18 @@ class XAI:
         # Bundle
         # inp_features_list = [feature for bundle in self.input_features for feature in bundle]
         # upper_bound_result = [feature for feature in inp_features_list if feature not in self.free]
-        # upper_bound_result = self.result_ub
+        upper_bound_result = self.result_ub
         # upper_bound_result = []
         # lower_bound_result = []
         # pair_result = []
-        # lower_bound_result = self.result_singletons
-        # pair_result = self.result_pairs
+        lower_bound_result = self.result_singletons
+        pair_result = self.result_pairs
 
         # Non-Bundle
-        upper_bound_result = []
-        upper_bound_result = [feature for feature in self.input_features if feature not in self.free]
-        lower_bound_result = self.singletons
-        pair_result = self.pairs
+        # upper_bound_result = []
+        # upper_bound_result = [feature for feature in self.input_features if feature not in self.free]
+        # lower_bound_result = self.singletons
+        # pair_result = self.pairs
 
         # print("Free: ", self.free)
         # print(f"Unsat result Singletons: {len(self.result_singletons)}")
