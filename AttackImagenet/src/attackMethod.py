@@ -11,6 +11,7 @@ from draw import *
 import minExp
 import helper
 from importance import get_importance 
+from importanceLime import limeExplanation
 import slic
 import networkx as nx
 
@@ -53,13 +54,13 @@ This file implements our algorithm as described in the paper.
 
 counter=0
 
-MODEL_PATH = '../Models/IMAGENET5/imagenette_1.h5'
-# MODEL_PATH = './imagenette_2_large.h5'
-# INP_DATA_PATH = '../data/IMAGENET5/inputs_large.csv'
-# OUT_DATA_PATH = '../data/IMAGENET5/outputs_large.csv'
+# MODEL_PATH = '../Models/IMAGENET5/imagenette_1.h5'
+MODEL_PATH = './imagenet64_1.h5'
+INP_DATA_PATH = './inputs_64.csv'
+OUT_DATA_PATH = './outputs_64.csv'
 
-INP_DATA_PATH = './fadv_img1_inputs.csv'
-OUT_DATA_PATH = './fadv_img1_outputs.csv'
+# INP_DATA_PATH = './fadv_img1_inputs.csv'
+# OUT_DATA_PATH = './fadv_img1_outputs.csv'
 
 
 no_exp = 0
@@ -673,52 +674,38 @@ def getImportantNeurons(sat_in, seg=50, comp=10, channel_axis=None):
 
     return important_neurons
 
+
 def lowerConfidence(sat_in):
-    adv_flag = False
-    # Segment the input image and sort the bundles according to importance 
-    input_features_bundle = image_to_bundles(sat_in, num_segments=50)
-
-    # Use XAI technique to find singleton for minimal modification
-    # Read the model and convert it to a graph for the verification purpose
-
-    # Use the model to find the predicted output/class of the image
     model = tf.keras.models.load_model(MODEL_PATH)
     pred_output = model.predict(np.array([sat_in]))[0]
-    # print("-------------------START---------------------")
     pred_class = np.argmax(pred_output)
-    second_largest = second_largest_index(pred_output)
-
-    pred_class_value = pred_output[pred_class]
-    conf_score = pred_class_value - pred_output[second_largest]
-
-    second_largest_position = second_largest
-    if(pred_class < second_largest):
-        second_largest_position = second_largest - 1
-
     print("Original Prediction: ", pred_class)
-    # print("-------------------START---------------------")
-    # print(pred_output)
-    # print(pred_class)
-
 
     G, _ = model_to_graph(MODEL_PATH)
-    G2, _ = model_to_graph(MODEL_PATH)
-    # get linear equation property
     lin_eqn = generate_linear_eqn(10, pred_class)
-
-    # Add the linear equation property to the model graph
     verif_property.add_property(G, True, lin_eqn)
-    verif_property.add_property(G2, True, lin_eqn)
-    important_neurons = sort_bundles(G2, sat_in, input_features_bundle)
+    important_neurons = limeExplanation(model, sat_in)
 
-    input_lower_bound = [0]*784
-    input_upper_bound = [1]*784
+    # Segment the input image and sort the bundles according to importance 
+    # input_features_bundle = image_to_bundles(sat_in, num_segments=50, channel_axis=-1)
+    # G2, _ = model_to_graph(MODEL_PATH)
+    # verif_property.add_property(G2, True, lin_eqn)
+    # important_neurons = sort_bundles(G2, sat_in, input_features_bundle)
 
-    find_singleton_bundle(G, important_neurons, input_lower_bound, input_upper_bound, [second_largest_position, conf_score], [pred_class, pred_class_value])
 
-    # Iteratively check which singleton reduces confidence,
-    # either lowers the true class confidence or misclassifies in which case
-    # we return adv_flag as true
+    input_lower_bound = [0]*len(sat_in)
+    input_upper_bound = [1]*len(sat_in)
+
+    success, adv_inp, new_pred, k = find_singleton_bundle(model, G, important_neurons, input_lower_bound, input_upper_bound, pred_class)
+
+    if success and new_pred != pred_class:
+        print("Attack was successful. Label changed from ",pred_class," to ",new_pred)
+        print("This was:", k, "pixel attack.")
+        adv_inp = [val for (node, val) in adv_inp]
+        return 1, sat_in, adv_inp, pred_class, new_pred, k
+    else:
+        print("Attack was unsuccessful.")
+        return 0, [], [], -1, -1, -1
 
 def FindCutoff(inputs, k):
     w = []
@@ -968,7 +955,8 @@ def attack():
         print("True label is:", t)
         print()
         t1 = time()
-        success, original, adversarial, true_label, predicted_label, k = generateAdversarial_XAI(sat_in)
+        success, original, adversarial, true_label, predicted_label, k = generateAdversarial(sat_in)
+        # success, original, adversarial, true_label, predicted_label, k = lowerConfidence(sat_in)
 
         if(success == 0):
             failed_adv.append(i)

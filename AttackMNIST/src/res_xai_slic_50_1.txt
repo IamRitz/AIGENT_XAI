@@ -1,0 +1,16 @@
+
+slic: 50, 1
+Attack was successful on: 164  images.
+Number of pixels modified(Mean): 101.9451219512195
+Number of pixels modified(Median): 87.0
+Number of pixels modified(Mode): ModeResult(mode=array([8]), count=array([7]))
+Pielou Measure is: (0.6155899742464992-0j)
+TIME TAKEN IN GENERATION OF ABOVE EXAMPLES:  2.607432569026947 seconds.
+
+slic: 30, 1
+Attack was successful on: 222  images.
+Number of pixels modified(Mean): 107.61711711711712
+Number of pixels modified(Median): 93.0
+Number of pixels modified(Mode): ModeResult(mode=array([7]), count=array([6]))
+Pielou Measure is: (0.5891368358100341-0j)
+TIME TAKEN IN GENERATION OF ABOVE EXAMPLES:  2.567091159820557 seconds.

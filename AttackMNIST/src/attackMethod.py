@@ -10,6 +10,7 @@ sys.path.append( "/home/ritesh/Desktop/MTP2/Marabou/" )
 sys.path.append( "./XAI/" )
 
 import verif_property
+from importanceLime import limeExplanation 
 from draw import *
 import minExp
 import helper
@@ -49,8 +50,8 @@ This file implements our algorithm as described in the paper.
 counter=0
 
 MODEL_PATH = '../Models/FMNIST/fashion_mnist1.h5'
-INP_DATA = './failedAttack_fmnist1_inputs.csv'
-OUT_DATA = './failedAttack_fmnist1_outputs.csv'
+INP_DATA = '../data/Failed/failedAttack_fmnist1_inputs.csv'
+OUT_DATA = '../data/Failed/failedAttack_fmnist1_outputs.csv'
 
 # MODEL_PATH = '../Models/MNIST/mnist_1.h5'
 # INP_DATA = '../data/MNIST/inputs.csv'
@@ -62,7 +63,7 @@ no_sig=0
 no_pair=0
 no_ub=0
 
-pred_dict = {i: 0 for i in range(10)}
+# pred_dict = {i: 0 for i in range(10)}
 
 def loadModel():
     model = tf.keras.models.load_model(MODEL_PATH)
@@ -194,6 +195,19 @@ def predict(epsilon, layer_to_change, sat_in):
     print("Prediction: ",np.argmax(prediction[0]))
     return model
 
+def predict_XAI(new_value, layer_to_change, sat_in):
+    model = loadModel()
+    weights = model.get_weights()
+
+    weights[2*layer_to_change] = new_value 
+
+    model.set_weights(weights)
+    model.compile(optimizer=tf.optimizers.Adam(),loss='sparse_categorical_crossentropy',metrics=['accuracy'])
+
+    prediction = model.predict([sat_in])
+    print("Prediction: ",np.argmax(prediction[0]))
+    return model
+
 
 def remove_till_layer(G, layer_num):
     nodes_to_remove = [node for node in G.nodes if node[0]<layer_num]
@@ -262,7 +276,7 @@ def getInputBounds(phases, labels, layer_sizes, layer_to_change, threshold):
 def updateModel_XAI(sat_in):
     model = loadModel()
     num_layers = int(len(model.get_weights())/2)
-    layer_to_change = int(num_layers/3)
+    layer_to_change = int(num_layers/2)
     originalModel = model
     sample_output = model.predict(np.array([sat_in]))[0]
     true_output = np.argmax(sample_output)
@@ -273,7 +287,7 @@ def updateModel_XAI(sat_in):
 
     # Convert the original model to a networkx graph
     G, layer_sizes = model_to_graph(MODEL_PATH)
-    layer_sizes.insert(0, 784)
+    layer_sizes.insert(0, len(sat_in)) 
     
     G_prime = copy.deepcopy(G)
     G_original = copy.deepcopy(G)
@@ -312,6 +326,7 @@ def updateModel_XAI(sat_in):
     sorted_indices = sorted(input_with_indices, reverse=True)
     sorted_indices = [idx for val, idx in sorted_indices]
     input_features = []
+
     # pos = []
     # neg = []
     # for i in range(layer_sizes[layer_to_change+1]):
@@ -327,21 +342,21 @@ def updateModel_XAI(sat_in):
     # top, medium and bottom
     # each containing 33% of the features
 
-    curr_layer_size = layer_sizes[layer_to_change+1]
-    top = int(curr_layer_size/4)
-    medium = int(curr_layer_size/4)
-    bottom = int(curr_layer_size/4)
-    lower_bottom = curr_layer_size - top - medium
+    # curr_layer_size = layer_sizes[layer_to_change+1]
+    # top = int(curr_layer_size/4)
+    # medium = int(curr_layer_size/4)
+    # bottom = int(curr_layer_size/4)
+    # lower_bottom = curr_layer_size - top - medium
+    #
+    # sorted_features = [((layer_to_change+1, sorted_indices[i]), input_layer_values[sorted_indices[i]]) for i in range(curr_layer_size)]
+    #
+    # input_features.append(sorted_features[:top])
+    # input_features.append(sorted_features[top:top+medium])
+    # input_features.append(sorted_features[top+medium:top+medium+lower_bottom])
+    # input_features.append(sorted_features[top+medium+lower_bottom:])
 
-    sorted_features = [((layer_to_change+1, sorted_indices[i]), input_layer_values[sorted_indices[i]]) for i in range(curr_layer_size)]
-
-    input_features.append(sorted_features[:top])
-    input_features.append(sorted_features[top:top+medium])
-    input_features.append(sorted_features[top+medium:top+medium+lower_bottom])
-    input_features.append(sorted_features[top+medium+lower_bottom:])
-
-    # for i in range(layer_sizes[layer_to_change+1]):
-    #     input_features.append(((layer_to_change+1, sorted_indices[i]), input_layer_values[sorted_indices[i]]))
+    for i in range(layer_sizes[layer_to_change+1]):
+        input_features.append(((layer_to_change+1, sorted_indices[i]), input_layer_values[sorted_indices[i]]))
 
     # input_lower_bound, input_upper_bound = getInputBounds(phases, labels, layer_sizes, layer_to_change, 20)
     input_lower_bound, input_upper_bound = [0]*layer_sizes[layer_to_change+1], [20]*layer_sizes[layer_to_change+1]
@@ -371,26 +386,27 @@ def updateModel_XAI(sat_in):
 
     # print("Result: ", E.result_ub)
     neuron_values_new = {}
-    if(E.result_singletons):
-        # print("Result: ", E.result_singletons)
+    if(E.result_ub):
+        print("Result ub: ")
+        max_key = helper.findClassForImage(G_original, E.result_ub[0])
+        for node, value in E.result_ub[0]:
+            neuron_values_new[node] = value
+        # print("Max key: ", max_key)
+    elif(E.result_singletons):
+        print("Result singleton: ")
         max_key = helper.findClassForImage(G_original, E.result_singletons[0])
         for node, value in E.result_singletons[0]:
             neuron_values_new[node] = value
         # print("Max key: ", max_key)
-    elif(E.result_ub):
-        max_key = helper.findClassForImage(G_original, E.result_ub[0])
-        for node, value in E.result_ub[0]:
-            neuron_values_new[node] = value
-        print("ub")
-        # print("Max key: ", max_key)
     elif(E.result_pairs):
-        # print("Result: ", E.result_singletons)
+        print("Result pair: ")
         max_key = helper.findClassForImage(G_original, E.result_pairs[0])
         for node, value in E.result_pairs[0]:
             neuron_values_new[node] = value
         print("pair")
         # print("Max key: ", max_key)
     else:
+        print("No result found.")
         return -1, None, None
 
 
@@ -447,18 +463,22 @@ def updateModel_XAI(sat_in):
         # input_features.append(neg)
 
 
-        curr_layer_size = layer_sizes[layer_to_change+1]
-        top = int(curr_layer_size/4)
-        medium = int(curr_layer_size/4)
-        bottom = int(curr_layer_size/4)
-        lower_bottom = curr_layer_size - top - medium
+        # curr_layer_size = layer_sizes[layer_to_change+1]
+        # top = int(curr_layer_size/4)
+        # medium = int(curr_layer_size/4)
+        # bottom = int(curr_layer_size/4)
+        # lower_bottom = curr_layer_size - top - medium
+        #
+        # sorted_features = [((layer_to_change+1, sorted_indices[i]), input_layer_values[sorted_indices[i]]) for i in range(curr_layer_size)]
+        #
+        # input_features.append(sorted_features[:top])
+        # input_features.append(sorted_features[top:top+medium])
+        # input_features.append(sorted_features[top+medium:top+medium+lower_bottom])
+        # input_features.append(sorted_features[top+medium+lower_bottom:])
 
-        sorted_features = [((layer_to_change+1, sorted_indices[i]), input_layer_values[sorted_indices[i]]) for i in range(curr_layer_size)]
 
-        input_features.append(sorted_features[:top])
-        input_features.append(sorted_features[top:top+medium])
-        input_features.append(sorted_features[top+medium:top+medium+lower_bottom])
-        input_features.append(sorted_features[top+medium+lower_bottom:])
+        for i in range(layer_sizes[layer_to_change+1]):
+            input_features.append(((layer_to_change+1, sorted_indices[i]), input_layer_values[sorted_indices[i]]))
 
         # input_lower_bound, input_upper_bound = getInputBounds(phases, labels, layer_sizes, layer_to_change, 20)
         input_lower_bound, input_upper_bound = [0]*layer_sizes[layer_to_change+1], [20]*layer_sizes[layer_to_change+1]
@@ -476,24 +496,28 @@ def updateModel_XAI(sat_in):
 
         neuron_values_final = {}
         if(E.result_ub):
+            print("Result ub")
             neuron_values_new = [0] * layer_sizes[layer_to_change+1]
             remove_till_layer(G_another, layer_to_change+1)
             # max_key = helper.findClassForImage(G_another, E.result_ub[0])
             for node, value in E.result_ub[0]:
                 neuron_values_final[node] = value
         elif(E.result_singletons):
+            print("Result singleton")
             neuron_values_new = [0] * layer_sizes[layer_to_change+1]
             remove_till_layer(G_another, layer_to_change+1)
             # max_key = helper.findClassForImage(G_another, E.result_singletons[0])
             for (node, value) in E.result_singletons[0]:
                 neuron_values_final[node] = value
         elif(E.result_pairs):
+            print("Result pair")
             neuron_values_new = [0] * layer_sizes[layer_to_change+1]
             remove_till_layer(G_another, layer_to_change+1)
             # max_key = helper.findClassForImage(G_another, E.result_pairs[0])
             for (node, value) in E.result_pairs[0]:
                 neuron_values_final[node] = value
         else:
+            print("None found")
             break
 
         # print("Neuron value: ", neuron_values_final)
@@ -577,18 +601,14 @@ def MarabouAttack(model, inputs, neuron_values, true_label, k=2):
     for index, value in neuron_values.items():
         output_values[index] = value
 
-    seg = 50
-
-    while seg >= 10:
-        print("Trying with seg: ", seg)
-        imp_neurons = getImportantNeurons(inputs, seg)
-        result, new_prediction, k = find_singleton_bundle2(G, imp_neurons, [0]*784, [1]*784, output_values, true_label)
-        if result:
-            adv_inp = []
-            for (node, val) in result:
-                adv_inp.append(val)
-            return 1, adv_inp, new_prediction, k
-        seg -= 10
+    # imp_neurons = getImportantNeurons(inputs, seg)
+    imp_neurons = limeExplanation(None, inputs, MODEL_PATH, True)
+    result, new_prediction, k = find_singleton_bundle2(G, imp_neurons, [0]*len(inputs), [1]*len(inputs), output_values, true_label)
+    if result:
+        adv_inp = []
+        for (node, val) in result:
+            adv_inp.append(val)
+        return 1, adv_inp, new_prediction, k
 
     return 0, [], -1, -1
 
@@ -645,7 +665,7 @@ def sort_bundles(G, image_data, input_features_bundle):
     return inp_f_bundle_sorted
 
 
-def find_singleton_bundle(G, input_features, input_lower_bound, input_upper_bound, true_label):
+def find_singleton_bundle(model, G, input_features, input_lower_bound, input_upper_bound, true_label):
     # Find the single input features that are important 
     # important: removal causes a mis-classification
     E = minExp.XAI()
@@ -657,7 +677,6 @@ def find_singleton_bundle(G, input_features, input_lower_bound, input_upper_boun
     E.input_lb = input_lower_bound
     E.input_ub = input_upper_bound
 
-
     orig_features = copy.deepcopy(input_features)
     # orig_features = set([feature for bundle in self.input_features for feature in bundle])
     for ip_f in input_features:
@@ -665,23 +684,14 @@ def find_singleton_bundle(G, input_features, input_lower_bound, input_upper_boun
             orig_features_list = set([feature for bundle in orig_features for feature in bundle])
             result =  E.verif_query(G, orig_features_list, ip_f)
             if result[0] == 'SAT':
-                    # print("Singleton , ip",result[1])
-                    # print("LENGTH OF SINGLETON: ", len(ip_f))
-                    # print("Singleton in image: ", ip_f)
                     new_img = []
                     for (_,_), value in result[1]:
                         new_img.append(value)
-                    model = loadModel()
+
                     pred_out = model.predict([new_img])[0]
-                    # print("----------------IN_SING------------------------")
                     new_pred = np.argmax(pred_out)
                     print("New Prediction: ", new_pred)
-                    # print(pred_out)
-                    pred_dict[np.argmax(pred_out)] += 1
-                    # print("----------------IN_SING------------------------")
-                    # singletons.add(tuple(ip_f))
-                    # result_singletons.append(result[1])
-                    # LB = LB+1
+
                     if true_label != new_pred:
                         return 1, result[1], new_pred, len(ip_f)
             else:
@@ -707,40 +717,22 @@ def find_singleton_bundle2(G, input_features, input_lower_bound, input_upper_bou
             orig_features_list = set([feature for bundle in orig_features for feature in bundle])
             result =  E.verif_query(G, orig_features_list, ip_f)
             if result[0] == 'SAT':
-                    # print("Singleton , ip",result[1])
-                    # print("LENGTH OF SINGLETON: ", len(ip_f))
-                    # print("Singleton in image: ", ip_f)
                     new_img = []
                     for (_,_), value in result[1]:
                         new_img.append(value)
                     model = loadModel()
                     pred_out = model.predict([new_img])[0]
-                    # print("----------------IN_SING------------------------")
+
                     new_pred = np.argmax(pred_out)
                     print("New Prediction: ", new_pred)
-                    # print(pred_out)
-                    pred_dict[np.argmax(pred_out)] += 1
-                    # print("----------------IN_SING------------------------")
-                    # singletons.add(tuple(ip_f))
-                    # result_singletons.append(result[1])
-                    # LB = LB+1
+
                     if true_label != new_pred:
                         return result[1], new_pred, len(ip_f)
             else:
-                # print("Not Singleton , ip",result[1],ip_f)
+                # print("Not Singleton")
                 pass
             orig_features.append(ip_f)
     return 0, -1, -1
-
-
-def second_largest_index(arr):
-    largest_index = np.argmax(arr)
-    largest_value = arr[largest_index]
-    arr[largest_index] = -np.inf
-    second_largest_index = np.argmax(arr)
-    arr[largest_index] = largest_value
-    
-    return second_largest_index
 
 def getImportantNeurons(sat_in, seg=50, comp=10, channel_axis=None):
     input_features_bundle = image_to_bundles(sat_in, seg, comp, channel_axis)
@@ -761,54 +753,40 @@ def getImportantNeurons(sat_in, seg=50, comp=10, channel_axis=None):
     return important_neurons
 
 def lowerConfidence(sat_in):
-    # Segment the input image and sort the bundles according to importance 
-    input_features_bundle = image_to_bundles(sat_in, num_segments=50)
 
-    # Use XAI technique to find singleton for minimal modification
-    # Read the model and convert it to a graph for the verification purpose
-
-    # Use the model to find the predicted output/class of the image
     model = tf.keras.models.load_model(MODEL_PATH)
     pred_output = model.predict(np.array([sat_in]))[0]
-    # print("-------------------START---------------------")
     pred_class = np.argmax(pred_output)
-    second_largest = second_largest_index(pred_output)
-
-    pred_class_value = pred_output[pred_class]
-    conf_score = pred_class_value - pred_output[second_largest]
-
-    second_largest_position = second_largest
-    if(pred_class < second_largest):
-        second_largest_position = second_largest - 1
-
     print("Original Prediction: ", pred_class)
-    # print("-------------------START---------------------")
-    # print(pred_output)
-    # print(pred_class)
 
 
     G, _ = model_to_graph(MODEL_PATH)
-    G2, _ = model_to_graph(MODEL_PATH)
-    # get linear equation property
     lin_eqn = generate_linear_eqn(10, pred_class)
-
-    # Add the linear equation property to the model graph
     verif_property.add_property(G, True, lin_eqn)
-    verif_property.add_property(G2, True, lin_eqn)
-    important_neurons = sort_bundles(G2, sat_in, input_features_bundle)
+    important_neurons = limeExplanation(model, sat_in)[::-1]
 
-    input_lower_bound = [0]*784
-    input_upper_bound = [1]*784
+    # input_features_bundle = image_to_bundles(sat_in, num_segments=50)
+    # G2, _ = model_to_graph(MODEL_PATH)
+    # verif_property.add_property(G2, True, lin_eqn)
+    # important_neurons = sort_bundles(G2, sat_in, input_features_bundle)
 
-    success, adv_inp, new_pred, k = find_singleton_bundle(G, important_neurons, input_lower_bound, input_upper_bound, pred_class)
+
+    input_lower_bound = [0]*len(sat_in)
+    input_upper_bound = [1]*len(sat_in)
+
+    success, adv_inp, new_pred, k = find_singleton_bundle(model, G, important_neurons, input_lower_bound, input_upper_bound, pred_class)
 
     if success and new_pred != pred_class:
         print("Attack was successful. Label changed from ",pred_class," to ",new_pred)
-        print("This was:", k,"pixel attack.")
+        adv_inp = [val for (node, val) in adv_inp]
         return success, sat_in, adv_inp, pred_class, new_pred, k
     else:
         print("Attack was unsuccessful.")
         return 0, [], [], -1, -1, -1
+
+def limeImportance(model, sat_in):
+    return limeExplanation(model, sat_in)
+
 
 def generateAdversarial(sat_in):
     try:
@@ -941,7 +919,6 @@ def generateAdversarial_XAI(sat_in):
                         max_shift = abs(vals[0][i]-neuron_values_1[i])
                 if predicted_label!=true_label:
                     print("Attack was successful. Label changed from ",true_label," to ",predicted_label)
-                    print("This was:", k,"pixel attack.")
                     return 1, sat_in, ad_inp2, true_label, predicted_label,  k
                 else:
                     k = k*2
@@ -957,6 +934,7 @@ def generate():
     counter_outputs = [0]*10
     adversarial_count = 0
     ks = []
+
     # print(getImportantNeurons(inputs[0]))
     # for i in range(10):
     #     lowerConfidence(inputs[i])
@@ -970,15 +948,20 @@ def generate():
         print()
         t1 = time()
 
-        success, original, adversarial, true_label, predicted_label, k = lowerConfidence(sat_in)
+        # success, original, adversarial, true_label, predicted_label, k = lowerConfidence(sat_in)
         
         # if (success == 0):
         #     success, original, adversarial, true_label, predicted_label, k = generateAdversarial_XAI(adversarial)
 
-        # success, original, adversarial, true_label, predicted_label, k = generateAdversarial_XAI(sat_in)
+        success, original, adversarial, true_label, predicted_label, k = generateAdversarial_XAI(sat_in)
 
-        # if(success==0):
-        #     failed_adv.append(i)
+        if(success==0):
+            failed_adv.append(i)
+        
+        if success == 1:
+            diff = np.count_nonzero(np.array(original) - np.array(adversarial))
+            k = diff
+            print("This was:", k,"pixel attack.")
 
         if success==1 and counter_inputs[true_label]<30:
             counter_inputs[true_label] = counter_inputs[true_label] + 1

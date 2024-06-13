@@ -1,0 +1,6 @@
+Attack was successful on: 462  images.
+Number of pixels modified(Mean): 24.7987012987013
+Number of pixels modified(Median): 23.0
+Number of pixels modified(Mode): ModeResult(mode=array([16]), count=array([97]))
+Pielou Measure is: (0.8968245542842924-0j)
+TIME TAKEN IN GENERATION OF ABOVE EXAMPLES:  1.8051541452407838 seconds.

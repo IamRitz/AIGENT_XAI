@@ -1,0 +1,8 @@
+# Changing the size of singletons on first layer doesn't help
+# Need to find middle layer neurons such that it satisfies for previous layer
+Attack was successful on: 64  images.
+Number of pixels modified(Mean): 42.453125
+Number of pixels modified(Median): 24.0
+Number of pixels modified(Mode): ModeResult(mode=array([11]), count=array([5]))
+Pielou Measure is: (0.5817392284943139-0j)
+TIME TAKEN IN GENERATION OF ABOVE EXAMPLES:  2.0615479941368102 seconds.

@@ -11,6 +11,7 @@ from draw import *
 import minExp
 import helper
 from importance import get_importance 
+from importanceLime import limeExplanation
 import slic
 import networkx as nx
 
@@ -50,9 +51,17 @@ This file implements our algorithm as described in the paper.
 
 counter=0
 
-MODEL_PATH = "../Models/CIFAR5/cifar5_3.h5"
-INP_PATH = "../data/CIFAR5/inputs.csv"
-OUT_PATH = "../data/CIFAR5/outputs.csv"
+# MODEL_PATH = "../Models/CIFAR5/cifar5_3.h5"
+# INP_PATH = "../data/CIFAR5/inputs.csv"
+# OUT_PATH = "../data/CIFAR5/outputs.csv"
+
+# MODEL_PATH = "../Models/CIFAR10/cifar1.h5"
+INP_PATH = "../data/CIFAR10/inputs.csv"
+OUT_PATH = "../data/CIFAR10/outputs.csv"
+
+MODEL_PATH = "./cifar_ext.h5"
+# INP_PATH = "./inputs_new.csv"
+# OUT_PATH = "./outputs_new.csv"
 
 def loadModel():
     model = tf.keras.models.load_model(MODEL_PATH)
@@ -63,11 +72,11 @@ def getData():
     outputs = []
     f1 = open(INP_PATH, 'r')
     f1_reader = reader(f1)
-    stopAt = 300
+    stopAt = 500
     f2 = open(OUT_PATH, 'r')
     f2_reader = reader(f2)
     i=0
-    adv = [16, 73, 290, 473, 530, 821]
+    # adv = [16, 73, 290, 473, 530, 821]
     for row in f1_reader:
         inp = [float(x) for x in row]
         inputs.append(inp)
@@ -469,7 +478,7 @@ def updateModel_XAI(sat_in):
 def image_to_bundles(image_data, num_segments=50, comp=10, channel_axis=None):
     # Generate Segments 
     B = slic.Bundle()
-    return B.generate_segments2(np.array(image_data), 28, 28, num_segments, comp, channel_axis)
+    return B.generate_segments2(np.array(image_data), 32, 32, num_segments, comp, channel_axis)
 
 
 def MarabouAttack(model, inputs, neuron_values, k=2):
@@ -547,7 +556,7 @@ def sort_bundles(G, image_data, input_features_bundle):
     return inp_f_bundle_sorted
 
 
-def find_singleton_bundle(G, input_features, input_lower_bound, input_upper_bound, second_largest_data, pred_class_data):
+def find_singleton_bundle(model, G, input_features, input_lower_bound, input_upper_bound, true_label):
     # Find the single input features that are important 
     # important: removal causes a mis-classification
     E = minExp.XAI()
@@ -559,7 +568,6 @@ def find_singleton_bundle(G, input_features, input_lower_bound, input_upper_boun
     E.input_lb = input_lower_bound
     E.input_ub = input_upper_bound
 
-
     orig_features = copy.deepcopy(input_features)
     # orig_features = set([feature for bundle in self.input_features for feature in bundle])
     for ip_f in input_features:
@@ -573,25 +581,19 @@ def find_singleton_bundle(G, input_features, input_lower_bound, input_upper_boun
                     new_img = []
                     for (_,_), value in result[1]:
                         new_img.append(value)
-                    model = loadModel()
                     pred_out = model.predict([new_img])[0]
-                    # print("----------------IN_SING------------------------")
                     new_pred = np.argmax(pred_out)
                     print("New Prediction: ", new_pred)
-                    print(pred_out)
-                    pred_dict[np.argmax(pred_out)] += 1
-                    # print("----------------IN_SING------------------------")
-                    # singletons.add(tuple(ip_f))
-                    # result_singletons.append(result[1])
-                    # LB = LB+1
-                    return result[1], new_pred, len(ip_f)
-            else:
-                # print("Not Singleton , ip",result[1],ip_f)
-                pass
-            orig_features.append(ip_f)
-    return 0, -1, -1
 
-def find_singleton_bundle2(G, input_features, input_lower_bound, input_upper_bound, output_values):
+                    if true_label != new_pred:
+                        return 1, result[1], new_pred, len(ip_f)
+            else:
+                print("Not Singleton: ", ip_f)
+
+            orig_features.append(ip_f)
+    return 0, [], -1, -1
+
+def find_singleton_bundle2(G, input_features, input_lower_bound, input_upper_bound, output_values): # TODO Fix it 
     # Find the single input features that are important 
     # important: removal causes a mis-classification
     E = minExp.XAI()
@@ -599,6 +601,7 @@ def find_singleton_bundle2(G, input_features, input_lower_bound, input_upper_bou
     E.output_values = output_values
     E.input_lb = input_lower_bound
     E.input_ub = input_upper_bound
+    model = loadModel()
 
 
     orig_features = copy.deepcopy(input_features)
@@ -608,23 +611,14 @@ def find_singleton_bundle2(G, input_features, input_lower_bound, input_upper_bou
             orig_features_list = set([feature for bundle in orig_features for feature in bundle])
             result =  E.verif_query(G, orig_features_list, ip_f)
             if result[0] == 'SAT':
-                    # print("Singleton , ip",result[1])
-                    # print("LENGTH OF SINGLETON: ", len(ip_f))
-                    # print("Singleton in image: ", ip_f)
                     new_img = []
                     for (_,_), value in result[1]:
                         new_img.append(value)
-                    model = loadModel()
+
                     pred_out = model.predict([new_img])[0]
-                    # print("----------------IN_SING------------------------")
                     new_pred = np.argmax(pred_out)
                     print("New Prediction: ", new_pred)
-                    # print(pred_out)
-                    pred_dict[np.argmax(pred_out)] += 1
-                    # print("----------------IN_SING------------------------")
-                    # singletons.add(tuple(ip_f))
-                    # result_singletons.append(result[1])
-                    # LB = LB+1
+
                     return result[1], new_pred, len(ip_f)
             else:
                 # print("Not Singleton , ip",result[1],ip_f)
@@ -633,16 +627,7 @@ def find_singleton_bundle2(G, input_features, input_lower_bound, input_upper_bou
     return 0, -1, -1
 
 
-def second_largest_index(arr):
-    largest_index = np.argmax(arr)
-    largest_value = arr[largest_index]
-    arr[largest_index] = -np.inf
-    second_largest_index = np.argmax(arr)
-    arr[largest_index] = largest_value
-    
-    return second_largest_index
-
-def getImportantNeurons(sat_in, seg=50, comp=10, channel_axis=None):
+def getImportantNeurons(sat_in, seg=50, comp=10, channel_axis=None): # TODO fix it according to img type
     input_features_bundle = image_to_bundles(sat_in, 20, comp, channel_axis)
 
     # Use the model to find the predicted output/class of the image
@@ -663,7 +648,7 @@ def getImportantNeurons(sat_in, seg=50, comp=10, channel_axis=None):
 def lowerConfidence(sat_in):
     adv_flag = False
     # Segment the input image and sort the bundles according to importance 
-    input_features_bundle = image_to_bundles(sat_in, num_segments=50)
+    input_features_bundle = image_to_bundles(sat_in, num_segments=50, channel_axis=-1)
 
     # Use XAI technique to find singleton for minimal modification
     # Read the model and convert it to a graph for the verification purpose
@@ -673,7 +658,7 @@ def lowerConfidence(sat_in):
     pred_output = model.predict(np.array([sat_in]))[0]
     # print("-------------------START---------------------")
     pred_class = np.argmax(pred_output)
-    second_largest = second_largest_index(pred_output)
+    second_largest = np.argsort(pred_output)[-2]
 
     pred_class_value = pred_output[pred_class]
     conf_score = pred_class_value - pred_output[second_largest]
@@ -696,16 +681,23 @@ def lowerConfidence(sat_in):
     # Add the linear equation property to the model graph
     verif_property.add_property(G, True, lin_eqn)
     verif_property.add_property(G2, True, lin_eqn)
-    important_neurons = sort_bundles(G2, sat_in, input_features_bundle)
+    # important_neurons = sort_bundles(G2, sat_in, input_features_bundle)
+    important_neurons = limeExplanation(model, sat_in)
 
-    input_lower_bound = [0]*784
-    input_upper_bound = [1]*784
+    input_lower_bound = [0]*len(sat_in)
+    input_upper_bound = [1]*len(sat_in)
 
-    find_singleton_bundle(G, important_neurons, input_lower_bound, input_upper_bound, [second_largest_position, conf_score], [pred_class, pred_class_value])
+    success, adv_inp, new_pred, k = find_singleton_bundle(model, G, important_neurons, input_lower_bound, input_upper_bound, pred_class)
 
-    # Iteratively check which singleton reduces confidence,
-    # either lowers the true class confidence or misclassifies in which case
-    # we return adv_flag as true
+    if success and new_pred != pred_class:
+        adv_flag = True
+        print("Attack was successful. Label changed from ",pred_class," to ",new_pred)
+        print("This was:", k, "pixel attack.")
+        adv_inp = [val for (node, val) in adv_inp]
+        return 1, sat_in, adv_inp, pred_class, new_pred, k
+    else:
+        print("Attack was unsuccessful.")
+        return 0, [], [], -1, -1, -1
 
 def FindCutoff(inputs, k):
     w = []
@@ -1047,12 +1039,10 @@ def attack():
         print("True label is:", t)
         print()
         t1 = time()
-        success, original, adversarial, true_label, predicted_label, k = generateAdversarial_XAI(sat_in)
+        success, original, adversarial, true_label, predicted_label, k = generateAdversarial(sat_in)
+        # success, original, adversarial, true_label, predicted_label, k = lowerConfidence(sat_in)
 
         if(success==0):
-            failed_adv.append(i)
-
-        if k > 1500:
             failed_adv.append(i)
 
         if success==1 and counter_inputs[true_label]<30:
@@ -1075,3 +1065,5 @@ def attack():
     print("Mode k value:",stats.mode(ks))
     pm = PielouMeaure(counter_outputs, len(counter_outputs))
     print("Pielou Measure is:", pm)
+
+    return count

@@ -90,7 +90,10 @@ class Bundle:
 
     def generate_segments2(self, image_data, w, h, num_segs, comp, channel_axis=None):
         # Load an example image
-        self.image = image_data.reshape((w, h))
+        if channel_axis == None:
+            self.image = image_data.reshape((w, h))
+        else:
+            self.image = image_data.reshape((w, h, len(image_data) // (w * h)))
         self.num_segs = num_segs
         self.comp = comp
 
