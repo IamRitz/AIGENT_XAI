@@ -20,5 +20,5 @@ def PielouMeaure(frequencies, num_classes):
             measure = measure+percents[i]*log(percents[i]+1)
         else:
             measure = measure+percents[i]*log(percents[i])
-    return -1*measure/log(num_classes)+0.6
+    return -1*measure/log(num_classes)
 

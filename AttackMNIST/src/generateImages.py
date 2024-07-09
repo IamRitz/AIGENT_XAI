@@ -7,6 +7,7 @@ import numpy as np
 from PIL import Image
 from csv import reader
 from time import time
+from math import floor
 import numpy as np
 import os
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3' 
@@ -34,7 +35,7 @@ The generated images are saved in an appropriate sub-folder in Images folder.
 
 def convertToMtarix(array, m, n):
     for i in range(m*n):
-        array[i] = 255*array[i]
+        array[i] = floor(255*array[i])
     matrix = np.array(array)
     return matrix.reshape((m,n))
 
@@ -48,16 +49,17 @@ def show(pixelMatrix, w, h):
 def generate():
     inputs, outputs, count = getData()
     print("Number of inputs in consideration: ",len(inputs))
-    i=15
     m, n = 28, 28
     #Change below to generate images for different experiments.
-    folderSuffix = "_max_XAI"
+    folderSuffix = "_fmnist2_XAI_singleton_only"
     # folderSuffix = "_restricted_XAI"
     for i in range(count):
         print("Launching attack on input:", i)
         sat_in = inputs[i]
         t1 = time()
-        success, original, adversarial, true_label, adversarial_label, k = generateAdversarial(sat_in)
+        success, original, adversarial, true_label, adversarial_label, k = generateAdversarial_XAI(sat_in)
+        # success, original, adversarial, true_label, adversarial_label, k = generateAdversarial(sat_in)
+        # success, original, adversarial, true_label, adversarial_label, k = lowerConfidence(sat_in)
         if success==1:
             print("...........................................................................................")
             print("Attack successful.")

@@ -1,0 +1,20 @@
+Model1= cifar.h5: 
+    (Mean): 0.15212601
+    (Median): 0.143
+    (Mode value): [0.125]
+    (Mode count): [15]
+    Largest Confidence score:  0.304
+
+Model2: cifar1.h5
+    (Mean): 0.19349799
+    (Median): 0.191
+    (Mode value): [0.185]
+    (Mode count): [9]
+    Largest Confidence score:  0.456
+
+Model3: cifar2.h5
+    (Mean): 0.15043798
+    (Median): 0.1385
+    (Mode value): [0.119]
+    (Mode count): [15]
+    Largest Confidence score:  0.305

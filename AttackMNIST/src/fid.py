@@ -4,6 +4,7 @@ from numpy import cov
 from numpy import trace
 from numpy import iscomplexobj
 from scipy.linalg import sqrtm
+import tensorflow as tf
 import os
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3' 
 """
@@ -32,7 +33,7 @@ FID for second experiment can be calculated by changing folderSuffix to "_max".
 """
 
 def loadModel():
-    model = tf.keras.models.load_model('../Models/mnist_1.h5')
+    model = tf.keras.models.load_model('../Models/MNIST/mnist.h5')
     return model
 
 def getImages():
@@ -42,7 +43,7 @@ def getImages():
     im1 = []
     im2 = []
     #Change below to calculate FID for different experiments.
-    folderSuffix = "_max_XAI"
+    folderSuffix = "_fmnist_AIG"
     
     for path in os.listdir("../Images/AdversarialImages"+str(folderSuffix)):
         originalImages.append('../Images/OriginalImages'+str(folderSuffix)+'/'+str(path))
@@ -72,22 +73,22 @@ def getImages():
     return im1, im2
 
 def calculate_fid(model, images1, images2):
-	
-	act1 = model.predict(images1)
-	act2 = model.predict(images2)
-	
-	mu1, sigma1 = act1.mean(axis=0), cov(act1, rowvar=False)
-	mu2, sigma2 = act2.mean(axis=0), cov(act2, rowvar=False)
+    # model = tf.keras.Sequential([model, tf.keras.layers.Softmax()])
+    act1 = model.predict(images1)
+    act2 = model.predict(images2)
 
-	ssdiff = numpy.sum((mu1 - mu2)**2.0)
+    mu1, sigma1 = act1.mean(axis=0), cov(act1, rowvar=False)
+    mu2, sigma2 = act2.mean(axis=0), cov(act2, rowvar=False)
 
-	covmean = sqrtm(sigma1.dot(sigma2))
-	
-	if iscomplexobj(covmean):
-		covmean = covmean.real
-	
-	fid = ssdiff + trace(sigma1 + sigma2 - 2.0 * covmean)
-	return fid
+    ssdiff = numpy.sum((mu1 - mu2)**2.0)
+
+    covmean = sqrtm(sigma1.dot(sigma2))
+
+    if iscomplexobj(covmean):
+        covmean = covmean.real
+    fid = ssdiff + trace(sigma1 + sigma2 - 2.0 * covmean)
+
+    return fid
 
 model = loadModel()
 im1, im2 = getImages()

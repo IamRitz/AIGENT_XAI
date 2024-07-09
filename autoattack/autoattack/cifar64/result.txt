@@ -1,0 +1,10 @@
+Average time taken to generate images: 0.1518154079914093  seconds.
+For  1000 Images:
+Average L2 distance was:  1.1286343600749968
+Highest L-inf distance was:  0.031372577
+Average number of pixels modified was:  2572.596
+FID: 0.059407833257216686
+Pielou Measure is: (0.9647761308568414-0j)
+Attack was succesfull on: 629
+
+& 0.05 & 0.96 & 1.12 & 0.03 & 0.15 & 2572 & 21\% & 62.9

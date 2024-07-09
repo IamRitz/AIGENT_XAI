@@ -1,0 +1,15 @@
+Attack was successful on: 371  images.
+[30, 30, 30, 30, 30, 30, 30, 30, 30, 30]
+[32, 15, 39, 49, 42, 12, 34, 32, 12, 33]
+Mean k value: 100.22757111597375
+Median k value: 24.0
+Mode k value: ModeResult(mode=array([12]), count=array([88]))
+Pielou Measure is: (.95601207267496568+0j)
+TIME TAKEN IN GENERATION OF ABOVE EXAMPLES:  29.12821734380722 seconds.
+
+FID for 371 images is: 0.00006
+
+Average L2 distance was:  0.7217108906183746
+Average L-inf distance was:  0.17257016013952792
+
+& 0.00006 & 0.95 & 0.72 & 0.17 & 29.12 & 24 & 0.19\% 74.2\%

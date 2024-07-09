@@ -1,0 +1,2 @@
+320 adversarial attack out of 1000
+FID for 320 images is: 0.087

@@ -27,10 +27,10 @@ To calculate FID for different sets of folders, change the suffix accordingly.
 """ 
 
 def loadModel():
-    model = tf.keras.models.load_model(os.path.abspath(os.path.join(os.getcwd(), os.pardir)) +'/Models/cifar.h5')
+    model = tf.keras.models.load_model(os.path.abspath(os.path.join(os.getcwd(), os.pardir)) +'/Models/CIFAR10/cifar.h5')
     return model
 
-def getImages(folderSuffix):
+def getImages():
     originalImages = []
     adversarialImages = []
     count = 0

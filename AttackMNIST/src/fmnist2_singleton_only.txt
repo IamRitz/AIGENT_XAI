@@ -1,0 +1,14 @@
+Attack was successful on: 79  images.
+Number of pixels modified(Mean): 93.87341772151899
+Number of pixels modified(Median): 48.0
+Number of pixels modified(Mode): ModeResult(mode=array([96]), count=array([20]))
+Pielou Measure is: (0.9282517752734462-0j)
+TIME TAKEN IN GENERATION OF ABOVE EXAMPLES:  3.6689087014198303 seconds.
+
+
+ Fid: 0.303
+
+ Average L2 distance was:  4.373696499532589
+Average L-inf distance was:  0.8490940680069496
+
+& 0.303 & 0.92 & 4.37 & 0.84 & 3.66 & 93 & 11.86\% & 15.8\%

@@ -1,0 +1,8 @@
+slic(image, n_segments=35, compactness=1)
+
+Attack was successful on: 354  images.
+Number of pixels modified(Mean): 61.08474576271186
+Number of pixels modified(Median): 40.0
+Number of pixels modified(Mode): ModeResult(mode=array([32]), count=array([11]))
+Pielou Measure is: (0.9069161658426291-0j)
+TIME TAKEN IN GENERATION OF ABOVE EXAMPLES:  12.127311073303222 seconds.

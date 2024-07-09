@@ -18,8 +18,8 @@ tqdm.tqdm().disable = True
 
 # Define the segmentation function with adjusted parameters
 def segmentation_fn(image):
-    return quickshift(image, kernel_size=1, max_dist=4, ratio=0.5)
-    # return slic(image, n_segments=40, compactness=1)
+    # return quickshift(image, kernel_size=1, max_dist=4, ratio=0.5)
+    return slic(image, n_segments=50, compactness=10)
 
 
 def loadImage(img_path, processed=True):
@@ -78,7 +78,7 @@ def limeExplanation(model, img_path, MODEL_PATH=False, processed=True):
     important_segments = {seg: [] for seg in sorted_dict_map.keys()}
     # print(important_segments)
     for i in range(784):
-        important_segments[segmented_img[i]].append(((0, i), img_array_reshaped[i]))
+        important_segments[segmented_img[i]-1].append(((0, i), img_array_reshaped[i]))
 
     return list(important_segments.values())
 

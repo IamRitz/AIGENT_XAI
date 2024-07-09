@@ -38,6 +38,7 @@ class XAI:
         self.result_ub = []
         self.output_values = None
         self.smallest = -1
+        self.tolerance = 15
 
     def contrastive_singleton(self):
         # Find the single input features that are important 
@@ -86,7 +87,7 @@ class XAI:
         ip_features = set(self.input_features) - self.singletons
         contr_pairs = list(itertools.combinations(ip_features, 2))
         orig_features = set(self.input_features)
-        for pair in contr_pairs:
+        for pair in contr_pairs[:5]:
                 feature_1 =  pair[0]
                 feature_2 = pair[1]
                 if feature_1 in orig_features:
@@ -144,7 +145,7 @@ class XAI:
 
     def lb_thread(self, q):
         self.contrastive_singleton()
-        self.contrastive_pairs()
+        # self.contrastive_pairs()
 
         q.put(self.singletons)
         q.put(self.result_singletons)
@@ -179,24 +180,8 @@ class XAI:
             n : i + len(n2v_post)
             for i, n in enumerate( itertools.chain( *layers[1:] ))
         }
-        # print(n2v_post)
-        # print(n2v_pre)
-        # exit(1)
 
-        # n2v_final = {}
-        # if(self.output_values):
-        #     n2v_final = {
-        #         n : i + len(n2v_post) + len(n2v_pre)
-        #         for i, n in enumerate(layers[-1])
-        #     }
-            # print("n2v_final: ", n2v_final)
-        # print("n2v_pre: ", n2v_pre)
-        # print("n2v_post: ", n2v_post)
-        # Reverse view
         rev=nx.reverse_view(G)
-        # print("Verif: ", G.nodes)
-        # print("Verif2: ", rev.nodes)
-        # exit(1)
 
         # Set up solver
         solver = MarabouCore.InputQuery()
@@ -214,9 +199,6 @@ class XAI:
                 eq.addAddend(-1, n2v_pre[node])
                 eq.setScalar(-1*G.nodes[node]['bias'])
                 solver.addEquation(eq)
-                # if(node!=out_node):
-                #     MarabouCore.addReluConstraint(solver,
-                #             n2v_pre[node], n2v_post[node])
                 if(node in out_node and self.output_values):
                     MarabouCore.addReluConstraint(solver,
                             n2v_pre[node], n2v_post[node])
@@ -232,14 +214,6 @@ class XAI:
                     eq1.addAddend(-1,n2v_post[node])
                     eq1.setScalar(0)
                     solver.addEquation(eq1)
-
-        # if(self.output_values):
-        #     for node in layers[-1]:
-        #         eq1 = MarabouCore.Equation()
-        #         eq1.addAddend(1,n2v_final[node])
-        #         eq1.addAddend(-1,n2v_post[node])
-        #         eq1.setScalar(0)
-        #         solver.addEquation(eq1)
 
         # Encode precondition
         for feature in orig_features:
@@ -257,16 +231,11 @@ class XAI:
 
         # Encode postcondition
         if(not self.output_values and not self.lower_conf):
-            # solver.setUpperBound( n2v_post[ out_node[0]], 0)
-            # print("Out node: ", n2v_post[out_node[0]])
-            solver.setUpperBound( n2v_post[ out_node[0]], 100)
+            solver.setUpperBound( n2v_post[ out_node[0]], 0)
         elif (self.output_values):
             for node in out_node:
-                # print(f"Output Constraint: {node} : {self.output_values[node]}")
-                # print(n2v_post)
-                # print(self.output_values)
-                solver.setLowerBound( n2v_post[ node ], self.output_values[node]-10)
-                solver.setUpperBound( n2v_post[ node ], self.output_values[node] + 10)
+                solver.setLowerBound( n2v_post[ node ], self.output_values[node] - self.tolerance)
+                solver.setUpperBound( n2v_post[ node ], self.output_values[node] + self.tolerance)
         elif self.lower_conf:
             node = n2v_post[out_node[0+self.second_largest]]
             solver.setUpperBound(node, self.conf_score//2)
@@ -527,10 +496,10 @@ class XAI:
         self.G = G
         self.output_values = output_values
 
-        thread1 = threading.Thread(target=self.lb_thread_bundle, args=(self.contrastive_queue, ))
-        thread2 = threading.Thread(target=self.ub_thread_bundle, args=(self.free_queue, ))
-        # thread1 = threading.Thread(target=self.lb_thread, args=(self.contrastive_queue, ))
-        # thread2 = threading.Thread(target=self.ub_thread, args=(self.free_queue, ))
+        # thread1 = threading.Thread(target=self.lb_thread_bundle, args=(self.contrastive_queue, ))
+        # thread2 = threading.Thread(target=self.ub_thread_bundle, args=(self.free_queue, ))
+        thread1 = threading.Thread(target=self.lb_thread, args=(self.contrastive_queue, ))
+        thread2 = threading.Thread(target=self.ub_thread, args=(self.free_queue, ))
         thread1.start()
         thread2.start()
         thread1.join()
@@ -568,28 +537,15 @@ class XAI:
         self.result_pairs = self.contrastive_queue.get()
 
         # Bundle
-        # inp_features_list = [feature for bundle in self.input_features for feature in bundle]
-        # upper_bound_result = [feature for feature in inp_features_list if feature not in self.free]
-        upper_bound_result = self.result_ub
-        # upper_bound_result = []
-        # lower_bound_result = []
-        # pair_result = []
-        lower_bound_result = self.result_singletons
-        pair_result = self.result_pairs
+        # upper_bound_result = self.result_ub
+        # lower_bound_result = self.result_singletons
+        # pair_result = self.result_pairs
 
         # Non-Bundle
         # upper_bound_result = []
-        # upper_bound_result = [feature for feature in self.input_features if feature not in self.free]
-        # lower_bound_result = self.singletons
-        # pair_result = self.pairs
-
-        # print("Free: ", self.free)
-        # print(f"Unsat result Singletons: {len(self.result_singletons)}")
-        # print(f"Unsat result Pairs: {len(self.result_pairs)}")
-        # print(f"Unsat result UB: {len(self.result_ub)}")
-
-        # print("----------------------------------------")
-        # print(upper_bound_result)
+        upper_bound_result = [feature for feature in self.input_features if feature not in self.free]
+        lower_bound_result = self.singletons
+        pair_result = self.pairs
 
         return upper_bound_result, lower_bound_result, pair_result
 
@@ -662,14 +618,14 @@ if __name__ == '__main__':
     # nx.draw_spring(G, with_labels=True)
     # plt.show()
 
-    # inp_features = [ ((0,0),1),((0,1),1),((0,2),1) ]
-    # inp_lb = [0,0,0]
-    # inp_ub = [1,1,1]
-    # E = XAI()
-    # ub_exp, lb_exp, pairs = E.explanation(G, inp_features, inp_lb, inp_ub)
-    # print("Upper_bound: ", ub_exp)
-    # print("Singletons: ", lb_exp)
-    # print("Pairs: ", pairs)
+    inp_features = [ ((0,0),1),((0,1),1),((0,2),1) ]
+    inp_lb = [0,0,0]
+    inp_ub = [1,1,1]
+    E = XAI()
+    ub_exp, lb_exp, pairs = E.explanation(G, inp_features, inp_lb, inp_ub)
+    print("Upper_bound: ", ub_exp)
+    print("Singletons: ", lb_exp)
+    print("Pairs: ", pairs)
 
 
     # visualize = []

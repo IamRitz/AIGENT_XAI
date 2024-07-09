@@ -1,0 +1,10 @@
+Attack was successful on: 213  images.
+[23, 15, 9, 30, 17, 30, 3, 25, 30, 15]
+[19, 31, 8, 27, 9, 40, 4, 21, 24, 14]
+Mean k value: 139.94366197183098
+Median k value: 24.0
+Mode k value: ModeResult(mode=array([12]), count=array([86]))
+Pielou Measure is: (0.9319466213465428-0j)
+TIME TAKEN IN GENERATION OF ABOVE EXAMPLES:  22.604005725383757 seconds.
+
+& 0.0002 & 0.93 & 0.95 & 0.21 & 22.6 & 24 & .19\% & 42.6\%

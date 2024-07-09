@@ -1,0 +1,15 @@
+Average Confidence: 0.9208153262883724
+Average L2: 2.8000001886247716
+Average L-inf: 0.1000000528705779
+Average number of pixels modified: 784.0
+Percentage of pixels modified(average): 100.0  %
+Attack was successful was on: 499 Images.
+Average time taken:  0.0979633450747014 seconds.
+[30, 30, 30, 30, 30, 30, 30, 30, 30, 30]
+[9, 3, 15, 27, 34, 24, 116, 43, 11, 18]
+16/16 [==============================] - 0s 4ms/step
+16/16 [==============================] - 0s 4ms/step
+FID for 499 images is: 0.814165
+Pielou Meaure is: (0.8262226386643265-0j)
+
+& 0.81 & 0.82 & 2.8 & 0.1 & 0.09 784 100\% & 99.8\%

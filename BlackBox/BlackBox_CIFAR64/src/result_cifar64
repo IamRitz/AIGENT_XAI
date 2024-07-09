@@ -1,0 +1,51 @@
+Average Confidence: 0.7628394096238272
+Average L2: 26.082647455154852
+Average L-inf: 0.2352941176470581
+Average number of pixels modified: 12288.0
+Percentage of pixels modified(average): 100.0  %
+Attack was successful was on: 350 Images.
+Average time taken:  0.2320075866154262 seconds.
+[11, 30, 30, 30, 30, 11, 30, 30, 30, 30]
+[30, 4, 26, 4, 1, 134, 8, 24, 25, 6]
+11/11 [==============================] - 0s 8ms/step
+11/11 [==============================] - 0s 7ms/step
+FID for 350 images is: 0.286742
+Pielou Meaure is:  (0.6972376843867074-0j)
+
+& 0.28 & 0.69 & 26.08 & 0.23 & 12288 & 100\% & 75\%
+
+
+
+
+
+
+
+Average Confidence: 0.9992364166796892
+Average L2: 26.082647455154703
+Average L-inf: 0.2352941176470581
+Average number of pixels modified: 12288.0
+Percentage of pixels modified(average): 100.0  %
+Attack was successful wa s on: 435 Images.
+Average time taken:  0.18451909141978998 seconds.
+[30, 30, 30, 30, 30, 30, 3, 30, 30, 30]
+[37, 0, 4, 2, 0, 0, 223, 0, 0, 7]
+14/14 [==============================] - 0s 8ms/step
+14/14 [==============================] - 0s 7ms/step
+FID for 435 images is: 0.088154
+Pielou Meaure is:  (0.27271416906654994-0j)
+
+& 0.08 & 0.27 & 26.08 & 0.235 & 0.18 & 12288 & 100\% & 87\%
+
+Average Confidence: 0.7639310834123128
+Average L2: 26.082647455154888
+Average L-inf: 0.23529411764705813
+Average number of pixels modified: 12288.0
+Percentage of pixels modified(average): 100.0  %
+Attack was successful was on: 335 Images.
+Average time taken:  0.2400844146956259 seconds.
+[12, 30, 30, 30, 30, 8, 30, 24, 30, 30]
+[36, 2, 25, 4, 1, 121, 8, 29, 21, 7]
+11/11 [==============================] - 0s 7ms/step
+11/11 [==============================] - 0s 7ms/step
+FID for 335 images is: 0.246537
+Pielou Meaure is:  (0.7146003571165092-0j)

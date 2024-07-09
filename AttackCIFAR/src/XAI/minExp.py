@@ -38,6 +38,7 @@ class XAI:
         self.result_ub = []
         self.output_values = None
         self.smallest = -1
+        self.tolerance = 15
 
     def contrastive_singleton(self):
         # Find the single input features that are important 
@@ -66,17 +67,17 @@ class XAI:
         for ip_f in self.input_features:
                 orig_features.remove(ip_f)
                 orig_features_list = set([feature for bundle in orig_features for feature in bundle])
-                result =  self.verif_query2(self.G, orig_features_list, ip_f)
+                result =  self.verif_query(self.G, orig_features_list, ip_f)
                 if result[0] == 'SAT':
-                        print("Singleton , ip",result[1])
-                        print("LENGTH OF SINGLETON: ", len(ip_f))
-                        print("Singleton in image: ", ip_f)
+                        # print("Singleton , ip",result[1])
+                        # print("LENGTH OF SINGLETON: ", len(ip_f))
+                        # print("Singleton in image: ", ip_f)
                         self.singletons.add(tuple(ip_f))
                         self.result_singletons.append(result[1])
                         self.LB = self.LB+1
-
+                        return
                 else:
-                    print("Not Singleton , ip",result[1],ip_f)
+                    # print("Not Singleton , ip",result[1],ip_f)
                     pass
                 orig_features.append(ip_f)
 
@@ -128,12 +129,13 @@ class XAI:
                 free_pairs.extend(feature_2)
 
                 orig_features_list = set([feature for bundle in orig_features for feature in bundle])
-                result =  self.verif_query2(self.G, orig_features_list, free_pairs)
+                result =  self.verif_query(self.G, orig_features_list, free_pairs)
                 if result[0] == 'SAT':
                         # print("----------------------------------------Pairs----------------------------------------")
-                        pair = [tuple(sublist) if isinstance(sublist, list) else sublist for sublist in pair]
+                        # pair = [tuple(sublist) if isinstance(sublist, list) else sublist for sublist in pair]
                         self.pairs.add(pair)
                         self.result_pairs.append(result[1])
+                        return
                 else:
                     # print("----------------------------------------Not Pairs----------------------------------------")
                     pass
@@ -178,30 +180,11 @@ class XAI:
             n : i + len(n2v_post)
             for i, n in enumerate( itertools.chain( *layers[1:] ))
         }
-        # print(n2v_post)
-        # print(n2v_pre)
-        # exit(1)
-
-        # n2v_final = {}
-        # if(self.output_values):
-        #     n2v_final = {
-        #         n : i + len(n2v_post) + len(n2v_pre)
-        #         for i, n in enumerate(layers[-1])
-        #     }
-            # print("n2v_final: ", n2v_final)
-        # print("n2v_pre: ", n2v_pre)
-        # print("n2v_post: ", n2v_post)
-        # Reverse view
         rev=nx.reverse_view(G)
-        # print("Verif: ", G.nodes)
-        # print("Verif2: ", rev.nodes)
-        # exit(1)
-
         # Set up solver
         solver = MarabouCore.InputQuery()
         solver.setNumberOfVariables( len(n2v_post) + len(n2v_pre))
         # Encode the network
-
         for node in G.nodes():
             eq = MarabouCore.Equation()
             flag = False
@@ -213,9 +196,6 @@ class XAI:
                 eq.addAddend(-1, n2v_pre[node])
                 eq.setScalar(-1*G.nodes[node]['bias'])
                 solver.addEquation(eq)
-                # if(node!=out_node):
-                #     MarabouCore.addReluConstraint(solver,
-                #             n2v_pre[node], n2v_post[node])
                 if(node in out_node and self.output_values):
                     MarabouCore.addReluConstraint(solver,
                             n2v_pre[node], n2v_post[node])
@@ -231,14 +211,6 @@ class XAI:
                     eq1.addAddend(-1,n2v_post[node])
                     eq1.setScalar(0)
                     solver.addEquation(eq1)
-
-        # if(self.output_values):
-        #     for node in layers[-1]:
-        #         eq1 = MarabouCore.Equation()
-        #         eq1.addAddend(1,n2v_final[node])
-        #         eq1.addAddend(-1,n2v_post[node])
-        #         eq1.setScalar(0)
-        #         solver.addEquation(eq1)
 
         # Encode precondition
         for feature in orig_features:
@@ -256,23 +228,18 @@ class XAI:
 
         # Encode postcondition
         if(not self.output_values and not self.lower_conf):
-            # solver.setUpperBound( n2v_post[ out_node[0]], 0)
-            # print("Out node: ", n2v_post[out_node[0]])
             solver.setUpperBound( n2v_post[ out_node[0]], 100)
         elif (self.output_values):
             for node in out_node:
-                # print(f"Output Constraint: {node} : {self.output_values[node]}")
-                # print(n2v_post)
-                # print(node)
-                # print(self.output_values)
-                solver.setLowerBound( n2v_post[ node ], self.output_values[node])
-                solver.setUpperBound( n2v_post[ node ], self.output_values[node] + 2)
+                solver.setLowerBound( n2v_post[ node ], self.output_values[node]- self.tolerance)
+                solver.setUpperBound( n2v_post[ node ], self.output_values[node]+ self.tolerance)
         elif self.lower_conf:
             node = n2v_post[out_node[0+self.second_largest]]
             solver.setUpperBound(node, self.conf_score//2)
 
         try:
             options=Marabou.createOptions(verbosity = 0)
+            options._timeoutInSeconds = 300
             ifsat, var, stats = MarabouCore.solve(solver,options,'')
         except Exception as e:
             val = []
@@ -309,21 +276,7 @@ class XAI:
             for i, n in enumerate( itertools.chain( *layers[1:] ))
         }
 
-        # n2v_final = {}
-        # if(self.output_values):
-        #     n2v_final = {
-        #         n : i + len(n2v_post) + len(n2v_pre)
-        #         for i, n in enumerate(layers[-1])
-        #     }
-            # print("n2v_final: ", n2v_final)
-        # print("n2v_pre: ", n2v_pre)
-        # print("n2v_post: ", n2v_post)
-        # Reverse view
         rev=nx.reverse_view(G)
-        # print("Verif: ", G.nodes)
-        # print("Verif2: ", rev.nodes)
-        # exit(1)
-
         # Set up solver
         solver = MarabouCore.InputQuery()
         solver.setNumberOfVariables( len(n2v_post) + len(n2v_pre))
@@ -340,10 +293,6 @@ class XAI:
                 eq.addAddend(-1, n2v_pre[node])
                 eq.setScalar(-1*G.nodes[node]['bias'])
                 solver.addEquation(eq)
-                # if(node!=out_node):
-                #     MarabouCore.addReluConstraint(solver,
-                #             n2v_pre[node], n2v_post[node])
-
                 if(node in out_node and self.output_values):
                     MarabouCore.addReluConstraint(solver,
                             n2v_pre[node], n2v_post[node])
@@ -357,17 +306,6 @@ class XAI:
                     eq1.setScalar(0)
                     solver.addEquation(eq1)
 
-        # if(self.output_values):
-        #     for node in layers[-1]:
-        #         eq1 = MarabouCore.Equation()
-        #         eq1.addAddend(1,n2v_final[node])
-        #         eq1.addAddend(-1,n2v_post[node])
-        #         eq1.setScalar(0)
-        #         solver.addEquation(eq1)
-        
-        # Encode precondition
-        # print(orig_features)
-        # exit(1)
         for feature in orig_features:
             node,val = feature[0],feature[1]
             # print(f"Original: {node}: {val}")
@@ -375,23 +313,16 @@ class XAI:
             solver.setUpperBound(n2v_post[node],val)
 
         for feature in free_list:
-            # print(feature)
             node = feature[0]
-            # print("Node Value: ", feature[1])
-            # print(f"Bounds: {self.input_lb[node[1]]}, {self.input_ub[node[1]]}")
             solver.setLowerBound(n2v_post[node],self.input_lb[node[1]])
             solver.setUpperBound(n2v_post[node],self.input_ub[node[1]])
 
             
         # Encode postcondition
-
         if(not self.output_values):
             solver.setUpperBound( n2v_post[ out_node[0]], 0)
         else:
             for node in out_node:
-                # print(f"Output Constraint: {node} : {self.output_values[node]}")
-                # solver.setLowerBound( n2v_post[ node ], self.output_values[node])
-                # solver.setUpperBound( n2v_post[ node ], self.output_values[node])
                 solver.setLowerBound( n2v_post[ node ], self.output_values[node])
                 solver.setUpperBound( n2v_post[ node ], self.output_values[node] + 3)
 
@@ -418,13 +349,15 @@ class XAI:
         change = float('inf')
         mapping = {}
         while L <= len(self.input_features)-1:
-            k = 2
+            break
+            # k = 2
             while L <= R:
-                print("value of k", k)
-                if k > len(self.input_features):
-                    print("break")
-                    break
-                Mid = k
+                # print("value of k", k)
+                # if k > len(self.input_features):
+                #     print("break")
+                #     break
+                Mid = (L + R) // 2
+                # Mid = k
                 Explanation = set(self.input_features) - self.free
                 # print(f"Exp: {Explanation}")
                 potential_free = set(self.input_features[L:Mid+1])
@@ -434,9 +367,9 @@ class XAI:
                 for node, val in free_list:
                     mapping[node] = val
                 # print(f'free_list : {free_list}')
-                print("--------------------------------------------------")
+                # print("--------------------------------------------------")
                 result = self.verif_query(self.G, Explanation-set(potential_free), free_list)
-                print("--------------------------------------------------")
+                # print("--------------------------------------------------")
                 if result[0] == 'UNSAT':
                     self.free = self.free.union(potential_free) 
                     # print("Confirmed to be Free: ", potential_free)
@@ -452,14 +385,12 @@ class XAI:
                         change = temp
                     if(result[1] not in self.result_ub):
                         self.result_ub.append(result[1])
-                    print("Confirmed Not to be free", potential_free)
+                    # print("Confirmed Not to be free", potential_free)
                     # print("Result_UB: ", result[1])
                     R = Mid-1
                     k = Mid-1
                     break
-            print("here")
             break
-            print("here2")
             L = L + 1
             R = len(self.input_features)-1
         
@@ -479,19 +410,22 @@ class XAI:
         count = 0
         inp_f_fl = [feature for bundle in self.input_features for feature in bundle]
         while L <= len(self.input_features)-1:
+            break
             while L <= R:
                 Mid = (L+R)//2
                 # inp_f_fl = set(chain(*self.input_features))
                 Explanation = set(inp_f_fl) - self.free
+                Explanation = set(inp_f_fl)
                 potential_free = set([feature for bundle in self.input_features[L:Mid+1] for feature in bundle])
                 # print("Potentially Free(Binary Search): ", potential_free)
                 free_list = list(self.free)
+                free_list = list()
                 # print(free_list)
                 free_list.extend(potential_free)
                 # print(f'free_list: {free_list}')
                 # exit(1)
                 # print(f'free list: {free_list}')
-                result = self.verif_query2(self.G, Explanation - set(potential_free), free_list)
+                result = self.verif_query(self.G, Explanation - set(free_list), free_list)
                 if result[0] == 'UNSAT':
                     self.free = self.free.union(potential_free) 
                     # print("Confirmed to be Free: ")
@@ -503,10 +437,9 @@ class XAI:
                     # print("-------------------Adv Example---------------------")
                     # print(result[1])
                     self.result_ub.append(result[1])
-                    # exit(1)
                     break
+                    # exit(1)
                     R = Mid-1
-
             break
             L = L + 1
             R = len(self.input_features)-1
@@ -524,10 +457,10 @@ class XAI:
         self.G = G
         self.output_values = output_values
 
-        # thread1 = threading.Thread(target=self.lb_thread_bundle, args=(self.contrastive_queue, ))
-        # thread2 = threading.Thread(target=self.ub_thread_bundle, args=(self.free_queue, ))
-        thread1 = threading.Thread(target=self.lb_thread, args=(self.contrastive_queue, ))
-        thread2 = threading.Thread(target=self.ub_thread, args=(self.free_queue, ))
+        thread1 = threading.Thread(target=self.lb_thread_bundle, args=(self.contrastive_queue, ))
+        thread2 = threading.Thread(target=self.ub_thread_bundle, args=(self.free_queue, ))
+        # thread1 = threading.Thread(target=self.lb_thread, args=(self.contrastive_queue, ))
+        # thread2 = threading.Thread(target=self.ub_thread, args=(self.free_queue, ))
         thread1.start()
         thread2.start()
         thread1.join()
@@ -565,14 +498,20 @@ class XAI:
         self.result_pairs = self.contrastive_queue.get()
 
         # Bundle
-        # upper_bound_result = self.result_ub
-        # lower_bound_result = self.result_singletons
-        # pair_result = self.result_pairs
+        # inp_features_list = [feature for bundle in self.input_features for feature in bundle]
+        # upper_bound_result = [feature for feature in inp_features_list if feature not in self.free]
+        upper_bound_result = self.result_ub
+        # upper_bound_result = []
+        # lower_bound_result = []
+        # pair_result = []
+        lower_bound_result = self.result_singletons
+        pair_result = self.result_pairs
 
         # Non-Bundle
-        upper_bound_result = [feature for feature in self.input_features if feature not in self.free]
-        lower_bound_result = self.singletons
-        pair_result = self.pairs
+        # upper_bound_result = []
+        # upper_bound_result = [feature for feature in self.input_features if feature not in self.free]
+        # lower_bound_result = self.singletons
+        # pair_result = self.pairs
 
         # print("Free: ", self.free)
         # print(f"Unsat result Singletons: {len(self.result_singletons)}")

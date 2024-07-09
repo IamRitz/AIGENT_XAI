@@ -19,19 +19,19 @@ tqdm.tqdm().disable = True
 # Define the segmentation function with adjusted parameters
 def segmentation_fn(image):
     # return quickshift(image, kernel_size=1, max_dist=4, ratio=0.5)
-    return slic(image, n_segments=50, compactness=20)
+    return slic(image, n_segments=250, compactness=10)
 
 
 def loadImage(img_path, processed=True):
     # Load and preprocess your image as a grayscale image
     if not processed:
-        img = image.load_img(img_path, target_size=(32, 32), color_mode='rgb')
+        img = image.load_img(img_path, target_size=(64, 64), color_mode='rgb')
         img_array = image.img_to_array(img)
         img_array = np.expand_dims(img_array, axis=0)
         img_array = img_array / 255.0  # Normalize the image to [0, 1]
         img_array_reshaped = img_array.reshape(1, -1)[0]
     else:
-        img_array = np.reshape(img_path, (32, 32, 3))
+        img_array = np.reshape(img_path, (64, 64, 3))
         img_array = np.expand_dims(img_array, axis=0)
         img_array_reshaped = img_path 
 
@@ -79,10 +79,10 @@ def limeExplanation(model, img_path, MODEL_PATH=False, processed=True):
     # print(segmented_img)
     # print(important_segments)
 
-    for i in range(32*32):
+    for i in range(64*64):
         important_segments[segmented_img[i]-1].append(((0, i), img_array_reshaped[i]))
-        important_segments[segmented_img[i]-1].append(((0, i+32*32), img_array_reshaped[i+32*32]))
-        important_segments[segmented_img[i]-1].append(((0, i+2*32*32), img_array_reshaped[i+2*32*32]))
+        important_segments[segmented_img[i]-1].append(((0, i+64*64), img_array_reshaped[i+64*64]))
+        important_segments[segmented_img[i]-1].append(((0, i+2*64*64), img_array_reshaped[i+2*64*64]))
 
     return list(important_segments.values())
 

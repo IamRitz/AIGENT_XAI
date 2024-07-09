@@ -27,7 +27,7 @@ def get_neuron_values_actual(loaded_model, input, num_layers):
 
 def get_neuron_values(loaded_model, input, num_layers, values, gurobi_model, epsilon_max, mode, layer_to_change, labels):
         neurons = []
-        val_max = 10
+        val_max = 100
         l = 0
         epsilons = []
         last_layer = num_layers-1
@@ -40,6 +40,8 @@ def get_neuron_values(loaded_model, input, num_layers, values, gurobi_model, eps
             epsilon = []
             
             if int(i/2) == layer_to_change:
+                print(shape0)
+                print(shape1)
                 for row in range(shape0):
                     ep = []
                     for col in range(shape1):

@@ -35,7 +35,7 @@ def linf(orig, adv):
 def getImages():
     paths = []
     count = 0
-    folderSuffix = "_restricted"
+    folderSuffix = "_fmnist2_XAI_singleton_only"
     for path in os.listdir("../Images/AdversarialImages"+str(folderSuffix)):
         paths.append(str(path))
         # print(path)

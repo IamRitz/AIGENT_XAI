@@ -1,0 +1,7 @@
+Failed Adv input indices:  [8, 9, 30, 86, 88, 120, 122, 144, 150, 172, 178, 193, 208, 213, 218, 246, 265, 267, 284, 299, 306, 308, 322, 381, 430, 431, 451, 459, 476, 492]
+Attack was successful on: 470  images.
+Number of pixels modified(Mean): 45.56808510638298
+Number of pixels modified(Median): 24.0
+Number of pixels modified(Mode): ModeResult(mode=array([12]), count=array([87]))
+Pielou Measure is: (0.9458262780521898-0j)
+TIME TAKEN IN GENERATION OF ABOVE EXAMPLES:  2.612138240814209 seconds.

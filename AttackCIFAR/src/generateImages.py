@@ -31,7 +31,7 @@ The generated images are saved in an appropriate sub-folder in Images folder.
 """
 
 def convertToMtarix(array, m, n, channels):
-    for i in range(32*32*3):
+    for i in range(64*64*3):
         array[i] = 255*array[i]
     matrix = np.array(array)
     return matrix.reshape((m, n, channels))
@@ -44,9 +44,8 @@ def show(pixelMatrix, m, n, channels):
 def attack():
     inputs, outputs, count = getData()
     print("Number of inputs in consideration: ",len(inputs))
-    i=15
-    m, n, channels = 32, 32, 3
-    folderSuffix = ""
+    m, n, channels = 64, 64, 3
+    folderSuffix = "_cifar64_AIG"
 
     for i in range(count):
         print("Launching attack on input:", i)

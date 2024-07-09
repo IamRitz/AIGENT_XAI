@@ -1,4 +1,5 @@
 import sys
+from math import ceil
 import copy
 from PielouMesaure import PielouMeaure
 from extractNetwork import extractNetwork
@@ -50,16 +51,16 @@ This file implements our algorithm as described in the paper.
 """
 
 counter=0
+#
+MODEL_PATH = "../Models/CIFAR5/cifar_64.h5"
+INP_PATH = "../data/CIFAR5/inputs_64.csv"
+OUT_PATH = "../data/CIFAR5/outputs_64.csv"
 
-# MODEL_PATH = "../Models/CIFAR5/cifar5_3.h5"
-# INP_PATH = "../data/CIFAR5/inputs.csv"
-# OUT_PATH = "../data/CIFAR5/outputs.csv"
+# MODEL_PATH = "../Models/CIFAR10/cifar.h5"
+# INP_PATH = "../data/CIFAR10/inputs10.csv"
+# OUT_PATH = "../data/CIFAR10/outputs.csv"
 
-# MODEL_PATH = "../Models/CIFAR10/cifar1.h5"
-INP_PATH = "../data/CIFAR10/inputs.csv"
-OUT_PATH = "../data/CIFAR10/outputs.csv"
-
-MODEL_PATH = "./cifar_ext.h5"
+# MODEL_PATH = "./cifar_ext.h5"
 # INP_PATH = "./inputs_new.csv"
 # OUT_PATH = "./outputs_new.csv"
 
@@ -264,11 +265,10 @@ def updateModel_XAI(sat_in):
 
     # Convert the original model to a networkx graph
     G, layer_sizes = model_to_graph(MODEL_PATH)
-    layer_sizes.insert(0, 784)
+    layer_sizes.insert(0, len(sat_in)) 
     
-    G_prime = copy.deepcopy(G)
-    G_original = copy.deepcopy(G)
-    G_another = copy.deepcopy(G)
+    # G_prime = copy.deepcopy(G)
+    G_prime, _ = model_to_graph(MODEL_PATH)
     
     # Creating conjunction of linear equations
     lin_eqn = [0] * (len(sample_output) + 1)
@@ -285,28 +285,19 @@ def updateModel_XAI(sat_in):
 
     verif_property.add_property(G, True, conj_lin_eqn)
 
-    G1 = copy.deepcopy(G)
-    remove_till_layer(G1, layer_to_change+1)
-    remove_till_layer(G_original, layer_to_change+1)
-
-    # We don't need labelling now for min explanation
-    labels = labelling(originalModel, true_output, 0.05)
-
-    # We don't want epsilons, rather we would like to get the neurons value
-    # at the neuron layer next to the edge layer we want to change.
+    # G1 = copy.deepcopy(G)
+    remove_till_layer(G, layer_to_change+1)
 
     phases = get_neuron_values_actual(originalModel, sat_in, num_layers)
-
 
     input_layer_values = phases[layer_to_change]
     input_with_indices = [(val, idx) for idx, val in enumerate(input_layer_values)]
     sorted_indices = sorted(input_with_indices, reverse=True)
     sorted_indices = [idx for val, idx in sorted_indices]
     input_features = []
+
     # pos = []
     # neg = []
-    for i in range(layer_sizes[layer_to_change+1]):
-        input_features.append(((layer_to_change+1, sorted_indices[i]), input_layer_values[sorted_indices[i]]))
     # for i in range(layer_sizes[layer_to_change+1]):
     #     if (input_layer_values[sorted_indices[i]] > 0):
     #         pos.append(((layer_to_change+1, sorted_indices[i]), input_layer_values[sorted_indices[i]]))
@@ -316,55 +307,48 @@ def updateModel_XAI(sat_in):
     # input_features.append(pos)
     # input_features.append(neg)
 
-    input_lower_bound, input_upper_bound = getInputBounds(phases, labels, layer_sizes, layer_to_change, 20)
+    # divide the sorted features into 3 parts
+    # top, medium and bottom
+    # each containing 33% of the features
+
+    curr_layer_size = layer_sizes[layer_to_change+1]
+    top = int(curr_layer_size/4)
+    medium = int(curr_layer_size/4)
+    bottom = int(curr_layer_size/4)
+    lower_bottom = curr_layer_size - top - medium
+
+    sorted_features = [((layer_to_change+1, sorted_indices[i]), input_layer_values[sorted_indices[i]]) for i in range(curr_layer_size)]
+
+    input_features.append(sorted_features[:top])
+    input_features.append(sorted_features[top:top+medium])
+    input_features.append(sorted_features[top+medium:top+medium+lower_bottom])
+    input_features.append(sorted_features[top+medium+lower_bottom:])
+
+    # for i in range(layer_sizes[layer_to_change+1]):
+    #     input_features.append(((layer_to_change+1, sorted_indices[i]), input_layer_values[sorted_indices[i]]))
+
+    # input_lower_bound, input_upper_bound = getInputBounds(phases, labels, layer_sizes, layer_to_change, 20)
     input_lower_bound, input_upper_bound = [0]*layer_sizes[layer_to_change+1], [20]*layer_sizes[layer_to_change+1]
 
     output_values = None
     E = minExp.XAI()
-    ub_exp, lb_exp, pairs = E.explanation(G1, input_features, input_lower_bound, input_upper_bound, output_values)
+    ub_exp, lb_exp, pairs = E.explanation(G, input_features, input_lower_bound, input_upper_bound, output_values)
 
-
-    # print(f"Upper Bound Exp: {ub_exp}")
-    # print(f"Lower Bound Exp: {lb_exp}")
-    # print(f"Pairs: {pairs}")
-
-    global no_exp
-    global no_sig
-    global no_pair
-    global no_ub
-
-    if(not E.result_singletons and not E.result_pairs and not E.result_ub):
-        no_exp += 1
-    if(not E.result_singletons):
-        no_sig += 1
-    if(not E.result_pairs):
-        no_pair += 1
-    if(not E.result_ub):
-        no_ub += 1
-
-    # print("Result: ", E.result_ub)
     neuron_values_new = {}
-    if(E.result_singletons):
-        # print("Result: ", E.result_singletons)
-        max_key = helper.findClassForImage(G_original, E.result_singletons[0])
-        for node, value in E.result_singletons[0]:
-            neuron_values_new[node] = value
-        print("singleton")
-        # print("Max key: ", max_key)
-    elif(E.result_ub):
-        max_key = helper.findClassForImage(G_original, E.result_ub[0])
+    if(E.result_ub):
+        print("UB Found")
         for node, value in E.result_ub[0]:
             neuron_values_new[node] = value
-        print("ub")
-        # print("Max key: ", max_key)
+    elif(E.result_singletons):
+        print("Singleton Found")
+        for node, value in E.result_singletons[0]:
+            neuron_values_new[node] = value
     elif(E.result_pairs):
-        # print("Result: ", E.result_singletons)
-        max_key = helper.findClassForImage(G_original, E.result_pairs[0])
+        print("Pairs Found")
         for node, value in E.result_pairs[0]:
             neuron_values_new[node] = value
-        print("pair")
-        # print("Max key: ", max_key)
     else:
+        print("No result found.")
         return -1, None, None
 
 
@@ -386,16 +370,13 @@ def updateModel_XAI(sat_in):
     while layer_to_change>0:
         extractedNetwork = o1.extractModel(originalModel, layer_to_change+1)
         last_layer_num = layer_to_change+1
-        G_new = copy.deepcopy(G_prime)
+        # G_new = copy.deepcopy(G_prime)
+        G_new, _ = model_to_graph(extractedNetwork, True)
         remove_after_layer(G_new, layer_to_change+1)
         layer_to_change = int(layer_to_change/2)
-        G_prime = copy.deepcopy(G_new)
+        # G_prime = copy.deepcopy(G_new)
         remove_till_layer(G_new, layer_to_change+1)
 
-        # for i in range(layer_sizes[last_layer_num]):
-        #     G_new.nodes[(last_layer_num, i)]['bias'] = 0
-        
-        # Again call the explanation sub_routine
         phases2 = get_neuron_values_actual(originalModel, sat_in, num_layers)
 
         input_layer_values = phases[layer_to_change]
@@ -409,27 +390,30 @@ def updateModel_XAI(sat_in):
         sorted_indices = [idx for val, idx in sorted_indices]
         input_features = []
 
-        for i in range(layer_sizes[layer_to_change+1]):
-            input_features.append(((layer_to_change+1, sorted_indices[i]), input_layer_values[sorted_indices[i]]))
+        curr_layer_size = layer_sizes[layer_to_change+1]
+        top = int(curr_layer_size/4)
+        medium = int(curr_layer_size/4)
+        bottom = int(curr_layer_size/4)
+        lower_bottom = curr_layer_size - top - medium
 
-        # pos = []
-        # neg = []
+        sorted_features = [((layer_to_change+1, sorted_indices[i]), input_layer_values[sorted_indices[i]]) for i in range(curr_layer_size)]
+
+        input_features.append(sorted_features[:top])
+        input_features.append(sorted_features[top:top+medium])
+        input_features.append(sorted_features[top+medium:top+medium+lower_bottom])
+        input_features.append(sorted_features[top+medium+lower_bottom:])
+
+
         # for i in range(layer_sizes[layer_to_change+1]):
-        #     if (input_layer_values[sorted_indices[i]] > 0):
-        #         pos.append(((layer_to_change+1, sorted_indices[i]), input_layer_values[sorted_indices[i]]))
-        #     else:
-        #         neg.append(((layer_to_change+1, sorted_indices[i]), input_layer_values[sorted_indices[i]]))
+        #     input_features.append(((layer_to_change+1, sorted_indices[i]), input_layer_values[sorted_indices[i]]))
 
-        # input_features.append(pos)
-        # input_features.append(neg)
-
-        input_lower_bound, input_upper_bound = getInputBounds(phases, labels, layer_sizes, layer_to_change, 20)
+        # input_lower_bound, input_upper_bound = getInputBounds(phases, labels, layer_sizes, layer_to_change, 20)
         input_lower_bound, input_upper_bound = [0]*layer_sizes[layer_to_change+1], [20]*layer_sizes[layer_to_change+1]
 
         output_values = neuron_values_new
 
         # output_values = {node : 0 for node in neuron_values_new.keys()}
-        print("Output vals: ", output_values)
+        # print("Output vals: ", output_values)
         E = minExp.XAI()
         try:
             ub_exp, lb_exp, pairs = E.explanation(G_new, input_features, input_lower_bound, input_upper_bound, output_values)
@@ -439,38 +423,30 @@ def updateModel_XAI(sat_in):
 
         neuron_values_final = {}
         if(E.result_ub):
+            print("UB Found")
             neuron_values_new = [0] * layer_sizes[layer_to_change+1]
-            remove_till_layer(G_another, layer_to_change+1)
-            # max_key = helper.findClassForImage(G_another, E.result_ub[0])
             for node, value in E.result_ub[0]:
                 neuron_values_final[node] = value
         elif(E.result_singletons):
+            print("Singleton Found")
             neuron_values_new = [0] * layer_sizes[layer_to_change+1]
-            remove_till_layer(G_another, layer_to_change+1)
-            # max_key = helper.findClassForImage(G_another, E.result_singletons[0])
             for (node, value) in E.result_singletons[0]:
                 neuron_values_final[node] = value
         elif(E.result_pairs):
+            print("Pairs Found")
             neuron_values_new = [0] * layer_sizes[layer_to_change+1]
-            remove_till_layer(G_another, layer_to_change+1)
-            # max_key = helper.findClassForImage(G_another, E.result_pairs[0])
             for (node, value) in E.result_pairs[0]:
                 neuron_values_final[node] = value
         else:
+            print("None found")
             break
 
-        print("Neuron value: ", neuron_values_final)
+        # print("Neuron value: ", neuron_values_final)
         if(neuron_values_final):
             neuron_values_new = neuron_values_final
         else:
             return -1, None, None
 
-        # epsilon = find2(10, extractedNetwork, inp, neuron_values_1, 1, layer_to_change, 0, phases2, labels)
-        # tempModel = predict(epsilon, layer_to_change, sat_in)
-        # phases2 = get_neuron_values_actual(tempModel, sat_in, num_layers)
-        # neuron_values_1 = phases2[layer_to_change]
-    # exit(1)
-    # return extractedNetwork, neuron_values_1,  epsilon 
     epsilon = None
     return extractedNetwork, neuron_values_final,  epsilon 
 
@@ -481,25 +457,26 @@ def image_to_bundles(image_data, num_segments=50, comp=10, channel_axis=None):
     return B.generate_segments2(np.array(image_data), 32, 32, num_segments, comp, channel_axis)
 
 
-def MarabouAttack(model, inputs, neuron_values, k=2):
-    imp_neurons = getImportantNeurons(inputs)
-    G, _ = model_to_graph(MODEL_PATH)
+def MarabouAttack(model, inputs, neuron_values, true_label, k=2):
+    # G, _ = model_to_graph(MODEL_PATH)
+    # remove_after_layer(G, 1)
+    G, _ = model_to_graph(model, True)
     remove_after_layer(G, 1)
 
     output_values = {}
     for index, value in neuron_values.items():
-        # output_values[(1, index)] = value
         output_values[index] = value
 
-    result, new_prediction, k = find_singleton_bundle2(G, imp_neurons, [0]*784, [1]*784, output_values)
+    # imp_neurons = getImportantNeurons(inputs, seg)
+    imp_neurons = limeExplanation(None, inputs, MODEL_PATH, True)
+    result, new_prediction, k = find_singleton_bundle2(G, imp_neurons, [0]*len(inputs), [1]*len(inputs), output_values, true_label)
     if result:
         adv_inp = []
         for (node, val) in result:
             adv_inp.append(val)
         return 1, adv_inp, new_prediction, k
-    else:
-        return 0, [], -1, -1
 
+    return 0, [], -1, -1
 
 
 def generate_linear_eqn(num_classes, pred_class):
@@ -593,7 +570,8 @@ def find_singleton_bundle(model, G, input_features, input_lower_bound, input_upp
             orig_features.append(ip_f)
     return 0, [], -1, -1
 
-def find_singleton_bundle2(G, input_features, input_lower_bound, input_upper_bound, output_values): # TODO Fix it 
+
+def find_singleton_bundle2(G, input_features, input_lower_bound, input_upper_bound, output_values, true_label):
     # Find the single input features that are important 
     # important: removal causes a mis-classification
     E = minExp.XAI()
@@ -601,7 +579,6 @@ def find_singleton_bundle2(G, input_features, input_lower_bound, input_upper_bou
     E.output_values = output_values
     E.input_lb = input_lower_bound
     E.input_ub = input_upper_bound
-    model = loadModel()
 
 
     orig_features = copy.deepcopy(input_features)
@@ -614,18 +591,19 @@ def find_singleton_bundle2(G, input_features, input_lower_bound, input_upper_bou
                     new_img = []
                     for (_,_), value in result[1]:
                         new_img.append(value)
-
+                    model = loadModel()
                     pred_out = model.predict([new_img])[0]
+
                     new_pred = np.argmax(pred_out)
                     print("New Prediction: ", new_pred)
 
-                    return result[1], new_pred, len(ip_f)
+                    if true_label != new_pred:
+                        return result[1], new_pred, len(ip_f)
             else:
-                # print("Not Singleton , ip",result[1],ip_f)
+                print("Not Singleton")
                 pass
             orig_features.append(ip_f)
     return 0, -1, -1
-
 
 def getImportantNeurons(sat_in, seg=50, comp=10, channel_axis=None): # TODO fix it according to img type
     input_features_bundle = image_to_bundles(sat_in, 20, comp, channel_axis)
@@ -703,121 +681,12 @@ def FindCutoff(inputs, k):
     w = []
     w = inputs.copy()
     w.sort()
-    mark = 0.01
+    mark = 0.05
     index = ceil(mark*len(w))
-    index = 500
+    # index = 500
     index = index if index>k else k
     heuristic = w[len(w)-index]
     return heuristic, index
-
-def GurobiAttack(inputs, model, outputs, k):
-    print("Launching attack with Gurobi.")
-    tolerance = 10
-    env = gp.Env(empty=True)
-    env.setParam('OutputFlag', 0)
-    env.start()
-    m = gp.Model("Model", env=env)
-    x = []
-    input_vars = []
-    cutOff, limit = FindCutoff(inputs, k)
-    changes = []
-    v = 0
-    for i in range(len(inputs)):
-        if inputs[i]>=cutOff and v<=limit:
-            v += 1
-            changes.append(m.addVar(lb=-tolerance, ub=tolerance, vtype=GRB.CONTINUOUS))
-            x.append(m.addVar(vtype=GRB.BINARY))
-            m.addConstr(changes[i]-tolerance*x[i]<=0)
-            m.addConstr(changes[i]+tolerance*x[i]>=0)
-        else:
-            changes.append(m.addVar(lb=0, ub=0, vtype=GRB.CONTINUOUS))
-            x.append(m.addVar(lb=0, ub=0, vtype=GRB.BINARY))
-            m.addConstr(changes[i]==0)
-    for i in range(len(inputs)):
-        input_vars.append(m.addVar(lb=-tolerance, ub=tolerance, vtype=GRB.CONTINUOUS))
-        m.addConstr(input_vars[i]-changes[i]==inputs[i])
-    
-    weights = model.get_weights()
-    w = weights[0]
-    b = weights[1]
-    result = np.matmul(input_vars,w)+b
-    print("Number of changes:", v)
-    tr = 5
-    for i in range(len(result)):
-        if outputs[i]<=0:
-            m.addConstr(result[i]<=tr)
-        else:
-            m.addConstr(result[i]-outputs[i]<=tr)
-    sumX = gp.quicksum(x)
-    m.addConstr(sumX-k<=0)
-
-    expr = gp.quicksum(changes)
-    epsilon_max_2 = m.addVar(lb=0,ub=150,vtype=GRB.CONTINUOUS, name="epsilon_max_2")
-    m.addConstr(expr>=0)
-    m.addConstr(expr-epsilon_max_2<=0)
-    m.update()
-    m.optimize()
-    if m.Status == GRB.INFEASIBLE:
-        print("Adversarial example not found.")
-        return []
-    modifications = []
-    for i in range(len(changes)):
-        modifications.append(float(changes[i].X))
-    return modifications
-
-def generateAdversarial(sat_in):
-    try:
-        extractedModel, neuron_values_1, epsilon = updateModel(sat_in)
-    except Exception as e:
-        print(e)
-        print("UNSAT. Could not find a minimal modification by divide and conquer.")
-        return 0, [], [], -1, -1, -1
-
-    tempModel = predict(epsilon, 0, sat_in)
-    
-    num_layers = int(len(tempModel.get_weights())/2)
-    phases = get_neuron_values_actual(tempModel, sat_in, num_layers)
-    neuron_values_1 = phases[0]
-    """
-    Now, I have all the epsilons which are to be added to layer 0. 
-    Left over task: Find delta such that input+delta can give the same effect as update model
-    We want the outputs of hidden layer 1 to be equal to the values stored in neuron_values_1
-    """
-    originalModel = loadModel()
-    true_output = originalModel.predict([sat_in])
-    
-    true_label = np.argmax(true_output)
-    k = 100
-    change = GurobiAttack(sat_in, extractedModel, neuron_values_1, k)
-    if len(change)>=0:
-        for j in range(5):
-            ad_inp2 = []
-            for i in range(len(change)):
-                ad_inp2.append(change[i]+sat_in[i])
-            if len(ad_inp2)==0:
-                k = k*3
-                print("Changing k to:", k)
-                change = GurobiAttack(sat_in, extractedModel, neuron_values_1, k)
-                continue
-            ad_output = originalModel.predict([ad_inp2])
-            predicted_label = np.argmax(ad_output)
-            vals = get_neuron_values_actual(originalModel, ad_inp2, num_layers)
-            ch = 0
-            max_shift = 0
-            
-            for i in range(len(vals[0])):
-                ch = ch + abs(vals[0][i]-neuron_values_1[i])
-                if abs(vals[0][i]-neuron_values_1[i])>max_shift:
-                    max_shift = abs(vals[0][i]-neuron_values_1[i])
-            if predicted_label!=true_label:
-                print("Attack was successful. Label changed from ",true_label," to ",predicted_label)
-                print("This was:", k, "pixel attack.")
-                return 1, sat_in, ad_inp2, true_label, predicted_label, k
-            else:
-                k = k*3
-                print("Changing k to:", k)
-                change = GurobiAttack(sat_in, extractedModel, neuron_values_1, k)
-    return 0, [], [], -1, -1, -1
 
 
 def generateAdversarial_XAI(sat_in):
@@ -839,14 +708,11 @@ def generateAdversarial_XAI(sat_in):
 
     """
 
-    print("hereflag")
-    print(neuron_values_1)
     if flag and neuron_values_1:
         originalModel = loadModel()
         true_output = originalModel.predict([sat_in])
         num_layers = int(len(originalModel.get_weights())/2)
         true_label = np.argmax(true_output)
-        print("flag")
 
         success, adv_inp, predicted_label, k = MarabouAttack(extractedModel, sat_in, neuron_values_1, 2)
         print("Success", success)
@@ -861,19 +727,6 @@ def generateAdversarial_XAI(sat_in):
         temp = neuron_values_1
         neuron_values_1 = list(neuron_values_1.values())
 
-
-        # tempModel = predict(epsilon, 0, sat_in)
-
-
-        # 
-        # num_layers = int(len(tempModel.get_weights())/2)
-        # # print("num_layers: ", num_layers)
-        # phases = get_neuron_values_actual(tempModel, sat_in, num_layers)
-        # print("NV: ", neuron_values_1)
-        # neuron_values_1 = phases[0]
-        # print("NV: ", neuron_values_1)
-
-        
         """
         Now, we have all the epsilons which are to be added to layer 0. 
         Left over task: Find delta such that input+delta can give the same effect as update model
@@ -883,18 +736,20 @@ def generateAdversarial_XAI(sat_in):
         true_output = originalModel.predict([sat_in])
         num_layers = int(len(originalModel.get_weights())/2)
         true_label = np.argmax(true_output)
-        k = 3
-        change = GurobiAttack(sat_in, extractedModel, neuron_values_1, k)
-        
-        if len(change)>0:
-            for j in range(18):
-                ad_inp2 = []
 
+        k = 80
+        change = GurobiAttack(sat_in, extractedModel, neuron_values_1, k)
+
+        if len(change)>0:
+            for j in range(8):
+                ad_inp2 = []
                 for i in range(len(change)):
                     ad_inp2.append(change[i]+sat_in[i])
 
                 ad_output = originalModel.predict([ad_inp2])
+                # print(ad_output)
                 predicted_label = np.argmax(ad_output)
+                # print(predicted_label)
                 vals = get_neuron_values_actual(originalModel, ad_inp2, num_layers)
                 ch = 0
                 max_shift = 0
@@ -902,14 +757,17 @@ def generateAdversarial_XAI(sat_in):
                     ch = ch + abs(vals[0][i]-neuron_values_1[i])
                     if abs(vals[0][i]-neuron_values_1[i])>max_shift:
                         max_shift = abs(vals[0][i]-neuron_values_1[i])
+
                 if predicted_label!=true_label:
                     print("Attack was successful. Label changed from ",true_label," to ",predicted_label)
-                    print("This was:", k,"pixel attack.")
-                    return 1, sat_in, ad_inp2, true_label, predicted_label,  k
+                    print("This was:", k, "pixel attack.")
+                    # print("Original Input:")
+                    return 1, sat_in, ad_inp2, true_label, predicted_label, k
                 else:
                     k = k*2
+                    print("Changing k to:", k)
                     change = GurobiAttack(sat_in, extractedModel, neuron_values_1, k)
-    return 0, [], [], -1, -1, -1
+        return 0, [], [], -1, -1, -1
 
 def GurobiAttack(inputs, model, outputs, k):
     print("Launching attack with Gurobi.")
@@ -922,14 +780,22 @@ def GurobiAttack(inputs, model, outputs, k):
     env.start()
     m = gp.Model("Model", env=env)
     x = []
+    # cutOff, limit = FindCutoff(inputs, k)
     input_vars = []
     changes = []
+    # v=0
 
     for i in range(len(inputs)):
+        # if inputs[i] >= cutOff and v <= limit:
+        #     v += 1
         changes.append(m.addVar(lb=-tolerance, ub=tolerance, vtype=GRB.CONTINUOUS))
         x.append(m.addVar(vtype=GRB.BINARY))
         m.addConstr(changes[i]-tolerance*x[i]<=0)
         m.addConstr(changes[i]+tolerance*x[i]>=0)
+        # else:
+        #     changes.append(m.addVar(lb=0, ub=0, vtype=GRB.CONTINUOUS))
+        #     x.append(m.addVar(lb=0, ub=0, vtype=GRB.BINARY))
+        #     m.addConstr(changes[i]==0)
 
     for i in range(len(inputs)):
         input_vars.append(m.addVar(lb=-tolerance, ub=tolerance, vtype=GRB.CONTINUOUS))
@@ -939,7 +805,7 @@ def GurobiAttack(inputs, model, outputs, k):
     w = weights[0]
     b = weights[1]
     result = np.matmul(input_vars,w)+b
-
+    # print("Number of Changes: ", v)
     tr = 3
     """
     Increasing/decreasing the parameter tr can relax/restrict the solver more and more/less adversarial images can be generated.
@@ -987,6 +853,7 @@ def generateAdversarial(sat_in):
     originalModel = loadModel()
     true_output = originalModel.predict([sat_in])
     true_label = np.argmax(true_output)
+
     k = 12
     change = GurobiAttack(sat_in, extractedModel, neuron_values_1, k)
     
@@ -1039,6 +906,7 @@ def attack():
         print("True label is:", t)
         print()
         t1 = time()
+        # success, original, adversarial, true_label, predicted_label, k = generateAdversarial_XAI(sat_in)
         success, original, adversarial, true_label, predicted_label, k = generateAdversarial(sat_in)
         # success, original, adversarial, true_label, predicted_label, k = lowerConfidence(sat_in)
 

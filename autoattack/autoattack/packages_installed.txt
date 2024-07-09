@@ -1,0 +1,6 @@
+pip3 install numpy
+pip3 install git+https://github.com/fra31/auto-attack
+brew install tensorflow
+python3 -m pip install tensorflow-macos
+pip3 install torch
+pip3 install torchvision

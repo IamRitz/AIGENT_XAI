@@ -1,0 +1,13 @@
+Model 1: mnist.h5
+    (Mean): 0.21104683
+    (Median): 0.21686056
+    (Mode value): [0.22818813]
+    (Mode count): [40]
+    Largest Confidence score:  0.290004
+
+Model 2: mnist_1.h5
+    (Mean): 0.23157941
+    (Median): 0.23406076
+    (Mode value): [0.14255714]
+    (Mode count): [1]
+    Largest Confidence score:  0.24638765
